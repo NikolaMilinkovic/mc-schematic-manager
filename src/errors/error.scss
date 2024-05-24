@@ -1,0 +1,33 @@
+@import url('../global/colors.scss');
+@import url('../global/global.scss');
+
+body{
+  background: var(--backgroud);
+  main{
+    border: 2px solid var(--primary-emphasis);
+    padding: 2rem;
+    button{
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      padding: 1rem;
+      width: 100%;
+      margin-top: 3rem;
+      border-radius: 5px;
+      border: 2px solid var(--primary-emphasis);
+      cursor: pointer;
+      background-color: var(--primary-emphasis);
+  
+      &:hover{
+        background-color: var(--primary-emphasis-hover);
+      }
+      &:focus{
+        border: 2px solid var(--primary-emphasis-hover);
+        background-color: var(--primary-emphasis-hover);
+        outline: none
+      }
+      &:active{
+        transform: scale(0.97);
+      }
+  }}
+}

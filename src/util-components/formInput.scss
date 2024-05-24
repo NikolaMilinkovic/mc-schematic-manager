@@ -1,0 +1,26 @@
+@import url('../global/colors.scss');
+@import url('../global/global.scss');
+
+.input-group{
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-top: 1rem;
+  font-size: var(--normal-font-size);
+  position: relative;
+
+  input{
+    border: 2px solid var(--black);
+    position: relative;
+    padding: 0.5rem;
+
+    &:focus{
+      // border: 2px solid var(--primary-emphasis);
+      outline: 2px solid var(--primary-emphasis)
+    }
+  }
+
+}
+.input-group:focus-within > label{
+  color: var(--primary-emphasis);
+}

@@ -1,0 +1,74 @@
+@import url('../global/colors.scss');
+@import url('../global/global.scss');
+
+header{
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 1rem;
+  padding: 30px 4rem;
+  border-bottom: 2px solid var(--secondary);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: black;
+  position: fixed;
+  transition: 0.2s;
+  height: 80px;
+
+
+  nav{
+    display: flex;
+    gap: 1rem;
+
+    a{
+      padding: 1rem;
+      border: 2px solid var(--secondary);
+      text-decoration: none;
+      color: whitesmoke;
+
+      &:hover{
+        background-color: var(--hover);
+      }
+    }
+  }
+  .responsive_nav{
+    background-color: var(--background);
+  }
+  .nav-btn{
+    visibility: hidden;
+    opacity: 0;
+  }
+  .nav-close-btn{
+
+  }
+
+}
+
+@media only screen and (max-width: 1024px) {
+  header{
+    // position: relative;
+    .nav-btn{
+      visibility: visible;
+      opacity: 1;
+    }
+    nav{
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 101vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      transition: 0.4s;
+      transform: translateX(-100vh);
+    }
+
+    .responsive_nav{
+      transform: none;
+    }
+  }
+}

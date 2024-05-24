@@ -1,3 +1,11 @@
 @import url('./index.css');
 @import url('../src/global/colors.scss');
 @import url('../src/global/global.scss');
+
+body,html,:root{
+  position: relative;
+}
+.test-div{
+  height: 1500px;
+  background-color: olive;
+}

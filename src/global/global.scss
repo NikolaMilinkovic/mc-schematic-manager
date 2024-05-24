@@ -1,5 +1,10 @@
 @import "./colors.scss";
 
+:root{
+  --normal-font-size: 18px;
+}
+
+
 html {
   color-scheme: dark;
 }
