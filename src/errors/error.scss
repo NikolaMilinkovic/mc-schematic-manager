@@ -4,7 +4,7 @@
 body{
   background: var(--backgroud);
   main{
-    border: 2px solid var(--primary-emphasis);
+    border: 2px solid var(--highlight);
     padding: 2rem;
     button{
       align-items: center;
@@ -14,16 +14,16 @@ body{
       width: 100%;
       margin-top: 3rem;
       border-radius: 5px;
-      border: 2px solid var(--primary-emphasis);
+      border: 2px solid var(--highlight);
       cursor: pointer;
-      background-color: var(--primary-emphasis);
+      background-color: var(--highlight);
   
       &:hover{
-        background-color: var(--primary-emphasis-hover);
+        background-color: var(--highlight-hover);
       }
       &:focus{
-        border: 2px solid var(--primary-emphasis-hover);
-        background-color: var(--primary-emphasis-hover);
+        border: 2px solid var(--highlight-hover);
+        background-color: var(--highlight-hover);
         outline: none
       }
       &:active{

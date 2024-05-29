@@ -1,0 +1,10 @@
+@import url('../../global/colors.scss');
+@import url('../../global/global.scss');
+
+body{
+  animation: none;
+}
+.edit-schematic-body{
+  background: var(--background-gradient);
+  animation: none;
+}

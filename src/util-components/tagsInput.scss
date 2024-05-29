@@ -1,0 +1,115 @@
+@import url('../global/colors.scss');
+@import url('../global/global.scss');
+
+.tags-input-group{
+  display: flex;
+  gap: 1rem;
+  background-color: transparent;
+
+  input{
+    border: 2px solid var(--black);
+  }
+
+  .tags-container{
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(5, 1fr);
+    overflow: hidden;
+    border: 2px solid var(--black);
+    padding: 1rem;
+    background-color: var(--black);
+    height: 160px;
+    box-sizing: border-box;
+    overflow: auto;
+  
+    .tag{
+      display: flex;
+      padding: 1rem;
+      border: 2px solid var(--borders);
+      background-color: transparent;
+      cursor: pointer;
+      height: fit-content;
+      align-items: center;
+      justify-content: center;
+      word-break: break-all;
+      &:hover{
+        background-color: var(--danger);
+        color: var(--black);
+      }
+      user-select: none;
+      &:active{
+        transform: scale(0.95);
+      }
+      &:focus{
+        background-color: var(--danger);
+        outline: none;
+      }
+    }
+  }
+  .inputs{
+    display: grid;
+    grid-template-columns: 1fr 0.3fr;
+    width: 100%;
+    gap: 1rem;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    button{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+      cursor: pointer;
+      border: 2px solid var(--black);
+      background-color: var(--black);
+      &:hover{
+        border: 2px solid var(--highlight);
+        background-color: var(--highlight);
+      }
+      &:active{
+        transform: scale(0.95);
+      }
+      &:focus{
+        outline: none;
+        border: 2px solid var(--highlight);
+      }
+    }
+    #tag-input{
+      margin-bottom: 0px;
+    }
+    .input-wrapper{
+      background-color: var(--black);
+      input{
+        height: 40px !important;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        background-color: transparent;
+        z-index: 2;
+      }
+    }
+
+    span{
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: ce;
+      bottom: calc(50% - 23px);
+      left: 10px;
+      color: lightgray;
+      z-index: 1;
+    }
+  }
+}
+
+
+@media only screen and (max-width: 1024px) {
+  .tags-container{
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+
+

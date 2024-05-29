@@ -1,0 +1,65 @@
+@import url('../../global/colors.scss');
+@import url('../../global/global.scss');
+
+body, html, :root{
+  overflow: auto;
+}
+body.upload-schematic-body{
+  background: var(--background-gradient);
+  animation: none;
+}
+
+.upload-schematic-content{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: transparent;
+  max-width: 800px;
+  margin-top: 180px;
+  padding: 1rem;
+  transform: scale(0.9);
+
+  .toast-container{
+    margin-top: 80px;
+  }
+  #upload-form{
+    animation: none;
+    display: flex;
+    width: 100%;
+    height: min-content;
+    flex-direction: column;
+    gap: 15px;
+    background-color: var(--background);
+    background-color: transparent;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10vh;
+    height: 100vh;
+
+    .submit-btn{
+      display: flex;
+      padding: 1rem;
+      width: 100%;
+      border-radius: 5px;
+      border: 2px solid var(--highlight);
+      cursor: pointer;
+      background-color: var(--highlight);
+      align-items: center;
+      justify-content: center;
+  
+      &:hover{
+        background-color: var(--highlight-hover);
+      }
+      &:focus{
+        border: 2px solid var(--highlight-hover);
+        background-color: var(--highlight-hover);
+        outline: none
+      }
+      &:active{
+        transform: scale(0.97);
+      }
+    }
+  }
+
+
+}
+

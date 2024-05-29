@@ -4,8 +4,8 @@
 
 body,html,:root{
   position: relative;
+  background-color: var(--background) !important;
 }
-.test-div{
-  height: 1500px;
-  background-color: olive;
+.toast-container{
+  margin-top: 80px;
 }

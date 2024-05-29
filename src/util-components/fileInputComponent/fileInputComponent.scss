@@ -1,0 +1,30 @@
+@import url('../../global/colors.scss');
+@import url('../../global/global.scss');
+
+
+.file-input-container{
+  border: none;
+  height: 140px !important;
+  background-color: var(--black);
+
+  .file-input-button{
+    padding: 12px 12px;
+    display: flex;
+    width: 100%;
+    cursor: pointer;
+    background-color: var(--black);
+    border: 2px solid var(--black);
+
+    &:hover{
+      background-color: var(--highlight);
+    }
+    &:focus{
+      border: 2px solid var(--highlight);
+      outline: none;
+    }
+
+    input[Type='file'] {
+      display: none;
+    }
+  }
+}

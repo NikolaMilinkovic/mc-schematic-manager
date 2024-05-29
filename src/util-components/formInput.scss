@@ -13,14 +13,15 @@
     border: 2px solid var(--black);
     position: relative;
     padding: 0.5rem;
+    background-color: var(--black);
+    height: 40px !important;
 
     &:focus{
-      // border: 2px solid var(--primary-emphasis);
-      outline: 2px solid var(--primary-emphasis)
+      outline: 2px solid var(--highlight)
     }
   }
 
 }
 .input-group:focus-within > label{
-  color: var(--primary-emphasis);
+  color: var(--highlight);
 }

@@ -2,46 +2,102 @@
 @import url('../global/global.scss');
 
 header{
+  --buttons-min-width: 100px;
   display: flex;
   align-items: center;
   justify-content: end;
   gap: 1rem;
   padding: 30px 4rem;
-  border-bottom: 2px solid var(--secondary);
+  border-bottom: 2px solid var(--borders);
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  background-color: black;
+  background-color: var(--black);
   position: fixed;
   transition: 0.2s;
   height: 80px;
+  z-index: 6;
+  box-sizing: border-box;
 
 
   nav{
     display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
     gap: 1rem;
+    
+    .nav-active{
+      background-color: var(--highlight);
+      height: 50px;
+    }
+
+    button{
+      height: 50px;
+    }
+
+    input{
+      display: flex;
+      min-width: 350px;
+      min-height: 40px;
+      align-self: center;
+      padding: 10px;
+      border: 1px solid transparent;
+      border-bottom: 1px solid var(--white);
+      outline: none;
+      margin-left: auto;
+      background-color: transparent;
+      margin-right: auto;
+      margin-left: 40.7%;
+
+
+      &:focus{
+        border-bottom: 1px solid var(--highlight);
+        outline: none;
+      }
+    }
 
     a{
+      display: flex;
       padding: 1rem;
-      border: 2px solid var(--secondary);
+      border: 0px solid var(--secondary);
       text-decoration: none;
       color: whitesmoke;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+      min-width: var(--buttons-min-width);
+      max-height: 50px;
+      height: 50px;
 
       &:hover{
-        background-color: var(--hover);
+        background-color: var(--highlight-hover);
       }
     }
   }
   .responsive_nav{
-    background-color: var(--background);
+    background-color: var(--black);
   }
   .nav-btn{
     visibility: hidden;
     opacity: 0;
+    padding: 1rem;
   }
-  .nav-close-btn{
+  .log-out{
+    display: flex;
+    background-color: transparent;
+    padding: 1rem;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--buttons-min-width);
 
+    &:hover{
+      background-color: var(--danger-hover);
+    }
   }
 
 }
@@ -65,10 +121,32 @@ header{
       justify-content: center;
       transition: 0.4s;
       transform: translateX(-100vh);
+      padding: 0rem 4rem;
+
+      input{
+        margin-left: auto;
+        margin-right: auto;
+      }
     }
 
     .responsive_nav{
       transform: none;
+    }
+    a{
+      width: 100%;
+      text-align: center;
+
+      &:hover{
+        background-color: var(--hover);
+      }
+    }
+    .log-out{
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      &:hover{
+        background-color: var(--danger-hover);
+      }
     }
   }
 }

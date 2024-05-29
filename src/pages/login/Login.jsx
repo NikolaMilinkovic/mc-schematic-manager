@@ -1,4 +1,4 @@
-import { useState, React, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
@@ -25,6 +25,7 @@ function Login() {
 
   function onChange(event) {
     const { name, value } = event.target;
+    console.log(formData);
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
@@ -71,8 +72,8 @@ function Login() {
 
   return (
     <>
-      <form method="POST" action="" className="login-form">
-        <h1 className="hero-text">Login</h1>
+      <form method="POST" action="" className="login-form" onSubmit={loginUser}>
+        <h1 className="hero-text">LogIn</h1>
         <FormInput
           label="Username"
           id={uuid()}
@@ -80,7 +81,8 @@ function Login() {
           type="text"
           placeholder=""
           required
-          onChange={onChange}
+          text={formData.username}
+          onChange={(e) => onChange(e)}
         />
         <FormInput
           label="Password"
@@ -89,14 +91,16 @@ function Login() {
           type="password"
           placeholder=""
           required
-          onChange={onChange}
+          text={formData.password}
+          onChange={(e) => onChange(e)}
         />
+
         {error && <div className="error-message">{error}</div>}
 
-        <button type="submit" className="btn-submit" onClick={loginUser}>Login</button>
+        <button type="submit" className="btn-submit">Login</button>
       </form>
       <p className="copyright">©2024 Gold Studios, All right reserved.</p>
-      <img src="\img\login-background-1920x1080.jpg" alt="test" />
+      <img className="login-background-image" src="\img\login-background-1920x1080.jpg" alt="test" />
       <div className="background-overlay" />
     </>
   );
