@@ -9,10 +9,6 @@ function FormInput({
   const tagInput = document.getElementById('tag-input');
   const [spanValue, setSpanValue] = useState('');
 
-  function handleAutocomplete() {
-    findMatch(input, tagInput);
-  }
-
   function findMatch(value, inputEl) {
     const regex = new RegExp(`^${value}`, 'i');
 
@@ -28,6 +24,10 @@ function FormInput({
       // Clear suggestion if keyword is not found
       setSpanValue('');
     }
+  }
+
+  function handleAutocomplete() {
+    findMatch(input, tagInput);
   }
 
   function caseCheck(value) {
