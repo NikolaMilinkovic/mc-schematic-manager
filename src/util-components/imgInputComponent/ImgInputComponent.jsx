@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './imgInputComponent.scss';
 
-function ImgInputComponent({ reference, key }) {
-  const [text, setText] = useState('Upload schematic image');
+function ImgInputComponent({
+  reference, key, label = 'Upload image', schematicObj = '',
+}) {
+  const [text, setText] = useState(label);
   const [imageDisplay, setImageDisplay] = useState('');
   const [displayState, setDisplayState] = useState(false);
   const [arrowState, setArrowState] = useState('rotateX(0deg)');
@@ -32,6 +34,17 @@ function ImgInputComponent({ reference, key }) {
       setImageDisplay(URL.createObjectURL(file));
     }
   }
+
+  useEffect(() => {
+    console.log(schematicObj);
+    if (schematicObj !== '') {
+      setImageDisplay(schematicObj.image.url);
+      // reference.current.value = 'Test';
+      const newText = `${schematicObj.name} image`;
+      setText(newText);
+      setDisplayState(true);
+    }
+  }, [schematicObj]);
 
   function handleDrop(event) {
     event.preventDefault();

@@ -119,7 +119,7 @@ function UploadSchematic() {
               return notifyError('This schematic already exists in database, canceling upload!');
             }
             if (response.status === 500) {
-              return notifyError('Error uploading the schematic!');
+              return notifyError('Error uploading the schematic! Response status 500');
             }
             return notifyError('Error uploading the schematic!');
           });

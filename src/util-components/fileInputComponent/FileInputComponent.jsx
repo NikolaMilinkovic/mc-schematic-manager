@@ -21,12 +21,11 @@ function FileInput({
     }
   }
 
-  // Using Reducer method causes a rerender upon upload
   useEffect(() => {
-    if (reset) {
-      setText('Upload File');
+    if (label || reset) {
+      setText(label);
     }
-  }, [reset]);
+  }, [reset, label]);
 
   return (
     <div className="file-input-container">
