@@ -7,8 +7,6 @@ import { ToastContainer, Bounce } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { notifySuccess, notifyError, notifyInfo } from '../../util-components/Notifications';
 
-require('dotenv').config();
-
 function DisplaySchematic({ schematic, index, popSchematic }) {
   const [getButtonState, setGetButtonState] = useState(false);
 
