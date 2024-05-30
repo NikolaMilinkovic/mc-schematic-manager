@@ -25,7 +25,6 @@ function Login() {
 
   function onChange(event) {
     const { name, value } = event.target;
-    console.log(formData);
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
