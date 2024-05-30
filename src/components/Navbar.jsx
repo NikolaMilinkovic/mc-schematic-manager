@@ -37,6 +37,8 @@ function Navbar({ navActive, setNavActive, setSchematicsFilter }) {
       setNavActive('upload-schematic');
     } else if (path === '/link') {
       setNavActive('link');
+    } else {
+      setNavActive('');
     }
   }, [location.pathname, setNavActive]);
 
