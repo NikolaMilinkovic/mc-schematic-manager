@@ -49,3 +49,7 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #313131;
 }
+
+button{
+  user-select: none;
+}

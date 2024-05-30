@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './fileInputComponent.scss';
 
-function FileInput({ reference }) {
-  const [text, setText] = useState('Upload File');
+function FileInput({
+  reference, label, reset,
+}) {
+  const [text, setText] = useState(label);
 
   function handleUpload(event) {
     const file = event.target.files[0];
     if (file && file.name) {
       setText(file.name);
+    } else {
+      setText(label);
     }
   }
 
@@ -16,6 +20,13 @@ function FileInput({ reference }) {
       reference.current.click();
     }
   }
+
+  // Using Reducer method causes a rerender upon upload
+  useEffect(() => {
+    if (reset) {
+      setText('Upload File');
+    }
+  }, [reset]);
 
   return (
     <div className="file-input-container">

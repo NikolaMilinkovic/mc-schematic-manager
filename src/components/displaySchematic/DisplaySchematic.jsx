@@ -71,7 +71,7 @@ function DisplaySchematic({ schematic, index, popSchematic }) {
 
       <h2>{schematic.name}</h2>
       <div className="img-container">
-        {/* <img src="img/placeholder-img.jpg" alt="" /> */}
+        <img src={schematic.image.url} alt={schematic.name} />
       </div>
       <div className="buttons">
         {!getButtonState

@@ -13,7 +13,7 @@
   .tags-container{
     display: grid;
     gap: 1rem;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     overflow: hidden;
     border: 2px solid var(--black);
     padding: 1rem;

@@ -20,8 +20,10 @@
  * Remove the margin in all browsers.
  */
 
-body {
-  margin: 0;
+body,html,:root {
+  margin: 0px !important;
+  padding: 0px !important;
+  overflow-x: hidden;
 }
 
 /**
