@@ -13,7 +13,7 @@ function Landing({ schematicsFilter }) {
   // Fetch schematics when component mounts
   useEffect(() => {
     async function fetchSchematics() {
-      const response = await fetch('http://localhost:3000/get-schematics');
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}get-schematics`);
       const data = await response.json();
       setSchematics(data);
       setCachedSchematics(data); // Cache initial fetched schematics

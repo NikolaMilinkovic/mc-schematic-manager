@@ -55,18 +55,3 @@ export const notifyWarrning = (message) => {
     transition: Bounce,
   });
 };
-
-{ /* <ToastContainer
-position="bottom-right"
-autoClose={3000}
-hideProgressBar
-newestOnTop
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-theme="dark"
-transition={Bounce}
-className="toast-container"
-/> */ }

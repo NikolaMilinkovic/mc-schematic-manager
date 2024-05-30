@@ -8,7 +8,7 @@ function Dashboard({ schematicsFilter }) {
   const [schematics, setSchematics] = useState();
 
   async function fetchSchematics() {
-    const allSchematics = await fetch('http://localhost:3000/get-schematics')
+    const allSchematics = await fetch(`${process.env.REACT_APP_BACKEND_URL}get-schematics`)
       .then((response) => response.json())
       .then((data) => setSchematics(data));
   }
