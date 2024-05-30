@@ -44,7 +44,7 @@ function UploadSchematic() {
   }
 
   async function fetchTags() {
-    const allTags = await fetch('mc-schematic-manager-server-production.up.railway.app/get-tags')
+    const allTags = await fetch('https://mc-schematic-manager-server-2c509bd83c65.herokuapp.com/get-tags')
       .then((response) => response.json())
       .then((data) => {
         setTagAutocomplete(data[0].tags);
@@ -100,7 +100,7 @@ function UploadSchematic() {
         formData.append('tags', tags.join(','));
         formData.append('schematicName', schematicName);
 
-        const res = await fetch('mc-schematic-manager-server-production.up.railway.app/upload-schematic', {
+        const res = await fetch('https://mc-schematic-manager-server-2c509bd83c65.herokuapp.com/upload-schematic', {
           method: 'POST',
           body: formData,
         })

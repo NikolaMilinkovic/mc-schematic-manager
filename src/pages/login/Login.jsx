@@ -44,7 +44,7 @@ function Login() {
       return null;
     }
 
-    fetch('mc-schematic-manager-server-production.up.railway.app/login', {
+    fetch('https://mc-schematic-manager-server-2c509bd83c65.herokuapp.com/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

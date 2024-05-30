@@ -36,7 +36,7 @@ function EditSchematic() {
 
   useEffect(() => {
     console.log(id);
-    fetch(`mc-schematic-manager-server-production.up.railway.app/get-schematic/${id}`)
+    fetch(`https://mc-schematic-manager-server-2c509bd83c65.herokuapp.com/get-schematic/${id}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -57,7 +57,7 @@ function EditSchematic() {
   }, []);
 
   async function fetchTags() {
-    const allTags = await fetch('mc-schematic-manager-server-production.up.railway.app/get-tags')
+    const allTags = await fetch('https://mc-schematic-manager-server-2c509bd83c65.herokuapp.com/get-tags')
       .then((response) => response.json())
       .then((data) => setTagAutocomplete(data[0].tags));
   }
@@ -113,7 +113,7 @@ function EditSchematic() {
         console.log(tags);
         console.log(schematicName);
 
-        const result = await fetch(`mc-schematic-manager-server-production.up.railway.app/update-schematic/${id}`, {
+        const result = await fetch(`https://mc-schematic-manager-server-2c509bd83c65.herokuapp.com/update-schematic/${id}`, {
           method: 'POST',
           body: formData,
         })

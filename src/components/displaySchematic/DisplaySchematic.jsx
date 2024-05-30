@@ -12,7 +12,7 @@ function DisplaySchematic({ schematic, index, popSchematic }) {
 
   async function downloadSchematic(event) {
     const id = event.target.name;
-    const response = await fetch(`mc-schematic-manager-server-production.up.railway.app/get-schematic-file/${id}`);
+    const response = await fetch(`https://mc-schematic-manager-server-2c509bd83c65.herokuapp.com/get-schematic-file/${id}`);
     if (response.ok) {
       notifySuccess('Success, downloading schematic now!');
       const blob = await response.blob();
@@ -32,7 +32,7 @@ function DisplaySchematic({ schematic, index, popSchematic }) {
   async function getSchematicString(event) {
     try {
       const id = event.target.name;
-      const response = await fetch(`mc-schematic-manager-server-production.up.railway.app/get-schematic-fawe-string/${id}`);
+      const response = await fetch(`https://mc-schematic-manager-server-2c509bd83c65.herokuapp.com/get-schematic-fawe-string/${id}`);
       const displayUrl = await response.text();
 
       if (displayUrl) {
@@ -57,7 +57,7 @@ function DisplaySchematic({ schematic, index, popSchematic }) {
   async function removeSchematic(event) {
     const id = event.target.name;
     popSchematic(event);
-    const removeStatus = await fetch(`mc-schematic-manager-server-production.up.railway.app/remove-schematic/${id}`)
+    const removeStatus = await fetch(`https://mc-schematic-manager-server-2c509bd83c65.herokuapp.com/remove-schematic/${id}`)
       .then((response) => {
         if (response.status === 201) {
           return notifySuccess('Success, schematic removed!');
