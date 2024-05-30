@@ -11,6 +11,7 @@ function Login() {
   const cookies = new Cookies();
 
   useEffect(() => {
+    console.log('Backend URL:', process.env.REACT_APP_BACKEND_URL);
     const token = cookies.get('token');
     if (token) {
       navigate('/');
