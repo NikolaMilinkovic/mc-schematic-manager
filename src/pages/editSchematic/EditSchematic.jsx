@@ -36,7 +36,7 @@ function EditSchematic() {
 
   useEffect(() => {
     console.log(id);
-    fetch(`${process.env.REACT_APP_BACKEND_URL}get-schematic/${id}`)
+    fetch(`https://mc-schematic-manager-server.adaptable.app/get-schematic/${id}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -57,7 +57,7 @@ function EditSchematic() {
   }, []);
 
   async function fetchTags() {
-    const allTags = await fetch(`${process.env.REACT_APP_BACKEND_URL}get-tags`)
+    const allTags = await fetch('https://mc-schematic-manager-server.adaptable.app/get-tags')
       .then((response) => response.json())
       .then((data) => setTagAutocomplete(data[0].tags));
   }
@@ -119,7 +119,7 @@ function EditSchematic() {
         console.log(tags);
         console.log(schematicName);
 
-        const result = await fetch(`${process.env.REACT_APP_BACKEND_URL}update-schematic/${id}`, {
+        const result = await fetch(`https://mc-schematic-manager-server.adaptable.app/update-schematic/${id}`, {
           method: 'POST',
           body: formData,
         })

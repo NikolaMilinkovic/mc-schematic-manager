@@ -44,7 +44,7 @@ function UploadSchematic() {
   }
 
   async function fetchTags() {
-    const allTags = await fetch(`${process.env.REACT_APP_BACKEND_URL}get-tags`)
+    const allTags = await fetch('https://mc-schematic-manager-server.adaptable.app/get-tags')
       .then((response) => response.json())
       .then((data) => setTagAutocomplete(data[0].tags));
   }
@@ -98,7 +98,7 @@ function UploadSchematic() {
         formData.append('tags', tags.join(','));
         formData.append('schematicName', schematicName);
 
-        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}upload-schematic`, {
+        const res = await fetch('https://mc-schematic-manager-server.adaptable.app/upload-schematic', {
           method: 'POST',
           body: formData,
         })

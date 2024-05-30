@@ -44,7 +44,7 @@ function Login() {
       return null;
     }
 
-    fetch(`${process.env.REACT_APP_BACKEND_URL}login`, {
+    fetch('https://mc-schematic-manager-server.adaptable.app/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
