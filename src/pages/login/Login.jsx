@@ -11,7 +11,7 @@ function Login() {
   const cookies = new Cookies();
 
   useEffect(() => {
-    console.log('Backend URL:', process.env.REACT_APP_BACKEND_URL);
+    // console.log('Backend URL:', process.env.REACT_APP_BACKEND_URL);
     const token = cookies.get('token');
     if (token) {
       navigate('/');
@@ -44,7 +44,7 @@ function Login() {
       return null;
     }
 
-    fetch('https://mc-schematic-manager-server.adaptable.app/login', {
+    fetch('mc-schematic-manager-server-production.up.railway.app/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

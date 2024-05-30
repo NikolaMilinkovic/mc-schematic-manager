@@ -8,7 +8,7 @@ function Dashboard({ schematicsFilter }) {
   const [schematics, setSchematics] = useState();
 
   async function fetchSchematics() {
-    const allSchematics = await fetch('https://mc-schematic-manager-server.adaptable.app/get-schematics')
+    const allSchematics = await fetch('mc-schematic-manager-server-production.up.railway.app/get-schematics')
       .then((response) => response.json())
       .then((data) => setSchematics(data));
   }

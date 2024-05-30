@@ -44,9 +44,11 @@ function UploadSchematic() {
   }
 
   async function fetchTags() {
-    const allTags = await fetch('https://mc-schematic-manager-server.adaptable.app/get-tags')
+    const allTags = await fetch('mc-schematic-manager-server-production.up.railway.app/get-tags')
       .then((response) => response.json())
-      .then((data) => setTagAutocomplete(data[0].tags));
+      .then((data) => {
+        setTagAutocomplete(data[0].tags);
+      });
   }
 
   useEffect(() => {
@@ -98,7 +100,7 @@ function UploadSchematic() {
         formData.append('tags', tags.join(','));
         formData.append('schematicName', schematicName);
 
-        const res = await fetch('https://mc-schematic-manager-server.adaptable.app/upload-schematic', {
+        const res = await fetch('mc-schematic-manager-server-production.up.railway.app/upload-schematic', {
           method: 'POST',
           body: formData,
         })
@@ -238,7 +240,7 @@ function UploadSchematic() {
 
           <ImgInputComponent
             reference={imgInputRef}
-            key={imgKey}
+            rerenderkey={imgKey}
           />
 
           <TagsInput

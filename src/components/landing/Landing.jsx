@@ -13,7 +13,7 @@ function Landing({ schematicsFilter }) {
   // Fetch schematics when component mounts
   useEffect(() => {
     async function fetchSchematics() {
-      const response = await fetch('https://mc-schematic-manager-server.adaptable.app/get-schematics');
+      const response = await fetch('mc-schematic-manager-server-production.up.railway.app/get-schematics');
       const data = await response.json();
       setSchematics(data);
       setCachedSchematics(data); // Cache initial fetched schematics

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './imgInputComponent.scss';
 
 function ImgInputComponent({
-  reference, key, label = 'Upload image', schematicObj = '',
+  reference, rerenderkey, label = 'Upload image', schematicObj = '',
 }) {
   const [text, setText] = useState(label);
   const [imageDisplay, setImageDisplay] = useState('');
@@ -72,7 +72,7 @@ function ImgInputComponent({
         >
           {text}
           <input
-            key={key}
+            rerenderkey={rerenderkey}
             type="file"
             accept="image/*"
             onChange={handleUpload}

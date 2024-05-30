@@ -36,7 +36,7 @@ function EditSchematic() {
 
   useEffect(() => {
     console.log(id);
-    fetch(`https://mc-schematic-manager-server.adaptable.app/get-schematic/${id}`)
+    fetch(`mc-schematic-manager-server-production.up.railway.app/get-schematic/${id}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -57,7 +57,7 @@ function EditSchematic() {
   }, []);
 
   async function fetchTags() {
-    const allTags = await fetch('https://mc-schematic-manager-server.adaptable.app/get-tags')
+    const allTags = await fetch('mc-schematic-manager-server-production.up.railway.app/get-tags')
       .then((response) => response.json())
       .then((data) => setTagAutocomplete(data[0].tags));
   }
@@ -76,12 +76,6 @@ function EditSchematic() {
       if (schematicName.trim() === '') {
         return notifyError('Please enter schematic name to continue.');
       }
-      // if (!fileInput.files[0]) {
-      //   return notifyError('Please enter a schematic file to continue.');
-      // }
-      // if (!imgInput.files[0]) {
-      //   return notifyError('Please an schematic image to continue.');
-      // }
       if (tags.length < 1) {
         return notifyError('Please enter schematic tags to continue.');
       }
@@ -119,7 +113,7 @@ function EditSchematic() {
         console.log(tags);
         console.log(schematicName);
 
-        const result = await fetch(`https://mc-schematic-manager-server.adaptable.app/update-schematic/${id}`, {
+        const result = await fetch(`mc-schematic-manager-server-production.up.railway.app/update-schematic/${id}`, {
           method: 'POST',
           body: formData,
         })
