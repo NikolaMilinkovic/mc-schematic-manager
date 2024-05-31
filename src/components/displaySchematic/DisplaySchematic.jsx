@@ -69,7 +69,7 @@ function DisplaySchematic({ schematic, index, popSchematic }) {
   return (
     <article key={index} className="schematic-container">
 
-      <h2>{schematic.name}</h2>
+      <h2 className="title">{schematic.name}</h2>
       <div className="img-container">
         <img src={schematic.image.url} alt={schematic.name} />
       </div>

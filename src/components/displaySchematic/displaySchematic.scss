@@ -12,6 +12,12 @@ article{
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.5);
 
+  .title{
+    font-size: 20px;
+    align-self: center;
+    justify-self: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
 
   .img-container {
     margin-top: 10px;
