@@ -56,7 +56,6 @@ function Login() {
           setError('Username or password is incorrect.');
           return null;
         }
-        console.log(response);
         return response.json();
       })
       .then((data) => {

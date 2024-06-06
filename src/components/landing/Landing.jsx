@@ -14,10 +14,10 @@ function Landing({ schematicsFilter }) {
   // Fetch schematics when component mounts
   useEffect(() => {
     async function fetchSchematics() {
-      const response = await customFetch('/get-schematics');
-      console.log(response);
+      const response = await customFetch('/get-schematics', 'GET');
       setSchematics(response);
       setCachedSchematics(response);
+      setLoading(false);
     }
     fetchSchematics();
   }, []);
@@ -46,7 +46,7 @@ function Landing({ schematicsFilter }) {
   return (
     <div className="landing-content">
       <div className="schematics-container">
-        {schematics.length === 0 && cachedSchematics.length === 0 ? (
+        {loading === 0 ? (
           <Loading zIndex="1" />
         )
           : schematics.length !== 0

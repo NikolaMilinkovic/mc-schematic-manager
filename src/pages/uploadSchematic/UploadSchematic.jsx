@@ -113,7 +113,8 @@ function UploadSchematic() {
 
           notifySuccess('Schematic uploaded successfully!');
         } else if (response.status === 400) {
-          notifyError('This schematic already exists in the database, canceling upload!');
+          notifyError('Due to space limitation storing same schematics is not allowed.');
+          notifyError('This schematic already exists on your profile, canceling upload!');
         } else if (response.status === 500) {
           notifyError('Error uploading the schematic! Response status 500');
         } else {
