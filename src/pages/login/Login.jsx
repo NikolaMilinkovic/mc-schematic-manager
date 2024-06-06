@@ -3,15 +3,15 @@ import { v4 as uuid } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import FormInput from '../../util-components/FormInput';
-
 import './login.scss';
+
+const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 function Login() {
   const navigate = useNavigate();
   const cookies = new Cookies();
 
   useEffect(() => {
-    // console.log('Backend URL:', process.env.REACT_APP_BACKEND_URL);
     const token = cookies.get('token');
     if (token) {
       navigate('/');
@@ -44,7 +44,7 @@ function Login() {
       return null;
     }
 
-    fetch('https://mc-schematic-manager-server-2c509bd83c65.herokuapp.com/login', {
+    fetch(`${apiUrl}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ function Login() {
       })
       .catch((err) => {
         setError('An error occurred while logging in. Server might be down. Call Helvos!');
-        console.log(err);
+        console.error(err);
       });
   }
 

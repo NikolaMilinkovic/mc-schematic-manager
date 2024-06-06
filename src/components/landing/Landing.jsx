@@ -4,6 +4,7 @@ import './landing.scss';
 import Loading from '../loading/Loading';
 import DisplaySchematic from '../displaySchematic/DisplaySchematic';
 import { notifySuccess } from '../../util-components/Notifications';
+import customFetch from '../../../fetchMethod';
 
 function Landing({ schematicsFilter }) {
   const [schematics, setSchematics] = useState([]);
@@ -13,10 +14,10 @@ function Landing({ schematicsFilter }) {
   // Fetch schematics when component mounts
   useEffect(() => {
     async function fetchSchematics() {
-      const response = await fetch('https://mc-schematic-manager-server-2c509bd83c65.herokuapp.com/get-schematics');
-      const data = await response.json();
-      setSchematics(data);
-      setCachedSchematics(data); // Cache initial fetched schematics
+      const response = await customFetch('/get-schematics');
+      console.log(response);
+      setSchematics(response);
+      setCachedSchematics(response);
     }
     fetchSchematics();
   }, []);

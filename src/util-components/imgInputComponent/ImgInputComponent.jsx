@@ -36,10 +36,8 @@ function ImgInputComponent({
   }
 
   useEffect(() => {
-    console.log(schematicObj);
     if (schematicObj !== '') {
       setImageDisplay(schematicObj.image.url);
-      // reference.current.value = 'Test';
       const newText = `${schematicObj.name} image`;
       setText(newText);
       setDisplayState(true);

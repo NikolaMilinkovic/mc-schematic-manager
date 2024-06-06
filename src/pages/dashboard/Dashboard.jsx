@@ -2,15 +2,21 @@ import { useState, React, useEffect } from 'react';
 import './dashboard.scss';
 import Loading from '../../components/loading/Loading';
 import Landing from '../../components/landing/Landing';
+import customFetch from '../../../fetchMethod';
+
+const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 function Dashboard({ schematicsFilter }) {
   const [loading, setLoading] = useState(true);
   const [schematics, setSchematics] = useState();
 
   async function fetchSchematics() {
-    const allSchematics = await fetch('https://mc-schematic-manager-server-2c509bd83c65.herokuapp.com/get-schematics')
-      .then((response) => response.json())
-      .then((data) => setSchematics(data));
+    try {
+      customFetch('/get-schematics', 'POST')
+        .then((data) => setSchematics(data));
+    } catch (err) {
+      console.error('Error fetching schematics ', err);
+    }
   }
 
   useEffect(() => {

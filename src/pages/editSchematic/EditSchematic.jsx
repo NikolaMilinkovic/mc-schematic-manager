@@ -10,6 +10,9 @@ import FormInput from '../../util-components/FormInput';
 import 'react-toastify/dist/ReactToastify.css';
 import FileInput from '../../util-components/fileInputComponent/FileInputComponent';
 import ImgInputComponent from '../../util-components/imgInputComponent/ImgInputComponent';
+import customFetch from '../../../fetchMethod';
+
+const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 // Method used for rerendering the file input text
 const initialState = 0;
@@ -35,16 +38,8 @@ function EditSchematic() {
   const [resetKey, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    console.log(id);
-    fetch(`https://mc-schematic-manager-server-2c509bd83c65.herokuapp.com/get-schematic/${id}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
+    customFetch(`/get-schematic/${id}`)
       .then((data) => {
-        console.log(data);
         setSchematic(data);
         setSchematicName(data.name);
         setFileInputLabel(data.original_file_name);
@@ -57,14 +52,13 @@ function EditSchematic() {
   }, []);
 
   async function fetchTags() {
-    const allTags = await fetch('https://mc-schematic-manager-server-2c509bd83c65.herokuapp.com/get-tags')
-      .then((response) => response.json())
-      .then((data) => setTagAutocomplete(data[0].tags));
+    const allTags = await customFetch('/get-tags', 'GET')
+      .then((response) => setTagAutocomplete(response[0].tags));
   }
 
   useEffect(() => {
     fetchTags();
-  }, [schematic]);
+  }, []);
 
   async function updateSchematic(event) {
     const fileInput = fileInputRef.current;
@@ -110,13 +104,7 @@ function EditSchematic() {
         formData.append('tags', tags.join(','));
         formData.append('schematicName', schematicName);
 
-        console.log(tags);
-        console.log(schematicName);
-
-        const result = await fetch(`https://mc-schematic-manager-server-2c509bd83c65.herokuapp.com/update-schematic/${id}`, {
-          method: 'POST',
-          body: formData,
-        })
+        const result = await customFetch(`/update-schematic/${id}`, 'POST', formData)
         // Display responses based on status returned
           .then((response) => {
             if (response.status === 200) {
@@ -131,7 +119,7 @@ function EditSchematic() {
             return notifyError('Error updating the schematic!');
           });
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     }
   }
@@ -190,8 +178,6 @@ function EditSchematic() {
     const fileName = files[0].name;
     const extension = fileName.split('.');
     const ext = extension.slice(-1)[0];
-
-    console.log(ext);
 
     // Compare extension with image types
     imgTypes.forEach((type) => {

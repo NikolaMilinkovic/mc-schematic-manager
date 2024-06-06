@@ -9,6 +9,9 @@ import FormInput from '../../util-components/FormInput';
 import 'react-toastify/dist/ReactToastify.css';
 import FileInput from '../../util-components/fileInputComponent/FileInputComponent';
 import ImgInputComponent from '../../util-components/imgInputComponent/ImgInputComponent';
+import customFetch from '../../../fetchMethod';
+
+const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 // Method used for rerendering the file input text
 const initialState = 0;
@@ -44,11 +47,8 @@ function UploadSchematic() {
   }
 
   async function fetchTags() {
-    const allTags = await fetch('https://mc-schematic-manager-server-2c509bd83c65.herokuapp.com/get-tags')
-      .then((response) => response.json())
-      .then((data) => {
-        setTagAutocomplete(data[0].tags);
-      });
+    const allTags = await customFetch('/get-tags', 'GET')
+      .then((response) => setTagAutocomplete(response[0].tags));
   }
 
   useEffect(() => {
@@ -100,34 +100,27 @@ function UploadSchematic() {
         formData.append('tags', tags.join(','));
         formData.append('schematicName', schematicName);
 
-        const res = await fetch('https://mc-schematic-manager-server-2c509bd83c65.herokuapp.com/upload-schematic', {
-          method: 'POST',
-          body: formData,
-        })
-        // Display responses based on status returned
-          .then((response) => {
-            if (response.status === 201) {
-              // Reset Values
-              setTags([]);
-              setSchematicName('');
-              setTagAutocomplete('');
-              setImgKey(uuid());
-              fileInputRef.current.value = null;
-              handleReset();
+        const response = await customFetch('/upload-schematic', 'POST', formData);
 
-              return notifySuccess('Schematic uploaded successfully!');
-            }
-            if (response.status === 400) {
-              return notifyError('This schematic already exists in database, canceling upload!');
-            }
-            if (response.status === 500) {
-              console.log(response);
-              return notifyError('Error uploading the schematic! Response status 500');
-            }
-            return notifyError('Error uploading the schematic!');
-          });
+        if (response.status === 201) {
+          // Reset Values
+          setTags([]);
+          setSchematicName('');
+          setTagAutocomplete('');
+          setImgKey(uuid());
+          fileInputRef.current.value = null;
+          handleReset();
+
+          notifySuccess('Schematic uploaded successfully!');
+        } else if (response.status === 400) {
+          notifyError('This schematic already exists in the database, canceling upload!');
+        } else if (response.status === 500) {
+          notifyError('Error uploading the schematic! Response status 500');
+        } else {
+          notifyError('Error uploading the schematic!');
+        }
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     }
   }
@@ -187,8 +180,6 @@ function UploadSchematic() {
     const fileName = files[0].name;
     const extension = fileName.split('.');
     const ext = extension.slice(-1)[0];
-
-    console.log(ext);
 
     // Compare extension with image types
     imgTypes.forEach((type) => {
