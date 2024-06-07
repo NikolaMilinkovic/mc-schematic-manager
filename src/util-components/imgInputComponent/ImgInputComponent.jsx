@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './imgInputComponent.scss';
 
 function ImgInputComponent({
-  reference, rerenderkey, label = 'Upload image', schematicObj = '',
+  reference, rerenderkey, label = 'Click to upload image', schematicObj = '',
 }) {
   const [text, setText] = useState(label);
   const [imageDisplay, setImageDisplay] = useState('');

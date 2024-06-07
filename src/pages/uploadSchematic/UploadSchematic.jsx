@@ -32,7 +32,8 @@ function UploadSchematic() {
   const fileInputRef = useRef(null);
   const imgInputRef = useRef(null);
   const [imgKey, setImgKey] = useState('');
-  const [fileInputLabel, setFileInputLabel] = useState('Upload Schematic');
+  const [fileInputLabel, setFileInputLabel] = useState('Click to Upload Schematic');
+  const [backgroundImage, setBackgroundImage] = useState('');
 
   // Rerenders file input text using reducer method
   function handleReset() {
@@ -223,6 +224,7 @@ function UploadSchematic() {
             onChange={(event) => setSchematicName(event.target.value)}
             text={schematicName}
             required
+            borderBottom="2px solid var(--borders)"
           />
           <FileInput
             reference={fileInputRef}
@@ -244,6 +246,7 @@ function UploadSchematic() {
           <button className="submit-btn" type="submit">Upload Schematic</button>
         </form>
       </div>
+      <div className="background-overlay-upload" />
     </body>
   );
 }

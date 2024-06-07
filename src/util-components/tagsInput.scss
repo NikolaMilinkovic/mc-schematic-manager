@@ -8,6 +8,7 @@
 
   input{
     border: 2px solid var(--black);
+    border-bottom: 2px solid var(--borders);
   }
 
   .tags-container{
@@ -61,7 +62,7 @@
       height: 100%;
       width: 100%;
       cursor: pointer;
-      border: 2px solid var(--black);
+      border: 2px solid var(--borders);
       background-color: var(--black);
       &:hover{
         border: 2px solid var(--highlight);

@@ -105,7 +105,7 @@ function FormInput({
               value={input}
               onChange={handleInputChange}
               onKeyDown={handleKeyPress}
-              placeholder=""
+              placeholder="Insert tags here"
             />
           </div>
           <span id="autocomplete-span">{spanValue}</span>

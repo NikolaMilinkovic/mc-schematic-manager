@@ -7,6 +7,22 @@ body, html, :root{
 body.upload-schematic-body{
   background: var(--background-gradient);
   animation: none;
+  position: relative;
+
+  background-image: url('/img/jungle-background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+
+  .background-overlay-upload{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6); 
+    z-index: 2;
+  }
 }
 
 .upload-schematic-content{
@@ -17,6 +33,7 @@ body.upload-schematic-body{
   max-width: 800px;
   padding: 1rem;
   margin-top: 8rem;
+
 
   h1{
     margin-top: 0px;
@@ -34,7 +51,7 @@ body.upload-schematic-body{
     gap: 15px;
     background-color: var(--background);
     background-color: transparent;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
     padding: 10dvh;
 
     .submit-btn{

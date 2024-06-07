@@ -16,7 +16,7 @@
     width: 100%;
     cursor: pointer;
     background-color: var(--black);
-    border: 2px solid var(--black);
+    border: 2px solid var(--borders);
 
     &:hover{
       background-color: var(--highlight);
@@ -57,7 +57,7 @@
     font-size: 20px;
     padding: 4px;
     background-color: transparent;
-    border: 2px solid transparent;
+    border: 2px solid var(--borders);
     cursor: pointer;
     user-select: none;
     width: 100%;
