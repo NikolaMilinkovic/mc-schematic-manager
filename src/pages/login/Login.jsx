@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { v4 as uuid } from 'uuid';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import FormInput from '../../util-components/FormInput';
 import './login.scss';
+import { UserContext } from '../../../UserContext';
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 function Login() {
   const navigate = useNavigate();
   const cookies = new Cookies();
+  const { activeUser, handleSetActiveUser } = useContext(UserContext);
 
   useEffect(() => {
     const token = cookies.get('token');
@@ -61,6 +63,8 @@ function Login() {
       .then((data) => {
         if (data && data.token) {
           cookies.set('token', data.token, { path: '/', maxAge: 365 * 24 * 60 * 60 });
+
+          handleSetActiveUser(data.user);
           navigate('/');
         }
       })
@@ -95,9 +99,17 @@ function Login() {
           onChange={(e) => onChange(e)}
         />
 
-        {error && <div className="error-message">{error}</div>}
+        <div className="error-message">{error}</div>
 
         <button type="submit" className="btn-submit">Login</button>
+        <p className="register-link-container">
+          <Link to="/register">
+            <span className="register-link">
+              Register Here!
+            </span>
+          </Link>
+        </p>
+
       </form>
       <p className="copyright">©2024 Gold Studios, All right reserved.</p>
       <img className="login-background-image" src="\img\login-background-1920x1080.jpg" alt="test" />

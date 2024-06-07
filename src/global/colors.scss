@@ -13,6 +13,7 @@ $hover: #d9d9d9e6;
 :root{
   --background: #1E1E1E;
   --background-gradient: linear-gradient(135deg, #293643, var(--highlight));
+  --background-gradient-hover: linear-gradient(135deg, #91f417e7, #293643 );
   --background-gradient-2: linear-gradient(20deg, var(--highlight-hover), var(--highlight));
   --borders: #383838;
   --highlight: #32cd32e7;

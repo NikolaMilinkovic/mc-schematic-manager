@@ -1,19 +1,19 @@
 /* eslint-disable react/jsx-no-bind */
 import {
-  React, useRef, useState, useEffect,
+  React, useRef, useState, useEffect, useContext,
 } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import './navbar.scss';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import ProfileDropDown from './profileMenu/ProfileDropDown';
 
 function Navbar({ navActive, setNavActive, setSchematicsFilter }) {
-  const cookies = new Cookies();
-  const navigate = useNavigate();
   const navRef = useRef();
   const [prevScrollPos, setScrollPos] = useState(window.scrollY);
   const [transformY, setTransformY] = useState(0);
   const location = useLocation();
+  const [userData, setUserData] = useState();
 
   function filterSchematics(e) {
     setSchematicsFilter(e.target.value);
@@ -37,6 +37,10 @@ function Navbar({ navActive, setNavActive, setSchematicsFilter }) {
       setNavActive('upload-schematic');
     } else if (path === '/link') {
       setNavActive('link');
+    } else if (path === '/profile') {
+      setNavActive('profile');
+    } else if (path === '/collections') {
+      setNavActive('collection');
     } else {
       setNavActive('');
     }
@@ -44,6 +48,7 @@ function Navbar({ navActive, setNavActive, setSchematicsFilter }) {
 
   // Updates the active element
   function updateNav(event) {
+    console.log('Updating nav on click');
     if (event.target.name) {
       const { name } = event.target;
       setNavActive(name);
@@ -74,14 +79,6 @@ function Navbar({ navActive, setNavActive, setSchematicsFilter }) {
     navRef.current.classList.toggle('responsive_nav');
   };
 
-  // Remove the cookie and go to login page
-  function logOut(event) {
-    event.preventDefault();
-    cookies.remove('token');
-    sessionStorage.removeItem('hasLoaded'); // Clear the session-specific flag
-    navigate('/login');
-  }
-
   return (
     <header style={{ transform: `translateY(${transformY}px)` }}>
 
@@ -98,7 +95,17 @@ function Navbar({ navActive, setNavActive, setSchematicsFilter }) {
           name="home"
           to="/"
         >
-          Home
+          Browse
+        </Link>
+
+        {/* COLLECTIONS BUTTON */}
+        <Link
+          onClick={updateNav}
+          className={navActive === 'collections' ? 'nav-active' : ''}
+          name="collections"
+          to="/collections"
+        >
+          Collections
         </Link>
 
         {/* UPLOAD BUTTON */}
@@ -110,7 +117,8 @@ function Navbar({ navActive, setNavActive, setSchematicsFilter }) {
         >
           Upload schematic
         </Link>
-        <button type="button" className="log-out" onClick={logOut}>Log out</button>
+
+        <ProfileDropDown />
       </nav>
       <button type="button" className="nav-btn" onClick={showNavbar}>
         <FaBars />

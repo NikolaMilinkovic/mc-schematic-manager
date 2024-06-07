@@ -1,10 +1,11 @@
 /* eslint-disable no-nested-ternary */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './landing.scss';
 import Loading from '../loading/Loading';
 import DisplaySchematic from '../displaySchematic/DisplaySchematic';
 import { notifySuccess } from '../../util-components/Notifications';
 import customFetch from '../../../fetchMethod';
+import DraggableButton from '../DraggableButton/DraggableButton';
 
 function Landing({ schematicsFilter }) {
   const [schematics, setSchematics] = useState([]);
@@ -64,6 +65,9 @@ function Landing({ schematicsFilter }) {
               <Loading zIndex="1" text="Pedro stole all schematics..." />
             )}
       </div>
+      <DraggableButton
+        pathString="/upload-schematic"
+      />
     </div>
   );
 }
