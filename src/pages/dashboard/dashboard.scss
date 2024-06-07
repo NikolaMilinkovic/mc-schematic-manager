@@ -1,13 +1,11 @@
   @import url('../../global/colors.scss');
   @import url('../../global/global.scss');
 
-  body.dashboard-body{
-    background: var(--background-gradient);
-    animation: none;
+  .dashboard-body{
     position: relative;
-
     .background-overlay-dashboard{
-      position: absolute;
+      position: fixed;
+      display: flex;
       top: 0;
       left: 0;
       right: 0;
@@ -15,18 +13,21 @@
       background: rgba(0, 0, 0, 0.6); 
       z-index: 1;
     }
-    .login-background-image{
-      position: absolute;
-      z-index: 0;
-      display: flex;
-      width: 100vw;
-      height: 100vh;
-      top: 0;
-      left: 0;
-      overflow: hidden;
-      object-fit: cover;
-      transition: opacity 0.5s ease !important;
-    }
+  }
+
+  body.dashboard-body{
+    background: var(--background-gradient);
+    animation: none;
+    position: relative;
+
+    background-image: url('/img/jungle-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+
+
+
     .dashboard-container{
       position: relative;
       top: 0;

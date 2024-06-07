@@ -30,8 +30,8 @@ function Dashboard({ schematicsFilter }) {
       <div className="dashboard-container">
         <Landing schematicsFilter={schematicsFilter} />
       </div>
+
       <div className="background-overlay-dashboard" />
-      <img className="login-background-image" src={backgroundImage} alt="test" />
     </body>
   );
 }

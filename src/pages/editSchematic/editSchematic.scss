@@ -5,6 +5,12 @@ body{
   animation: none;
 }
 .edit-schematic-body{
-  background: var(--background-gradient);
+  // background: var(--background-gradient);
   animation: none;
+  position: relative;
+
+  background-image: url('/img/jungle-background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
