@@ -79,7 +79,6 @@ function ImgInputComponent({
           />
         </button>
       </div>
-
       <div
         className="image-container"
         onDrop={handleDrop}

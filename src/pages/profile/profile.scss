@@ -184,4 +184,11 @@ main.profile-content{
       padding-right: 0rem !important;
     }
   }
+
+  .stats-section{
+    .user-stats{
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
 }
