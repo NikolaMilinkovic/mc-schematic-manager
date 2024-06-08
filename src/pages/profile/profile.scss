@@ -161,6 +161,14 @@ main.profile-content{
         grid-template-columns: 1fr 0.5fr;
         width: 100%;
       }
+
+      .data-first,
+      .data-second{
+        display: flex;
+        flex-direction: column;
+        margin-left: auto;
+        align-self: end;
+      }
     }
   }
 

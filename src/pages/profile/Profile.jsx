@@ -288,30 +288,24 @@ function Profile() {
 
           <div className="right">
             <div className="labels-second">
-              <p>Number of schematics:</p>
-              <p>Number of collections:</p>
-              <p>Number of studio users:</p>
+              <p>Schematics:</p>
+              <p>Collections:</p>
+              <p>Studio users:</p>
             </div>
             <div className="data-second">
               {activeUser.schematics && (
               <p>
                 {activeUser.schematics.length}
-                {' '}
-                schematics
               </p>
               )}
               {activeUser.collections && (
               <p>
                 {activeUser.collections.length}
-                {' '}
-                collections
               </p>
               )}
               {activeUser.studio && (
               <p>
                 {activeUser.studio.users.length}
-                {' '}
-                users
               </p>
               )}
             </div>
