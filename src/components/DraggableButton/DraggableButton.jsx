@@ -43,62 +43,62 @@ function DraggableButton({ pathString }) {
   // Drag & Drop for mobile phones
   const buttonPositionRef = useRef({ x: 0, y: 0 });
 
-  useEffect(() => {
-    let startX = 0;
-    let startY = 0;
+  // useEffect(() => {
+  //   let startX = 0;
+  //   let startY = 0;
 
-    function onTouchStart(event) {
-      event.preventDefault();
-      const touch = event.touches[0];
-      startX = touch.clientX;
-      startY = touch.clientY;
-    }
+  //   function onTouchStart(event) {
+  //     event.preventDefault();
+  //     const touch = event.touches[0];
+  //     startX = touch.clientX;
+  //     startY = touch.clientY;
+  //   }
 
-    function onTouchMove(event) {
-      event.preventDefault();
-      if (buttonRef.current) {
-        const touch = event.touches[0];
-        const deltaX = touch.clientX - startX;
-        const deltaY = touch.clientY - startY;
-        const newTranslateX = buttonPositionRef.current.x + deltaX;
-        const newTranslateY = buttonPositionRef.current.y + deltaY;
-        buttonRef.current.style.transform = `translate(${newTranslateX}px, ${newTranslateY}px)`;
-      }
-    }
+  //   function onTouchMove(event) {
+  //     event.preventDefault();
+  //     if (buttonRef.current) {
+  //       const touch = event.touches[0];
+  //       const deltaX = touch.clientX - startX;
+  //       const deltaY = touch.clientY - startY;
+  //       const newTranslateX = buttonPositionRef.current.x + deltaX;
+  //       const newTranslateY = buttonPositionRef.current.y + deltaY;
+  //       buttonRef.current.style.transform = `translate(${newTranslateX}px, ${newTranslateY}px)`;
+  //     }
+  //   }
 
-    function onTouchEnd(event) {
-      if (buttonRef.current) {
-        buttonRef.current.style.transform = 'none';
-        const touch = event.changedTouches[0];
-        const targetField = document.elementFromPoint(touch.clientX, touch.clientY);
-        // Do something with targetField if needed
+  //   function onTouchEnd(event) {
+  //     if (buttonRef.current) {
+  //       buttonRef.current.style.transform = 'none';
+  //       const touch = event.changedTouches[0];
+  //       const targetField = document.elementFromPoint(touch.clientX, touch.clientY);
+  //       // Do something with targetField if needed
 
-        // Update the button position reference
-        const rect = buttonRef.current.getBoundingClientRect();
-        buttonPositionRef.current = {
-          x: rect.left,
-          y: rect.top,
-        };
-      }
-    }
+  //       // Update the button position reference
+  //       const rect = buttonRef.current.getBoundingClientRect();
+  //       buttonPositionRef.current = {
+  //         x: rect.left,
+  //         y: rect.top,
+  //       };
+  //     }
+  //   }
 
-    const button = buttonRef.current;
-    if (button) {
-      button.addEventListener('touchstart', onTouchStart);
-      button.addEventListener('touchmove', onTouchMove, { passive: false });
-      button.addEventListener('touchend', onTouchEnd);
-      // Add event listener for touch cancel if needed
-    }
+  //   const button = buttonRef.current;
+  //   if (button) {
+  //     button.addEventListener('touchstart', onTouchStart);
+  //     button.addEventListener('touchmove', onTouchMove, { passive: false });
+  //     button.addEventListener('touchend', onTouchEnd);
+  //     // Add event listener for touch cancel if needed
+  //   }
 
-    return () => {
-      if (button) {
-        button.removeEventListener('touchstart', onTouchStart);
-        button.removeEventListener('touchmove', onTouchMove, { passive: false });
-        button.removeEventListener('touchend', onTouchEnd);
-        // Remove event listener for touch cancel if added
-      }
-    };
-  }, []);
+  //   return () => {
+  //     if (button) {
+  //       button.removeEventListener('touchstart', onTouchStart);
+  //       button.removeEventListener('touchmove', onTouchMove, { passive: false });
+  //       button.removeEventListener('touchend', onTouchEnd);
+  //       // Remove event listener for touch cancel if added
+  //     }
+  //   };
+  // }, []);
 
   return (
     <div
