@@ -64,6 +64,7 @@ main.profile-content{
           user-select: none;
           -webkit-user-drag: none;
           cursor: pointer;
+          max-height: 350px;
 
           &:active{
             transform: scale(0.95);
@@ -177,6 +178,6 @@ main.profile-content{
 @media only screen and (max-width: 1024px) {
   // Unutrasnji div prve kartice / layout
   .avatar-information-section{
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
 }
