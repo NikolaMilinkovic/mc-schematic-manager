@@ -147,11 +147,6 @@ function Profile() {
       newFormData.append('studio_name', formData.studio_name);
       newFormData.append('new_password', formData.new_password);
 
-      // Log FormData before submission
-      for (const [key, value] of newFormData.entries()) {
-        console.log(`${key}: ${value}`);
-      }
-      console.log('> Sending POST request to update-profile');
       const response = await customFetch('/update-profile', 'POST', newFormData);
 
       if (response.status === 201 || response.status === 200) {
