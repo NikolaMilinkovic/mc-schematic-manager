@@ -42,7 +42,6 @@ function Profile() {
     const fetchUserData = async () => {
       try {
         const userData = await customFetch('/get-user-data', 'GET');
-        console.log(userData);
         handleSetActiveUser(userData);
       } catch (err) {
         console.error(err);
@@ -154,7 +153,7 @@ function Profile() {
       } else if (response.status === 304) {
         notifyError('Profile updated successfully!');
       } else {
-        console.log(response.message);
+        console.log('');
         if (response.message) {
           notifyError(response.message);
         } else {

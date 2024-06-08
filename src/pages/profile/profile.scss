@@ -179,5 +179,9 @@ main.profile-content{
   // Unutrasnji div prve kartice / layout
   .avatar-information-section{
     grid-template-columns: 1fr !important;
+
+    .profile-avatar-container{
+      padding-right: 0rem;
+    }
   }
 }
