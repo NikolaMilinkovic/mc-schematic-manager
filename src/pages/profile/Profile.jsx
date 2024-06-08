@@ -38,20 +38,6 @@ function Profile() {
   }
 
   useEffect(() => {
-    const dateString = activeUser.created_at;
-    const date = new Date(dateString);
-
-    const monthNames = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
-    ];
-
-    // Extract day, month, and year
-    const day = date.getDate().toString().padStart(2, '0');
-    const monthAbbreviation = monthNames[date.getMonth()];
-    const year = date.getFullYear();
-    const formattedDate = `${day}/${monthAbbreviation}/${year}`;
-    setJoinedAt(formattedDate);
     const fetchUserData = async () => {
       try {
         const userData = await customFetch('/get-user-data', 'GET');
@@ -76,6 +62,20 @@ function Profile() {
       new_password: '',
       repeat_new_password: '',
     });
+    const dateString = activeUser.created_at;
+    const date = new Date(dateString);
+
+    const monthNames = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+    ];
+
+    // Extract day, month, and year
+    const day = date.getDate().toString().padStart(2, '0');
+    const monthAbbreviation = monthNames[date.getMonth()];
+    const year = date.getFullYear();
+    const formattedDate = `${day}/${monthAbbreviation}/${year}`;
+    setJoinedAt(formattedDate);
   }, [activeUser]);
 
   function handleImageUpload(event) {
@@ -173,6 +173,7 @@ function Profile() {
   return (
     <main className="profile-content">
       <article className="user-profile-section">
+        <h2>Profile Section:</h2>
         <div className="avatar-information-section">
           <div className="profile-avatar-container">
             <img

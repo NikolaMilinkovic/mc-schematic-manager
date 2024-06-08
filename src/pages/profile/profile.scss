@@ -30,6 +30,12 @@ main.profile-content{
     z-index: 3;
     border-radius: 12px;
 
+    > h2 {
+      margin-bottom: 1rem;
+      display: flex;
+      width: 100%;
+    }
+
     // Unutrasnji div prve kartice / layout
     .avatar-information-section{
       display: grid;
@@ -46,7 +52,6 @@ main.profile-content{
         height: 100%;
         align-items: center;
         justify-content: center;
-        border-right: 2px solid var(--white);
         padding-right: 2rem;
 
         img{
