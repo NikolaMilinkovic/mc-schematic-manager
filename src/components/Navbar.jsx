@@ -87,7 +87,6 @@ function Navbar({ navActive, setNavActive, setSchematicsFilter }) {
         <button type="button" className="nav-btn nav-close-btn" onClick={showNavbar}>
           <FaTimes />
         </button>
-
         {/* HOME BUTTON */}
         <Link
           onClick={updateNav}
@@ -97,7 +96,6 @@ function Navbar({ navActive, setNavActive, setSchematicsFilter }) {
         >
           Browse
         </Link>
-
         {/* COLLECTIONS BUTTON */}
         <Link
           onClick={updateNav}
@@ -107,7 +105,6 @@ function Navbar({ navActive, setNavActive, setSchematicsFilter }) {
         >
           Collections
         </Link>
-
         {/* UPLOAD BUTTON */}
         <Link
           onClick={updateNav}
