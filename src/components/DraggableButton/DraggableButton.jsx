@@ -41,12 +41,11 @@ function DraggableButton({ pathString }) {
   }, []);
 
   // Drag & Drop for mobile phones
+  const buttonPositionRef = useRef({ x: 0, y: 0 });
+
   useEffect(() => {
-    const draggedEl = buttonRef.current;
     let startX = 0;
     let startY = 0;
-    let translateX = 0; // New variable to store horizontal translation
-    let translateY = 0; // New variable to store vertical translation
 
     function onTouchStart(event) {
       event.preventDefault();
@@ -57,37 +56,47 @@ function DraggableButton({ pathString }) {
 
     function onTouchMove(event) {
       event.preventDefault();
-      if (draggedEl) {
+      if (buttonRef.current) {
         const touch = event.touches[0];
         const deltaX = touch.clientX - startX;
         const deltaY = touch.clientY - startY;
-        translateX += deltaX; // Accumulate horizontal translation
-        translateY += deltaY; // Accumulate vertical translation
-        draggedEl.style.transform = `translate(${translateX}px, ${translateY}px)`;
-        startX = touch.clientX; // Update start X position
-        startY = touch.clientY; // Update start Y position
+        const newTranslateX = buttonPositionRef.current.x + deltaX;
+        const newTranslateY = buttonPositionRef.current.y + deltaY;
+        buttonRef.current.style.transform = `translate(${newTranslateX}px, ${newTranslateY}px)`;
       }
     }
 
     function onTouchEnd(event) {
-      if (draggedEl) {
+      if (buttonRef.current) {
+        buttonRef.current.style.transform = 'none';
         const touch = event.changedTouches[0];
-        // Note: Use translateX and translateY to set the final position
-        draggedEl.style.transform = `translate(${translateX}px, ${translateY}px)`;
-        // Reset translation variables for next interaction
-        translateX = 0;
-        translateY = 0;
+        const targetField = document.elementFromPoint(touch.clientX, touch.clientY);
+        // Do something with targetField if needed
+
+        // Update the button position reference
+        const rect = buttonRef.current.getBoundingClientRect();
+        buttonPositionRef.current = {
+          x: rect.left,
+          y: rect.top,
+        };
       }
     }
 
-    draggedEl.addEventListener('touchstart', onTouchStart);
-    window.addEventListener('touchmove', onTouchMove, { passive: false });
-    window.addEventListener('touchend', onTouchEnd);
+    const button = buttonRef.current;
+    if (button) {
+      button.addEventListener('touchstart', onTouchStart);
+      button.addEventListener('touchmove', onTouchMove, { passive: false });
+      button.addEventListener('touchend', onTouchEnd);
+      // Add event listener for touch cancel if needed
+    }
 
     return () => {
-      draggedEl.removeEventListener('touchstart', onTouchStart);
-      window.removeEventListener('touchmove', onTouchMove, { passive: false });
-      window.removeEventListener('touchend', onTouchEnd);
+      if (button) {
+        button.removeEventListener('touchstart', onTouchStart);
+        button.removeEventListener('touchmove', onTouchMove, { passive: false });
+        button.removeEventListener('touchend', onTouchEnd);
+        // Remove event listener for touch cancel if added
+      }
     };
   }, []);
 
