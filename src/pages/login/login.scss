@@ -1,7 +1,14 @@
 @import url('../../global/colors.scss');
 @import url('../../global/global.scss');
 
-body{
+body.login-body{
+  position: relative;
+
+  background-image: url('/img/login-background-1920x1080.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+
   .login-background-image{
     position: absolute;
     z-index: 1;

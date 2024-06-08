@@ -207,7 +207,7 @@ function EditSchematic() {
   };
 
   return (
-    <body className="edit-schematic-body" onDrop={handleDrop} onDragOver={(event) => event.preventDefault()} onPaste={handlePaste}>
+    <div className="edit-schematic-div" onDrop={handleDrop} onDragOver={(event) => event.preventDefault()} onPaste={handlePaste}>
       <div className="upload-schematic-content">
         <form id="upload-form" onSubmit={updateSchematic}>
           <h1>Edit Schematic</h1>
@@ -241,7 +241,8 @@ function EditSchematic() {
           <button className="submit-btn" type="submit">Update Schematic</button>
         </form>
       </div>
-    </body>
+      <div className="background-overlay" />
+    </div>
   );
 }
 

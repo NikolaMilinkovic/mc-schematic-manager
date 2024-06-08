@@ -28,10 +28,17 @@ function Register() {
 
   function onChange(event) {
     const { name, value } = event.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    if (name === 'email') {
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: value.toLowerCase(),
+      }));
+    } else {
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
   }
 
   useEffect(() => {
@@ -97,7 +104,7 @@ function Register() {
   }
 
   return (
-    <>
+    <body className="register-body">
       {success && (
         <div className="modal">
           <div className="success-message-container">
@@ -165,9 +172,8 @@ function Register() {
 
       </form>
       <p className="copyright">©2024 Gold Studios, All right reserved.</p>
-      <img className="login-background-image" src="\img\login-background-1920x1080.jpg" alt="test" />
       <div className="background-overlay" />
-    </>
+    </body>
   );
 }
 

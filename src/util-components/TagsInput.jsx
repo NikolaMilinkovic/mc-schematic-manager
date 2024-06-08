@@ -61,6 +61,7 @@ function FormInput({
       if (tags.includes(input)) return;
       setTags((prevTags) => [input, ...prevTags]);
       setInput('');
+      setSpanValue('');
     }
     tagInput.focus();
   }

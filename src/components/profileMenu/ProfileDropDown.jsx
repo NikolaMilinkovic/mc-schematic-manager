@@ -7,6 +7,8 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { UserContext } from '../../../UserContext';
 
+const apiUrl = import.meta.env.VITE_BACKEND_URL;
+
 function ProfileDropDown() {
   const cookies = new Cookies();
   const navigate = useNavigate();
@@ -45,11 +47,17 @@ function ProfileDropDown() {
   }
 
   // Remove the cookie and go to login page
-  function logOut(event) {
-    event.preventDefault();
-    cookies.remove('token');
-    sessionStorage.removeItem('hasLoaded'); // Clear the session-specific flag
-    navigate('/login');
+  async function logOut(event) {
+    try {
+      event.preventDefault();
+      cookies.remove('token', { path: '/' });
+      sessionStorage.removeItem('hasLoaded');
+      // const response = await fetch(`${apiUrl}/logout`);
+      // console.log(response);
+      navigate('/login');
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
@@ -65,7 +73,7 @@ function ProfileDropDown() {
       </button>
 
       <ul className={`${dropdownState} dropdown-container`} ref={dropdownRef}>
-        <Link to="/profile">
+        <Link to={`/profile/${activeUser._id}`}>
           <li>
             <span className="">
               Profile

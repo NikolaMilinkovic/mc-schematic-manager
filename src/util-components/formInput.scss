@@ -23,5 +23,5 @@
 
 }
 .input-group:focus-within > label{
-  color: var(--highlight);
+  color: var(--highlight) !important;
 }

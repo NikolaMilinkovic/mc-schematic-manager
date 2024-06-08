@@ -4,13 +4,29 @@
 body{
   animation: none;
 }
-.edit-schematic-body{
-  // background: var(--background-gradient);
+.edit-schematic-div{
   animation: none;
   position: relative;
+  overflow: hidden;
+  position: relative;
+  min-width: 100vw;
+  min-height: 100vh;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   background-image: url('/img/jungle-background.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  .background-overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.25) !important; 
+    z-index: 2;
+  }
 }

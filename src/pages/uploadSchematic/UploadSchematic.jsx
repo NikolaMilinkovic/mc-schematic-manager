@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import FileInput from '../../util-components/fileInputComponent/FileInputComponent';
 import ImgInputComponent from '../../util-components/imgInputComponent/ImgInputComponent';
 import customFetch from '../../../fetchMethod';
+import imageCompressor from '../../../util-methods/imageCompressor';
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -33,7 +34,6 @@ function UploadSchematic() {
   const imgInputRef = useRef(null);
   const [imgKey, setImgKey] = useState('');
   const [fileInputLabel, setFileInputLabel] = useState('Click to Upload Schematic');
-  const [backgroundImage, setBackgroundImage] = useState('');
 
   // Rerenders file input text using reducer method
   function handleReset() {
@@ -95,9 +95,13 @@ function UploadSchematic() {
       });
 
       try {
-        const imageBase64 = await setFileToBase64(image);
+        let compressedImage;
+        if (image) {
+          compressedImage = await imageCompressor(imgInput.files[0]);
+          const imageBase64 = await setFileToBase64(compressedImage);
+          formData.append('image', imageBase64);
+        }
         formData.append('schematicFile', file);
-        formData.append('image', imageBase64);
         formData.append('tags', tags.join(','));
         formData.append('schematicName', schematicName);
 

@@ -2,7 +2,7 @@ import Cookies from 'universal-cookie';
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
-async function customFetch(url, method, body, headers = {}) {
+async function customFetch(url, method, formData, headers = {}) {
   try {
     const cookies = new Cookies(null, { path: '/' });
     const token = cookies.get('token');
@@ -16,7 +16,7 @@ async function customFetch(url, method, body, headers = {}) {
     const response = await fetch(`${apiUrl}${url}`, {
       method,
       headers: mergedHeaders,
-      body,
+      body: formData, // Pass the FormData object directly
     });
 
     if (response.status === 401) {

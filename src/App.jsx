@@ -5,6 +5,7 @@ import { ToastContainer, Bounce } from 'react-toastify';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import Dashboard from './pages/dashboard/Dashboard';
+import Profile from './pages/profile/Profile';
 import ProtectedAuth from './pages/auth/ProtectedAuth';
 import Error401 from './errors/Error401';
 import Error403 from './errors/Error403';
@@ -56,13 +57,21 @@ function App() {
               </ProtectedAuth>
         )}
           />
-          {/* <Route path="/edit-schematic/:id" element={<EditSchematic />} /> */}
           <Route
             path="/edit-schematic/:id"
             element={(
               <ProtectedAuth>
                 <Navbar navActive={navActive} setNavActive={setNavActive} />
                 <EditSchematic />
+              </ProtectedAuth>
+        )}
+          />
+          <Route
+            path="/profile/:id"
+            element={(
+              <ProtectedAuth>
+                <Navbar navActive={navActive} setNavActive={setNavActive} />
+                <Profile />
               </ProtectedAuth>
         )}
           />

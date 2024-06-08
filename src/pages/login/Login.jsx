@@ -64,8 +64,12 @@ function Login() {
         if (data && data.token) {
           cookies.set('token', data.token, { path: '/', maxAge: 365 * 24 * 60 * 60 });
 
+          console.log(data.user);
           handleSetActiveUser(data.user);
-          navigate('/');
+
+          setTimeout(() => {
+            navigate('/');
+          }, 1000);
         }
       })
       .catch((err) => {
@@ -75,7 +79,7 @@ function Login() {
   }
 
   return (
-    <>
+    <body className="login-body">
       <form method="POST" action="" className="login-form" onSubmit={loginUser}>
         <h1 className="hero-text">LogIn</h1>
         <FormInput
@@ -112,9 +116,8 @@ function Login() {
 
       </form>
       <p className="copyright">©2024 Gold Studios, All right reserved.</p>
-      <img className="login-background-image" src="\img\login-background-1920x1080.jpg" alt="test" />
       <div className="background-overlay" />
-    </>
+    </body>
   );
 }
 

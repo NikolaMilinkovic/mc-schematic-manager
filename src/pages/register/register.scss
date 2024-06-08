@@ -1,7 +1,7 @@
 @import url('../../global/colors.scss');
 @import url('../../global/global.scss');
 
-body{
+body.register-body{
   overflow: hidden;
   position: relative;
   min-width: 100vw;
@@ -13,6 +13,13 @@ body{
   animation: fadeInAnimation ease 1.8s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
+
+  position: relative;
+
+  background-image: url('/img/login-background-1920x1080.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 
   .modal{
     position: absolute;
