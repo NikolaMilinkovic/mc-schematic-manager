@@ -293,9 +293,27 @@ function Profile() {
               <p>Number of studio users:</p>
             </div>
             <div className="data-second">
-              {activeUser.schematics && <p>{activeUser.schematics.length}</p>}
-              {activeUser.collections && <p>{activeUser.collections.length}</p>}
-              {activeUser.studio && <p>{activeUser.studio.users.length}</p>}
+              {activeUser.schematics && (
+              <p>
+                {activeUser.schematics.length}
+                {' '}
+                schematics
+              </p>
+              )}
+              {activeUser.collections && (
+              <p>
+                {activeUser.collections.length}
+                {' '}
+                collections
+              </p>
+              )}
+              {activeUser.studio && (
+              <p>
+                {activeUser.studio.users.length}
+                {' '}
+                users
+              </p>
+              )}
             </div>
           </div>
 

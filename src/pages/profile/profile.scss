@@ -187,8 +187,8 @@ main.profile-content{
 
   .stats-section{
     .user-stats{
-      grid-template-columns: 1fr;
-      gap: 2rem;
+      grid-template-columns: 1fr !important;
+      gap: 0rem !important;
     }
   }
 }
