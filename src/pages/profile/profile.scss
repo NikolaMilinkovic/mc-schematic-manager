@@ -53,6 +53,7 @@ main.profile-content{
         align-items: center;
         justify-content: center;
         padding-right: 2rem;
+        
 
         img{
           align-self: center;
@@ -65,6 +66,7 @@ main.profile-content{
           -webkit-user-drag: none;
           cursor: pointer;
           max-height: 350px;
+          border-radius: 8px;
 
           &:active{
             transform: scale(0.95);
@@ -79,6 +81,7 @@ main.profile-content{
           background-color: var(--highlight);
           padding: 1rem;
           cursor: pointer;
+          border-radius: 8px;
 
           &:hover{
             background-color: var(--highlight-hover);
@@ -115,6 +118,7 @@ main.profile-content{
         padding: 1rem;
         border: none;
         cursor: pointer;
+        border-radius: 8px;
 
         &:hover{
           background-color: var(--highlight-hover);
@@ -125,6 +129,7 @@ main.profile-content{
       }
     }
   }
+  
   .stats-section{
     display: flex;
     flex-direction: column;
@@ -167,7 +172,7 @@ main.profile-content{
         display: flex;
         flex-direction: column;
         margin-left: auto;
-        align-self: end;
+        text-align: end;
       }
     }
   }
@@ -180,6 +185,46 @@ main.profile-content{
     bottom: 0;
     background: rgba(0, 0, 0, 0.2) !important; 
     z-index: 2;
+  }
+
+  .studio-section{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: fit-content;
+    align-self: center;
+    max-width: 800px;
+    margin-top: 2rem;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 2rem;
+    z-index: 3;
+    border-radius: 12px;
+
+    > h2 {
+      margin-bottom: 1.5rem;
+    }
+
+    .button-container{
+      display: flex;
+      width: 100%;
+      justify-content: end;
+      margin-top: 2rem;
+
+      button{
+        background-color: var(--highlight);
+        padding: 1rem;
+        border: none;
+        cursor: pointer;
+        border-radius: 8px;
+        
+        &:hover{
+          background-color: var(--highlight-hover);
+        }
+        &:active{
+          transform: scale(0.95);
+        }
+      }
+    }
   }
 }
 

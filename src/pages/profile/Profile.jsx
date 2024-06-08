@@ -13,6 +13,8 @@ import { UserContext } from '../../../UserContext';
 import customFetch from '../../../fetchMethod';
 import { notifySuccess, notifyError, notifyInfo } from '../../util-components/Notifications';
 import imageCompressor from '../../../util-methods/imageCompressor';
+import Checkbox from '../../util-components/checkbox/Checkbox';
+import StudioUsersManager from '../../util-components/studioUsersManager/StudioUsersManager';
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -167,6 +169,8 @@ function Profile() {
 
   return (
     <main className="profile-content">
+
+      {/* PROFILE CARD */}
       <article className="user-profile-section">
         <h2>Profile Section:</h2>
         <div className="avatar-information-section">
@@ -267,9 +271,22 @@ function Profile() {
         <div className="button-container">
           <button type="button" onClick={(e) => updateProfile(e)}>Update Profile</button>
         </div>
-
       </article>
 
+      {/* STUDIO CARD */}
+      <article className="studio-section">
+
+        {activeUser.studio && (
+        <h2>
+          {activeUser.studio.name}
+          {' '}
+          user manager
+        </h2>
+        )}
+        <StudioUsersManager />
+      </article>
+
+      {/* STATISTICS CARD */}
       <article className="stats-section">
         <h2>
           User Statistics:
@@ -310,7 +327,6 @@ function Profile() {
               )}
             </div>
           </div>
-
         </section>
       </article>
       <div className="background-overlay" />

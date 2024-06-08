@@ -1,0 +1,45 @@
+@import url('../../global/colors.scss');
+@import url('../../global/global.scss');
+
+.checkbox-container{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+
+  &:hover{
+    cursor: pointer;
+  }
+  &:hover > .label-checked{
+    color: var(--highlight-hover) !important;
+    cursor: pointer;
+  }
+  &:hover > .label-unchecked{
+    color: var(--text-grayed) !important;
+    cursor: pointer;
+  }
+  &:hover > *{
+    cursor: pointer;
+  }
+
+  .checkbox{
+    display: flex;
+    margin-left: auto;
+  }
+  .label-checked{
+    color: var(--highlight);
+    &:hover{
+      color: var(--highlight-hover);
+    }
+  }
+  .label-unchecked{
+    color: var(--secondary);
+    &:hover{
+      color: var(--text-grayed);
+    }
+  }
+  label{
+    user-select: none;
+  }
+}

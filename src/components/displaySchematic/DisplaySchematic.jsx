@@ -1,15 +1,17 @@
 /* eslint-disable react/prop-types */
 import {
-  React, useState, useEffect,
+  React, useState, useEffect, useContext,
 } from 'react';
 import './displaySchematic.scss';
 import { ToastContainer, Bounce } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { notifySuccess, notifyError, notifyInfo } from '../../util-components/Notifications';
 import customFetch from '../../../fetchMethod';
+import { UserContext } from '../../../UserContext';
 
 function DisplaySchematic({ schematic, index, popSchematic }) {
   const [getButtonState, setGetButtonState] = useState(false);
+  const { activeUser, handleSetActiveUser } = useContext(UserContext);
 
   async function downloadSchematic(event) {
     const id = event.target.name;
@@ -91,7 +93,7 @@ function DisplaySchematic({ schematic, index, popSchematic }) {
           </button>
 
           <button type="button" onClick={downloadSchematic} name={schematic._id}>Download</button>
-          <button type="button" onClick={removeSchematic} className="remove-button" name={schematic._id}>Remove</button>
+          {activeUser.role === 'owner' && <button type="button" onClick={removeSchematic} className="remove-button" name={schematic._id}>Remove</button>}
         </div>
       </div>
     </article>
