@@ -69,7 +69,7 @@ function DraggableButton({ pathString }) {
       }
     }
 
-    buttonRef.addEventListener('touchstart', onTouchStart);
+    draggedEl.addEventListener('touchstart', onTouchStart);
     window.addEventListener('touchmove', onTouchMove, { passive: false });
     window.addEventListener('touchend', onTouchEnd);
 
