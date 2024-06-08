@@ -45,6 +45,8 @@ function DraggableButton({ pathString }) {
     const draggedEl = buttonRef.current;
     let startX = 0;
     let startY = 0;
+    let translateX = 0; // New variable to store horizontal translation
+    let translateY = 0; // New variable to store vertical translation
 
     function onTouchStart(event) {
       event.preventDefault();
@@ -52,20 +54,29 @@ function DraggableButton({ pathString }) {
       startX = touch.clientX;
       startY = touch.clientY;
     }
+
     function onTouchMove(event) {
       event.preventDefault();
       if (draggedEl) {
         const touch = event.touches[0];
         const deltaX = touch.clientX - startX;
         const deltaY = touch.clientY - startY;
-        draggedEl.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+        translateX += deltaX; // Accumulate horizontal translation
+        translateY += deltaY; // Accumulate vertical translation
+        draggedEl.style.transform = `translate(${translateX}px, ${translateY}px)`;
+        startX = touch.clientX; // Update start X position
+        startY = touch.clientY; // Update start Y position
       }
     }
+
     function onTouchEnd(event) {
       if (draggedEl) {
-        draggedEl.style.transform = 'none';
         const touch = event.changedTouches[0];
-        const targetField = window.elementFromPoint(touch.clientX, touch.clientY);
+        // Note: Use translateX and translateY to set the final position
+        draggedEl.style.transform = `translate(${translateX}px, ${translateY}px)`;
+        // Reset translation variables for next interaction
+        translateX = 0;
+        translateY = 0;
       }
     }
 
@@ -74,7 +85,7 @@ function DraggableButton({ pathString }) {
     window.addEventListener('touchend', onTouchEnd);
 
     return () => {
-      buttonRef.removeEventListener('touchstart', onTouchStart);
+      draggedEl.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('touchmove', onTouchMove, { passive: false });
       window.removeEventListener('touchend', onTouchEnd);
     };
