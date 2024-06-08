@@ -40,6 +40,46 @@ function DraggableButton({ pathString }) {
     };
   }, []);
 
+  // Drag & Drop for mobile phones
+  useEffect(() => {
+    const draggedEl = buttonRef.current;
+    let startX = 0;
+    let startY = 0;
+
+    function onTouchStart(event) {
+      event.preventDefault();
+      const touch = event.touches[0];
+      startX = touch.clientX;
+      startY = touch.clientY;
+    }
+    function onTouchMove(event) {
+      event.preventDefault();
+      if (draggedEl) {
+        const touch = event.touches[0];
+        const deltaX = touch.clientX - startX;
+        const deltaY = touch.clientY - startY;
+        draggedEl.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+      }
+    }
+    function onTouchEnd(event) {
+      if (draggedEl) {
+        draggedEl.style.transform = 'none';
+        const touch = event.changedTouches[0];
+        const targetField = window.elementFromPoint(touch.clientX, touch.clientY);
+      }
+    }
+
+    buttonRef.addEventListener('touchstart', onTouchStart);
+    window.addEventListener('touchmove', onTouchMove, { passive: false });
+    window.addEventListener('touchend', onTouchEnd);
+
+    return () => {
+      buttonRef.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchmove', onTouchMove, { passive: false });
+      window.removeEventListener('touchend', onTouchEnd);
+    };
+  }, []);
+
   return (
     <div
       className="plus-button"
