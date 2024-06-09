@@ -4,6 +4,7 @@ import './loading.scss';
 function Loading({ zIndex, text = 'Loading...' }) {
   return (
     <div className="load-gif-container" style={{ zIndex }}>
+      <div className="loading-background-overlay" />
       <div className="gif-container">
         <img className="load-gif" src="\gif\pedro.webp" alt="test" />
       </div>
