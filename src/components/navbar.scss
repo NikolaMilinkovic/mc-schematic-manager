@@ -118,10 +118,11 @@ header{
       display: flex;
       align-items: center;
       flex-direction: column;
-      justify-content: center;
+      justify-content: start;
       transition: 0.4s;
-      transform: translateX(-100vh);
+      transform: translateX(-110vh);
       padding: 0rem 4rem;
+      padding-top: 10vh;
       gap: 1rem;
 
       input{
