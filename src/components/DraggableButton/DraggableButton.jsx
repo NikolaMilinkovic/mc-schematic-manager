@@ -38,8 +38,8 @@ function DraggableButton({ pathString }) {
         buttonRef.current.style.left = `calc(${window.innerWidth}px - 100px)`;
       }
       if (window.innerWidth < 550) {
-        buttonRef.current.style.top = `calc(${window.innerHeight}px - 50px)`;
-        buttonRef.current.style.left = `calc(${window.innerWidth}px - 50px)`;
+        buttonRef.current.style.top = `calc(${window.innerHeight}px - 85px)`;
+        buttonRef.current.style.left = `calc(${window.innerWidth}px - 85px)`;
       }
     };
 
