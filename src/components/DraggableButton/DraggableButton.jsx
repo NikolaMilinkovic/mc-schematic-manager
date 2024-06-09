@@ -29,8 +29,18 @@ function DraggableButton({ pathString }) {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
       setScreenHeight(window.innerHeight);
-      buttonRef.current.style.top = `calc(${window.innerHeight}px - 150px)`;
-      buttonRef.current.style.left = `calc(${window.innerWidth}px - 150px)`;
+      if (window.innerWidth > 800) {
+        buttonRef.current.style.top = `calc(${window.innerHeight}px - 150px)`;
+        buttonRef.current.style.left = `calc(${window.innerWidth}px - 150px)`;
+      }
+      if (window.innerWidth > 550 && window.innerWidth < 800) {
+        buttonRef.current.style.top = `calc(${window.innerHeight}px - 100px)`;
+        buttonRef.current.style.left = `calc(${window.innerWidth}px - 100px)`;
+      }
+      if (window.innerWidth < 550) {
+        buttonRef.current.style.top = `calc(${window.innerHeight}px - 50px)`;
+        buttonRef.current.style.left = `calc(${window.innerWidth}px - 50px)`;
+      }
     };
 
     window.addEventListener('resize', handleResize);
