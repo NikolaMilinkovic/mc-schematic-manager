@@ -4,7 +4,6 @@ import {
 import './dashboard.scss';
 import Loading from '../../components/loading/Loading';
 import Landing from '../../components/landing/Landing';
-import customFetch from '../../../fetchMethod';
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 

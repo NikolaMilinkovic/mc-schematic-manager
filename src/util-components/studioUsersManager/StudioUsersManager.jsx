@@ -10,6 +10,12 @@ function StudioUsersManager() {
   const { activeUser, handleSetActiveUser } = useContext(UserContext);
   const [allStudioUsers, setAllStudioUsers] = useState();
 
+  useEffect(() => {
+    console.log('LOGGING ALL STUDIO USERS:');
+    console.log(allStudioUsers);
+  }, [allStudioUsers]);
+
+  // Handles input change
   function onChange(event) {
     const { name, value } = event.target;
     const customId = event.target.getAttribute('data-custom-id');
@@ -23,6 +29,58 @@ function StudioUsersManager() {
     const updatedUser = {
       ...allStudioUsers[userIndex],
       [name]: value,
+    };
+
+    const updatedUsers = [
+      ...allStudioUsers.slice(0, userIndex),
+      updatedUser,
+      ...allStudioUsers.slice(userIndex + 1),
+    ];
+    setAllStudioUsers(updatedUsers);
+  }
+  // Handles delete button
+  function removeUser(event) {
+    // Get Custom Id from element
+    const customId = event.target.getAttribute('data-custom-id');
+    // Find index in allStudioUsers arr
+    const userIndex = allStudioUsers.findIndex((user) => user.custom_id === customId);
+
+    if (userIndex === -1) {
+      console.error(`User with custom_id ${customId} not found`);
+      return;
+    }
+
+    // Remove that index from array
+    const updatedUsers = [
+      ...allStudioUsers.slice(0, userIndex),
+      ...allStudioUsers.slice(userIndex + 1),
+    ];
+    // Update users
+    setAllStudioUsers(updatedUsers);
+  }
+  // Handles checkbox onChange
+  function handleCheckboxChange(event, checkState) {
+    // Get Custom Id from element
+    const customId = event.target.getAttribute('data-custom-id');
+    const permission = event.target.getAttribute('data-permission');
+    const category = event.target.getAttribute('data-category');
+
+    // Find index in allStudioUsers arr
+    const userIndex = allStudioUsers.findIndex((user) => user.custom_id === customId);
+
+    if (userIndex === -1) {
+      console.error(`User with custom_id ${customId} not found`);
+    }
+
+    const updatedUser = {
+      ...allStudioUsers[userIndex],
+      permissions: {
+        ...allStudioUsers[userIndex].permissions,
+        [category]: {
+          ...allStudioUsers[userIndex].permissions[category],
+          [permission]: checkState,
+        },
+      },
     };
 
     const updatedUsers = [
@@ -92,6 +150,28 @@ function StudioUsersManager() {
     setAllStudioUsers((prev) => [...prev, defaultUserData]);
   }
 
+  // if (activeUser !== undefined) {
+  //   const getAllStudioUsers = async () => {
+  //     const allStudioUsers = await customFetch('/get-all-studio-users', 'GET');
+  //     if (allStudioUsers && allStudioUsers.studio && allStudioUsers.studio.users && allStudioUsers.studio.users.length !== 0) {
+  //       setAllStudioUsers(allStudioUsers.studio.users);
+  //     } else {
+  //       setAllStudioUsers([defaultUserData]);
+  //     }
+  //   };
+  //   getAllStudioUsers();
+  // }
+
+  async function updateUsers() {
+    const allStudioUsersJSON = JSON.stringify(allStudioUsers);
+
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    const response = await customFetch('/update-studio-users', 'POST', allStudioUsersJSON, headers);
+  }
+
   return (
     <div className="studio-users-wrapper">
       <div className="studio-users-manager-container">
@@ -102,6 +182,8 @@ function StudioUsersManager() {
                 users={allStudioUsers}
                 parentId={activeUser._id}
                 updateUserInput={(e) => onChange(e)}
+                removeUser={(e) => removeUser(e)}
+                handleCheckboxChange={handleCheckboxChange}
               />
             )
             : (
@@ -114,7 +196,7 @@ function StudioUsersManager() {
       </div>
       <div className="button-container">
         <button type="button" onClick={addNewStudioUser}>Add New</button>
-        <button type="button">Save All</button>
+        <button type="button" onClick={updateUsers}>Save All</button>
       </div>
     </div>
   );

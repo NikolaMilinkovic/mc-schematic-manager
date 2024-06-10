@@ -6,7 +6,9 @@ import Checkbox from '../../checkbox/Checkbox';
 import UserPermissions from '../userPermissions/UserPermissions';
 import UserInputDisplay from './UserInputDisplay';
 
-function StudioUserInput({ users, parentId, updateUserInput }) {
+function StudioUserInput({
+  users, parentId, updateUserInput, removeUser, handleCheckboxChange,
+}) {
   return (
     <div>
       {users && users.map((user, index) => (
@@ -15,6 +17,8 @@ function StudioUserInput({ users, parentId, updateUserInput }) {
           user={user}
           index={index}
           updateUserInput={updateUserInput}
+          removeUser={removeUser}
+          handleCheckboxChange={handleCheckboxChange}
         />
       ))}
     </div>

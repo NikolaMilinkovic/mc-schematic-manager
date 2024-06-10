@@ -93,7 +93,7 @@ function DisplaySchematic({ schematic, index, popSchematic }) {
           </button>
 
           <button type="button" onClick={downloadSchematic} name={schematic._id}>Download</button>
-          {activeUser.role === 'owner' && <button type="button" onClick={removeSchematic} className="remove-button" name={schematic._id}>Remove</button>}
+          {activeUser && activeUser.permissions.schematic.remove_schematic === true && <button type="button" onClick={removeSchematic} className="remove-button" name={schematic._id}>Remove</button>}
         </div>
       </div>
     </article>

@@ -6,7 +6,9 @@ import Checkbox from '../../checkbox/Checkbox';
 import UserPermissions from '../userPermissions/UserPermissions';
 import StudioUserInput from './StudioUserInput';
 
-function UserInputDisplay({ user, index, updateUserInput }) {
+function UserInputDisplay({
+  user, index, updateUserInput, removeUser, handleCheckboxChange,
+}) {
   const [permissionsState, setPermissionsState] = useState('closed');
   const [arrowState, setArrowState] = useState('rotateX(0deg)');
 
@@ -35,7 +37,14 @@ function UserInputDisplay({ user, index, updateUserInput }) {
             {user.username}
           </h3>
         </button>
-        <button className="remove-user-button">DELETE</button>
+        <button
+          className="remove-user-button"
+          onClick={(e) => removeUser(e)}
+          type="button"
+          data-custom-id={user.custom_id}
+        >
+          DELETE
+        </button>
       </div>
       {permissionsState === 'open' && (
         <div>
@@ -67,7 +76,10 @@ function UserInputDisplay({ user, index, updateUserInput }) {
               labelColor={{ color: 'var(--text-grayed)' }}
             />
           </div>
-          <UserPermissions user={user} />
+          <UserPermissions
+            user={user}
+            handleCheckboxChange={handleCheckboxChange}
+          />
         </div>
       )}
     </div>

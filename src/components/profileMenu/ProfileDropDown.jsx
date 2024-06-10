@@ -52,8 +52,7 @@ function ProfileDropDown() {
       event.preventDefault();
       cookies.remove('token', { path: '/' });
       sessionStorage.removeItem('hasLoaded');
-      // const response = await fetch(`${apiUrl}/logout`);
-      // console.log(response);
+      localStorage.removeItem('activeUser');
       navigate('/login');
     } catch (err) {
       console.log(err);

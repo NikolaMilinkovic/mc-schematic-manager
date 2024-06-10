@@ -57,3 +57,18 @@
     background-color: var(--background);
   }
 }
+
+@media only screen and (max-width: 800px) {
+  .user-container{    
+    .permissions-section{
+      grid-template-columns: 1fr 1fr !important;
+    }
+  }
+}
+@media only screen and (max-width: 550px) {
+  .user-container{    
+    .permissions-section{
+      grid-template-columns: 1fr !important;
+    }
+  }
+}

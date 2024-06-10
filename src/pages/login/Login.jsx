@@ -15,10 +15,14 @@ function Login() {
 
   useEffect(() => {
     const token = cookies.get('token');
+    const storedUser = localStorage.getItem('activeUser');
+    if (storedUser) {
+      localStorage.removeItem('activeUser');
+    }
     if (token) {
       navigate('/');
     }
-  }, []);
+  }, [cookies, navigate]);
 
   const [formData, setFormData] = useState({
     username: '',
@@ -63,9 +67,8 @@ function Login() {
       .then((data) => {
         if (data && data.token) {
           cookies.set('token', data.token, { path: '/', maxAge: 365 * 24 * 60 * 60 });
-
-          console.log(data.user);
           handleSetActiveUser(data.user);
+          localStorage.setItem('activeUser', JSON.stringify(data.user));
 
           setTimeout(() => {
             navigate('/');

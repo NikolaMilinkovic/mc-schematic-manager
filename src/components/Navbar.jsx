@@ -4,8 +4,7 @@ import {
 } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import './navbar.scss';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import Cookies from 'universal-cookie';
+import { Link, useLocation } from 'react-router-dom';
 import ProfileDropDown from './profileMenu/ProfileDropDown';
 
 function Navbar({ navActive, setNavActive, setSchematicsFilter }) {

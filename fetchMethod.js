@@ -16,7 +16,7 @@ async function customFetch(url, method, formData, headers = {}) {
     const response = await fetch(`${apiUrl}${url}`, {
       method,
       headers: mergedHeaders,
-      body: formData, // Pass the FormData object directly
+      body: formData,
     });
 
     if (response.status === 401) {
