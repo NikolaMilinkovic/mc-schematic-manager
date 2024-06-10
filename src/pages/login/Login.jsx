@@ -15,10 +15,10 @@ function Login() {
 
   useEffect(() => {
     const token = cookies.get('token');
-    const storedUser = localStorage.getItem('activeUser');
-    if (storedUser) {
-      localStorage.removeItem('activeUser');
-    }
+    // const storedUser = localStorage.getItem('activeUser');
+    // if (storedUser) {
+    //   localStorage.removeItem('activeUser');
+    // }
     if (token) {
       navigate('/');
     }
