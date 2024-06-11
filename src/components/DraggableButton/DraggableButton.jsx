@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './draggableButton.scss';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
-function DraggableButton({ pathString }) {
+function DraggableButton({ pathString, onClick }) {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
   const buttonRef = useRef();
@@ -110,11 +110,15 @@ function DraggableButton({ pathString }) {
   //   };
   // }, []);
 
+  function onClickPlaceholder() {
+
+  }
   return (
     <div
       className="plus-button"
       ref={buttonRef}
       draggable
+      onClick={onClick || onClickPlaceholder}
     >
       <Link
         to={pathString}

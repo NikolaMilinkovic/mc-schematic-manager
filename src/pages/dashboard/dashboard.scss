@@ -2,7 +2,6 @@
   @import url('../../global/global.scss');
 
   .dashboard-body{
-    position: relative;
     .background-overlay-dashboard{
       position: fixed;
       display: flex;
@@ -17,8 +16,9 @@
 
   body.dashboard-body{
     background: var(--background-gradient);
-    animation: none;
     position: relative;
+    min-width: 100vw;
+    min-height: 100vh;
 
     background-image: url('/img/jungle-background.jpg');
     background-size: cover;
@@ -26,11 +26,11 @@
     background-attachment: fixed;
 
     .dashboard-container{
-      position: relative;
+      position: absolute;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
+      min-width: 100vw;
+      min-height: 100vh;
       z-index: 2;
     }
   }

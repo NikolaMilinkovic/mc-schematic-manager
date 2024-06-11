@@ -3,17 +3,13 @@
 
 .landing-content{
   display: grid;
-  // grid-template-rows:  1fr; //0.135fr
   position: relative;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
   box-sizing: border-box;
   padding-top: 80px;
-
-    
-
 
   .options-section{
     display: flex;

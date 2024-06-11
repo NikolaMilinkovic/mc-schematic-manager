@@ -42,9 +42,6 @@ function Profile() {
       }
     }
   }
-  useEffect(() => {
-    console.log(studioOwner);
-  }, [studioOwner]);
 
   function onChange(event) {
     const { name, value } = event.target;

@@ -1,16 +1,16 @@
 import React, {
   useEffect, useState, useRef, useReducer,
 } from 'react';
-import './uploadSchematic.scss';
+import './uploadSchematicPopup.scss';
 import { v4 as uuid } from 'uuid';
-import { notifySuccess, notifyError, notifyInfo } from '../../util-components/Notifications';
-import TagsInput from '../../util-components/TagsInput';
-import FormInput from '../../util-components/FormInput';
+import { notifySuccess, notifyError, notifyInfo } from '../../../util-components/Notifications';
+import TagsInput from '../../../util-components/TagsInput';
+import FormInput from '../../../util-components/FormInput';
 import 'react-toastify/dist/ReactToastify.css';
-import FileInput from '../../util-components/fileInputComponent/FileInputComponent';
-import ImgInputComponent from '../../util-components/imgInputComponent/ImgInputComponent';
-import customFetch from '../../../fetchMethod';
-import imageCompressor from '../../../util-methods/imageCompressor';
+import FileInput from '../../../util-components/fileInputComponent/FileInputComponent';
+import ImgInputComponent from '../../../util-components/imgInputComponent/ImgInputComponent';
+import customFetch from '../../../../fetchMethod';
+import imageCompressor from '../../../../util-methods/imageCompressor';
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -25,15 +25,34 @@ function reducer(state, action) {
   }
 }
 
-function UploadSchematic() {
+function UploadSchematicPopup({ state, toggleState }) {
   const [resetKey, dispatch] = useReducer(reducer, initialState);
   const [tags, setTags] = useState([]);
   const [schematicName, setSchematicName] = useState('');
   const [tagAutocomplete, setTagAutocomplete] = useState();
   const fileInputRef = useRef(null);
   const imgInputRef = useRef(null);
+  const formRef = useRef(null);
+  const outsideFormRef = useRef(null);
   const [imgKey, setImgKey] = useState('');
   const [fileInputLabel, setFileInputLabel] = useState('Click to Upload Schematic');
+
+  // Closes the dropdown when clicked outside of it
+  useEffect(() => {
+    function handleClicks(event) {
+      if (!formRef.current.contains(event.target)
+      && outsideFormRef.current.contains(event.target)
+      ) {
+        toggleState();
+      }
+    }
+
+    document.addEventListener('click', handleClicks);
+
+    return () => {
+      document.removeEventListener('click', handleClicks);
+    };
+  }, []);
 
   // Rerenders file input text using reducer method
   function handleReset() {
@@ -216,44 +235,52 @@ function UploadSchematic() {
   };
 
   return (
-    <main className="upload-schematic-body" onDrop={handleDrop} onDragOver={(event) => event.preventDefault()} onPaste={handlePaste}>
-      <div className="upload-schematic-content">
-        <form id="upload-form" onSubmit={submitSchematic}>
-          <h1>Upload Schematic</h1>
-          <FormInput
-            label="Schematic name"
-            id={uuid()}
-            name="name"
-            type="text"
-            placeholder="Name"
-            onChange={(event) => setSchematicName(event.target.value)}
-            text={schematicName}
-            required
-            borderBottom="2px solid var(--borders)"
-          />
-          <FileInput
-            reference={fileInputRef}
-            reset={resetKey}
-            label={fileInputLabel}
-          />
-
-          <ImgInputComponent
-            reference={imgInputRef}
-            rerenderkey={imgKey}
-          />
-
-          <TagsInput
-            tags={tags}
-            setTags={setTags}
-            autocomplete={tagAutocomplete}
-            id="tags-input"
-          />
+    <div
+      className={`upload-schematic-body ${state ? 'showPopup' : 'hidePopup'}`}
+      onDrop={handleDrop}
+      onDragOver={(event) => event.preventDefault()}
+      onPaste={handlePaste}
+      ref={outsideFormRef}
+    >
+      <div className="upload-schematic-content-popup">
+        <form id="upload-form" onSubmit={submitSchematic} ref={formRef}>
+          <h1 className="header">Upload Schematic</h1>
+          <section className="inputs-section">
+            <FormInput
+              label="Schematic name"
+              id={uuid()}
+              name="name"
+              type="text"
+              placeholder="Name"
+              onChange={(event) => setSchematicName(event.target.value)}
+              text={schematicName}
+              required
+              borderBottom="2px solid var(--borders)"
+            />
+            <FileInput
+              reference={fileInputRef}
+              reset={resetKey}
+              label={fileInputLabel}
+            />
+            <ImgInputComponent
+              reference={imgInputRef}
+              rerenderkey={imgKey}
+            />
+          </section>
+          <section className="tags-section">
+            <TagsInput
+              tags={tags}
+              setTags={setTags}
+              autocomplete={tagAutocomplete}
+              id="tags-input"
+            />
+          </section>
           <button className="submit-btn" type="submit">Upload Schematic</button>
         </form>
       </div>
       <div className="background-overlay-upload" />
-    </main>
+    </div>
   );
 }
 
-export default UploadSchematic;
+export default UploadSchematicPopup;

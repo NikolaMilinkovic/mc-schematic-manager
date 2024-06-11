@@ -4,12 +4,13 @@ import {
 import './dashboard.scss';
 import Loading from '../../components/loading/Loading';
 import Landing from '../../components/landing/Landing';
+import UploadSchematicPopup from '../uploadSchematic/uploadSchematicPopup/UploadSchematicPopup';
+import DraggableButton from '../../components/DraggableButton/DraggableButton';
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 function Dashboard({ schematicsFilter }) {
   const [loading, setLoading] = useState(true);
-  const [backgroundImage, setBackgroundImage] = useState('/img/jungle-background.jpg');
 
   useEffect(() => {
     const hasLoaded = sessionStorage.getItem('hasLoaded');
@@ -22,6 +23,11 @@ function Dashboard({ schematicsFilter }) {
       }, 1500);
     }
   }, []);
+  const [ModalState, setModalState] = useState(false);
+  function toggleUploadModal() {
+    setModalState((prevState) => !prevState);
+    console.log(ModalState);
+  }
 
   return (
     <body className="dashboard-body">
@@ -30,6 +36,15 @@ function Dashboard({ schematicsFilter }) {
         <Landing schematicsFilter={schematicsFilter} />
       </div>
 
+      <DraggableButton
+        pathString="/"
+        onClick={() => toggleUploadModal()}
+        state={ModalState}
+      />
+      <UploadSchematicPopup
+        state={ModalState}
+        toggleState={toggleUploadModal}
+      />
       <div className="background-overlay-dashboard" />
     </body>
   );

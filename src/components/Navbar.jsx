@@ -12,7 +12,7 @@ function Navbar({ navActive, setNavActive, setSchematicsFilter }) {
   const [prevScrollPos, setScrollPos] = useState(window.scrollY);
   const [transformY, setTransformY] = useState(0);
   const location = useLocation();
-  const [userData, setUserData] = useState();
+  // const [userData, setUserData] = useState();
 
   function filterSchematics(e) {
     setSchematicsFilter(e.target.value);
@@ -39,7 +39,7 @@ function Navbar({ navActive, setNavActive, setSchematicsFilter }) {
     } else if (path === '/profile') {
       setNavActive('profile');
     } else if (path === '/collections') {
-      setNavActive('collection');
+      setNavActive('collections');
     } else {
       setNavActive('');
     }

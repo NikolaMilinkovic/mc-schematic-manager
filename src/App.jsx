@@ -7,6 +7,7 @@ import Register from './pages/register/Register';
 import Dashboard from './pages/dashboard/Dashboard';
 import Profile from './pages/profile/Profile';
 import ProtectedAuth from './pages/auth/ProtectedAuth';
+import Collections from './pages/collections/Collections';
 import Error401 from './errors/Error401';
 import Error403 from './errors/Error403';
 import Error404 from './errors/Error404';
@@ -43,8 +44,21 @@ function App() {
             path="/"
             element={(
               <ProtectedAuth>
-                <Navbar navActive={navActive} setNavActive={setNavActive} setSchematicsFilter={setSchematicsFilter} />
+                <Navbar
+                  navActive={navActive}
+                  setNavActive={setNavActive}
+                  setSchematicsFilter={setSchematicsFilter}
+                />
                 <Dashboard schematicsFilter={schematicsFilter} />
+              </ProtectedAuth>
+        )}
+          />
+          <Route
+            path="/collections"
+            element={(
+              <ProtectedAuth>
+                <Navbar navActive={navActive} setNavActive={setNavActive} />
+                <Collections />
               </ProtectedAuth>
         )}
           />
