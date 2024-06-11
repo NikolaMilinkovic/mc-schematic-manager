@@ -59,6 +59,7 @@ function Login() {
     })
       .then((response) => {
         if (response.status === 401) {
+          // console.log(response);
           setError('Username or password is incorrect.');
           return null;
         }
@@ -67,8 +68,18 @@ function Login() {
       .then((data) => {
         if (data && data.token) {
           cookies.set('token', data.token, { path: '/', maxAge: 365 * 24 * 60 * 60 });
-          handleSetActiveUser(data.user);
-          localStorage.setItem('activeUser', JSON.stringify(data.user));
+          if (data.studioUser) {
+            console.log('THERE IS STUDIO USER');
+            console.log(data.studioUser);
+            console.log(data.user);
+            handleSetActiveUser(data.studioUser);
+            localStorage.setItem('activeUser', JSON.stringify(data.studioUser));
+          } else {
+            handleSetActiveUser(data.user);
+            localStorage.setItem('activeUser', JSON.stringify(data.user));
+          }
+          // NOTE DOBIJAMO STUDIO USERA !!!
+          // KAKO SADA POPRAVITI CELU APLIKACIJU??
 
           setTimeout(() => {
             navigate('/');

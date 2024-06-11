@@ -39,12 +39,12 @@ function EditSchematic() {
 
   useEffect(() => {
     customFetch(`/get-schematic/${id}`)
-      .then((data) => {
-        setSchematic(data);
-        setSchematicName(data.name);
-        setFileInputLabel(data.original_file_name);
+      .then((response) => {
+        setSchematic(response.data);
+        setSchematicName(response.data.name);
+        setFileInputLabel(response.data.original_file_name);
 
-        data.tags.forEach((tag) => {
+        response.data.tags.forEach((tag) => {
           setTags((prev) => [...prev, tag]);
         });
       })
@@ -53,7 +53,7 @@ function EditSchematic() {
 
   async function fetchTags() {
     const allTags = await customFetch('/get-tags', 'GET')
-      .then((response) => setTagAutocomplete(response[0].tags));
+      .then((response) => setTagAutocomplete(response.data[0].tags));
   }
 
   useEffect(() => {
@@ -118,6 +118,7 @@ function EditSchematic() {
             }
             return notifyError('Error updating the schematic!');
           });
+        fetchTags();
       } catch (err) {
         console.error(err);
       }

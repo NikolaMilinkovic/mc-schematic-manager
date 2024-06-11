@@ -8,6 +8,12 @@ function ImgInputComponent({
   const [imageDisplay, setImageDisplay] = useState('');
   const [displayState, setDisplayState] = useState(false);
   const [arrowState, setArrowState] = useState('rotateX(0deg)');
+  const [imgRerender, setImgRerender] = useState(rerenderkey);
+
+  useEffect(() => {
+    setImageDisplay('');
+    setText(label);
+  }, [rerenderkey]);
 
   function toggleImgPreview() {
     if (displayState === false) {

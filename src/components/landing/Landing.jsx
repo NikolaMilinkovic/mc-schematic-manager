@@ -16,8 +16,8 @@ function Landing({ schematicsFilter }) {
   useEffect(() => {
     async function fetchSchematics() {
       const response = await customFetch('/get-schematics', 'GET');
-      setSchematics(response);
-      setCachedSchematics(response);
+      setSchematics(response.data);
+      setCachedSchematics(response.data);
       setLoading(false);
     }
     fetchSchematics();

@@ -72,6 +72,7 @@ function ProfileDropDown() {
       </button>
 
       <ul className={`${dropdownState} dropdown-container`} ref={dropdownRef}>
+        {activeUser && activeUser.permissions.profile.view_profile === true && (
         <Link to={`/profile/${activeUser._id}`}>
           <li>
             <span className="">
@@ -79,6 +80,8 @@ function ProfileDropDown() {
             </span>
           </li>
         </Link>
+        ) }
+
         <Link to="/settings">
           <li>
             <span className="">

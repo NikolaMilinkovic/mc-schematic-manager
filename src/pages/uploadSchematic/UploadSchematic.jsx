@@ -49,7 +49,7 @@ function UploadSchematic() {
 
   async function fetchTags() {
     const allTags = await customFetch('/get-tags', 'GET')
-      .then((response) => setTagAutocomplete(response[0].tags));
+      .then((response) => setTagAutocomplete(response.data[0].tags));
   }
 
   useEffect(() => {
@@ -125,6 +125,7 @@ function UploadSchematic() {
         } else {
           notifyError('Error uploading the schematic!');
         }
+        fetchTags();
       } catch (err) {
         console.error(err);
       }

@@ -1,19 +1,26 @@
 import React, { useState, useEffect, useContext } from 'react';
 import './studioUsersManager.scss';
 import { v4 as uuid } from 'uuid';
-import FormInput from '../FormInput';
 import { UserContext } from '../../../UserContext';
 import customFetch from '../../../fetchMethod';
 import StudioUserInput from './studioUserInput/StudioUserInput';
+import { notifySuccess, notifyError } from '../Notifications';
 
 function StudioUsersManager() {
   const { activeUser, handleSetActiveUser } = useContext(UserContext);
   const [allStudioUsers, setAllStudioUsers] = useState();
 
-  useEffect(() => {
-    console.log('LOGGING ALL STUDIO USERS:');
-    console.log(allStudioUsers);
-  }, [allStudioUsers]);
+  async function updateUserData() {
+    try {
+      const userData = await customFetch('/get-user-data', 'GET');
+      handleSetActiveUser(userData.data);
+      if (userData.status !== 200) {
+        notifyError('There was an error fetching User Data.');
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   // Handles input change
   function onChange(event) {
@@ -39,9 +46,22 @@ function StudioUsersManager() {
     setAllStudioUsers(updatedUsers);
   }
   // Handles delete button
-  function removeUser(event) {
+  async function removeUser(event) {
     // Get Custom Id from element
     const customId = event.target.getAttribute('data-custom-id');
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+    const response = await customFetch('/remove-studio-user', 'POST', JSON.stringify({ customId }), headers);
+    if (response.status === 200) {
+      notifySuccess(response.data.message);
+    } else if (response.status === 404) {
+
+    } else {
+      notifyError(response.data.message);
+    }
+
+    updateUserData();
     // Find index in allStudioUsers arr
     const userIndex = allStudioUsers.findIndex((user) => user.custom_id === customId);
 
@@ -95,10 +115,14 @@ function StudioUsersManager() {
     if (activeUser !== undefined) {
       const getAllStudioUsers = async () => {
         const allStudioUsers = await customFetch('/get-all-studio-users', 'GET');
-        if (allStudioUsers && allStudioUsers.studio && allStudioUsers.studio.users && allStudioUsers.studio.users.length !== 0) {
-          setAllStudioUsers(allStudioUsers.studio.users);
+        if (
+          allStudioUsers
+          && allStudioUsers.data.studio
+          && allStudioUsers.data.studio.users
+          && allStudioUsers.data.studio.users.length !== 0) {
+          setAllStudioUsers(allStudioUsers.data.studio.users);
         } else {
-          setAllStudioUsers([defaultUserData]);
+          // setAllStudioUsers([defaultUserData]);
         }
       };
       getAllStudioUsers();
@@ -109,7 +133,7 @@ function StudioUsersManager() {
   let passwordUUID = uuid();
   let customIdUUID = uuid();
   // Default studio user data
-  let defaultUserData = {
+  const defaultUserData = {
     username: usernameUUID,
     password: passwordUUID,
     custom_id: customIdUUID,
@@ -147,20 +171,12 @@ function StudioUsersManager() {
     passwordUUID = uuid();
     customIdUUID = uuid();
     const newUser = { ...defaultUserData };
-    setAllStudioUsers((prev) => [...prev, defaultUserData]);
+    if (allStudioUsers) {
+      setAllStudioUsers((prev) => [...prev, defaultUserData]);
+    } else {
+      setAllStudioUsers([defaultUserData]);
+    }
   }
-
-  // if (activeUser !== undefined) {
-  //   const getAllStudioUsers = async () => {
-  //     const allStudioUsers = await customFetch('/get-all-studio-users', 'GET');
-  //     if (allStudioUsers && allStudioUsers.studio && allStudioUsers.studio.users && allStudioUsers.studio.users.length !== 0) {
-  //       setAllStudioUsers(allStudioUsers.studio.users);
-  //     } else {
-  //       setAllStudioUsers([defaultUserData]);
-  //     }
-  //   };
-  //   getAllStudioUsers();
-  // }
 
   async function updateUsers() {
     const allStudioUsersJSON = JSON.stringify(allStudioUsers);
@@ -170,6 +186,12 @@ function StudioUsersManager() {
     };
 
     const response = await customFetch('/update-studio-users', 'POST', allStudioUsersJSON, headers);
+    if (response.status === 200) {
+      notifySuccess(response.data.message);
+    } else {
+      notifyError(response.data.message);
+    }
+    updateUserData();
   }
 
   return (

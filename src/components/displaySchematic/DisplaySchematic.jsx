@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/prop-types */
 import {
   React, useState, useEffect, useContext,
@@ -16,9 +17,9 @@ function DisplaySchematic({ schematic, index, popSchematic }) {
   async function downloadSchematic(event) {
     const id = event.target.name;
     const response = await customFetch(`/get-schematic-file/${id}`);
-    if (response.ok) {
+    if (response.data.ok) {
       notifySuccess('Success, downloading schematic now!');
-      const blob = await response.blob();
+      const blob = await response.data.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -36,7 +37,7 @@ function DisplaySchematic({ schematic, index, popSchematic }) {
     try {
       const id = event.target.name;
       const response = await customFetch(`/get-schematic-fawe-string/${id}`);
-      const displayUrl = await response.text();
+      const displayUrl = await response.data.text();
 
       if (displayUrl) {
         await navigator.clipboard.writeText(displayUrl)
@@ -77,11 +78,16 @@ function DisplaySchematic({ schematic, index, popSchematic }) {
         <img src={schematic.image.url} alt={schematic.name} />
       </div>
       <div className="buttons">
-        {!getButtonState
-          ? <button type="button" className="get-button" name={schematic._id} onClick={(e) => getSchematicString(e)}>Get Schematic</button>
-          : <button type="button" className="get-button btn-copied" name={schematic._id} onClick={(e) => getSchematicString(e)}>Copied to clipboard!</button>}
+        {activeUser && activeUser.permissions.schematic.get_schematic ? (
+          !getButtonState ? (
+            <button type="button" className="get-button" name={schematic._id} onClick={(e) => getSchematicString(e)}>Get Schematic</button>
+          ) : (
+            <button type="button" className="get-button btn-copied" name={schematic._id} onClick={(e) => getSchematicString(e)}>Copied to clipboard!</button>
+          )
+        ) : null}
 
         <div>
+          {activeUser && activeUser.permissions.schematic.edit_schematic && (
           <button type="button">
             <Link
               className="link"
@@ -91,8 +97,11 @@ function DisplaySchematic({ schematic, index, popSchematic }) {
               Edit
             </Link>
           </button>
-
+          )}
+          {activeUser && activeUser.permissions.schematic.download_schematic && (
           <button type="button" onClick={downloadSchematic} name={schematic._id}>Download</button>
+          )}
+
           {activeUser && activeUser.permissions.schematic.remove_schematic === true && <button type="button" onClick={removeSchematic} className="remove-button" name={schematic._id}>Remove</button>}
         </div>
       </div>

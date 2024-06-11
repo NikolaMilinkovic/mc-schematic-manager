@@ -44,7 +44,10 @@ function Profile() {
     const fetchUserData = async () => {
       try {
         const userData = await customFetch('/get-user-data', 'GET');
-        handleSetActiveUser(userData);
+        handleSetActiveUser(userData.data);
+        if (userData.status !== 200) {
+          notifyError('There was an error fetching User Data.');
+        }
       } catch (err) {
         console.error(err);
       }
@@ -53,6 +56,7 @@ function Profile() {
   }, []);
 
   useEffect(() => {
+    console.log(activeUser);
     setFormData({
       id: activeUser._id || '',
       username: activeUser.username || '',
@@ -149,6 +153,7 @@ function Profile() {
       newFormData.append('new_password', formData.new_password);
 
       const response = await customFetch('/update-profile', 'POST', newFormData);
+      console.log(response);
 
       if (response.status === 201 || response.status === 200) {
         notifySuccess('Profile updated successfully!');
@@ -156,10 +161,10 @@ function Profile() {
         notifyError('Profile updated successfully!');
       } else {
         console.log('');
-        if (response.message) {
-          notifyError(response.message);
+        if (response.data.message) {
+          notifyError(response.data.message);
         } else {
-          notifyError('Error updating the profile!');
+          notifyError(`Error: ${response.data.message}`);
         }
       }
     } catch (err) {
@@ -203,30 +208,35 @@ function Profile() {
               borderBottom="2px solid var(--borders)"
               labelColor={{ color: 'var(--text-grayed)' }}
             />
-            <FormInput
-              label="Email"
-              id={uuid()}
-              name="email"
-              type="email"
-              placeholder="Email"
-              onChange={(e) => onChange(e)}
-              text={formData.email ? formData.email : ''}
-              required
-              borderBottom="2px solid var(--borders)"
-              labelColor={{ color: 'var(--text-grayed)' }}
-            />
-            <FormInput
-              label="Studio Name"
-              id={uuid()}
-              name="studio_name"
-              type="text"
-              placeholder="Studio"
-              onChange={(e) => onChange(e)}
-              text={formData.studio_name ? formData.studio_name : ''}
-              required
-              borderBottom="2px solid var(--borders)"
-              labelColor={{ color: 'var(--text-grayed)' }}
-            />
+
+            {activeUser && activeUser.role === 'owner' && (
+              <>
+                <FormInput
+                  label="Email"
+                  id={uuid()}
+                  name="email"
+                  type="email"
+                  placeholder="Email"
+                  onChange={(e) => onChange(e)}
+                  text={formData.email ? formData.email : ''}
+                  required
+                  borderBottom="2px solid var(--borders)"
+                  labelColor={{ color: 'var(--text-grayed)' }}
+                />
+                <FormInput
+                  label="Studio Name"
+                  id={uuid()}
+                  name="studio_name"
+                  type="text"
+                  placeholder="Studio"
+                  onChange={(e) => onChange(e)}
+                  text={formData.studio_name ? formData.studio_name : ''}
+                  required
+                  borderBottom="2px solid var(--borders)"
+                  labelColor={{ color: 'var(--text-grayed)' }}
+                />
+              </>
+            )}
             {/* PASSWORDS */}
             <div className="passwords-container">
               <FormInput
@@ -274,17 +284,17 @@ function Profile() {
       </article>
 
       {/* STUDIO CARD */}
+      {activeUser.studio && activeUser.role === 'owner' && (
       <article className="studio-section">
 
-        {activeUser.studio && (
         <h2>
           {activeUser.studio.name}
           {' '}
           user manager
         </h2>
-        )}
         <StudioUsersManager />
       </article>
+      )}
 
       {/* STATISTICS CARD */}
       <article className="stats-section">
