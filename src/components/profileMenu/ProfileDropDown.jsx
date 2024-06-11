@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react/jsx-no-bind */
 import {
   React, useRef, useState, useEffect, useContext,
@@ -20,18 +21,25 @@ function ProfileDropDown() {
 
   // Closes the dropdown when clicked outside of it
   useEffect(() => {
-    function handleClickOutside(event) {
+    function toggleStates() {
+      setDropdownState('closed');
+      arrowState === 'rotateX(180deg)' ? setArrowState('rotateX(0deg)') : setArrowState('rotateX(180deg)');
+    }
+    function handleClicks(event) {
       if (!dropdownRef.current.contains(event.target)
       && !profileBtnRef.current.contains(event.target)
       ) {
-        setDropdownState('closed');
+        toggleStates();
+      } else if (dropdownRef.current.contains(event.target)
+        && !profileBtnRef.current.contains(event.target)) {
+        toggleStates();
       }
     }
 
-    document.addEventListener('click', handleClickOutside);
+    document.addEventListener('click', handleClicks);
 
     return () => {
-      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener('click', handleClicks);
     };
   }, []);
 
@@ -68,7 +76,13 @@ function ProfileDropDown() {
           src="/icons/angle-down-solid.svg"
           alt="Toggle preview"
         />
-        Profile
+        <img
+          className="navbar-avatar"
+          src={activeUser.avatar.url}
+          alt={`${activeUser.username} profile`}
+        />
+
+        {/* Profile */}
       </button>
 
       <ul className={`${dropdownState} dropdown-container`} ref={dropdownRef}>
@@ -82,13 +96,16 @@ function ProfileDropDown() {
         </Link>
         ) }
 
-        <Link to="/settings">
+        {/* SETTINGS */}
+        {/* <Link to="/settings">
           <li>
             <span className="">
               Settings
             </span>
           </li>
-        </Link>
+        </Link> */}
+
+        {/* LOGOUT */}
         <button type="button" className="log-out" onClick={logOut}>Log out</button>
       </ul>
     </div>

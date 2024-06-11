@@ -21,6 +21,8 @@ const apiUrl = import.meta.env.VITE_BACKEND_URL;
 function Profile() {
   const { activeUser, handleSetActiveUser } = useContext(UserContext);
   const [joinedAt, setJoinedAt] = useState();
+  const [studioOwner, setStudioOwner] = useState(activeUser);
+  const [studioName, setStudioName] = useState('');
   const imgInputRef = useRef(null);
   const [formData, setFormData] = useState({
     username: '',
@@ -31,6 +33,18 @@ function Profile() {
     new_password: '',
     repeat_new_password: '',
   });
+
+  async function getStudioOwner() {
+    if (activeUser && activeUser.role === 'studio_user') {
+      const response = await customFetch('/get-studio-owner-data', 'GET');
+      if (response && response.data && response.data.ownerData) {
+        setStudioOwner(response.data.ownerData);
+      }
+    }
+  }
+  useEffect(() => {
+    console.log(studioOwner);
+  }, [studioOwner]);
 
   function onChange(event) {
     const { name, value } = event.target;
@@ -45,6 +59,8 @@ function Profile() {
       try {
         const userData = await customFetch('/get-user-data', 'GET');
         handleSetActiveUser(userData.data);
+        getStudioOwner();
+
         if (userData.status !== 200) {
           notifyError('There was an error fetching User Data.');
         }
@@ -56,7 +72,6 @@ function Profile() {
   }, []);
 
   useEffect(() => {
-    console.log(activeUser);
     setFormData({
       id: activeUser._id || '',
       username: activeUser.username || '',
@@ -113,10 +128,10 @@ function Profile() {
     if (formData.username.trim() === '') {
       return notifyError('Please enter a valid username to continue.');
     }
-    if (formData.email.trim() === '') {
+    if (formData.email.trim() === '' && activeUser.role !== 'studio_user') {
       return notifyError('Please enter a valid email to continue.');
     }
-    if (formData.studio_name.trim() === '') {
+    if (formData.studio_name.trim() === '' && activeUser.role !== 'studio_user') {
       return notifyError('Please enter a valid studio name.');
     }
     if (formData.new_password.trim() || formData.repeat_new_password.trim()) {
@@ -153,7 +168,6 @@ function Profile() {
       newFormData.append('new_password', formData.new_password);
 
       const response = await customFetch('/update-profile', 'POST', newFormData);
-      console.log(response);
 
       if (response.status === 201 || response.status === 200) {
         notifySuccess('Profile updated successfully!');
@@ -284,11 +298,13 @@ function Profile() {
       </article>
 
       {/* STUDIO CARD */}
-      {activeUser.studio && activeUser.role === 'owner' && (
+      {activeUser.permissions && activeUser.permissions.profile && activeUser.permissions.profile.studio_user_manager && (
       <article className="studio-section">
 
         <h2>
-          {activeUser.studio.name}
+          {/* STUDIO NAME: */}
+          {activeUser && activeUser.role === 'owner' && (activeUser.studio.name) }
+          {studioOwner && studioOwner.studio && studioOwner.studio.name && activeUser.role !== 'owner' && (studioOwner.studio.name) }
           {' '}
           user manager
         </h2>
@@ -297,48 +313,67 @@ function Profile() {
       )}
 
       {/* STATISTICS CARD */}
-      <article className="stats-section">
-        <h2>
-          User Statistics:
-        </h2>
-        <section className="user-stats">
-          <div className="left">
-            <div className="labels-first">
-              <p>Joined at:</p>
-              <p>Studio name:</p>
+      {activeUser && activeUser.permissions.profile.view_user_stats ? (
+        <article className="stats-section">
+          <h2>
+            User Statistics:
+          </h2>
+          <section className="user-stats">
+            <div className="left">
+              <div className="labels-first">
+                <p>Joined at:</p>
+                <p>Studio name:</p>
+              </div>
+              <div className="data-first">
+                {/* JOINED AT: */}
+                {activeUser && <p>{joinedAt}</p>}
+                {/* STUDIO NAME: */}
+                {activeUser && activeUser.role === 'owner' && (<p>{activeUser.studio.name}</p>) }
+                {studioOwner && studioOwner.studio && studioOwner.studio.name && activeUser.role !== 'owner' && (<p>{studioOwner.studio.name}</p>) }
+              </div>
             </div>
-            <div className="data-first">
-              {activeUser && <p>{joinedAt}</p>}
-              {activeUser.studio && <p>{activeUser.studio.name}</p>}
-            </div>
-          </div>
 
-          <div className="right">
-            <div className="labels-second">
-              <p>Schematics:</p>
-              <p>Collections:</p>
-              <p>Studio users:</p>
+            <div className="right">
+              <div className="labels-second">
+                <p>Schematics:</p>
+                <p>Collections:</p>
+                {activeUser && activeUser.role !== 'studio_user' && (<p>Studio users:</p>)}
+              </div>
+              <div className="data-second">
+                {/* SCHEMATICS: */}
+                {activeUser.schematics && activeUser.role === 'owner' && (
+                <p>
+                  {activeUser.schematics.length}
+                </p>
+                )}
+                {studioOwner && studioOwner.studio && studioOwner.studio.name && activeUser.role !== 'owner' && (
+                <p>
+                  {studioOwner.schematics.length}
+                </p>
+                )}
+                {/* COLLECTIONS: */}
+                {activeUser.collections && (
+                <p>
+                  {activeUser.collections.length}
+                </p>
+                )}
+                {studioOwner && studioOwner.collections && studioOwner && activeUser.role !== 'owner' && (
+                <p>
+                  {studioOwner.collections.length}
+                </p>
+                )}
+                {/* STUDIO USERS */}
+                {activeUser && activeUser.role !== 'studio_user' && (
+                <p>
+                  {activeUser.studio.users.length}
+                </p>
+                )}
+              </div>
             </div>
-            <div className="data-second">
-              {activeUser.schematics && (
-              <p>
-                {activeUser.schematics.length}
-              </p>
-              )}
-              {activeUser.collections && (
-              <p>
-                {activeUser.collections.length}
-              </p>
-              )}
-              {activeUser.studio && (
-              <p>
-                {activeUser.studio.users.length}
-              </p>
-              )}
-            </div>
-          </div>
-        </section>
-      </article>
+          </section>
+        </article>
+      ) : '' }
+
       <div className="background-overlay" />
     </main>
   );

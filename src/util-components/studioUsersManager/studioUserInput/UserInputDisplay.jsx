@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './studioUserInput.scss';
 import { v4 as uuid } from 'uuid';
 import FormInput from '../../FormInput';
@@ -7,7 +7,7 @@ import UserPermissions from '../userPermissions/UserPermissions';
 import StudioUserInput from './StudioUserInput';
 
 function UserInputDisplay({
-  user, index, updateUserInput, removeUser, handleCheckboxChange,
+  user, updateUserInput, removeUser, handleCheckboxChange,
 }) {
   const [permissionsState, setPermissionsState] = useState('closed');
   const [arrowState, setArrowState] = useState('rotateX(0deg)');
@@ -16,6 +16,12 @@ function UserInputDisplay({
     setPermissionsState((prevState) => (prevState === 'closed' ? 'open' : 'closed'));
     setArrowState((prevState) => (prevState === 'rotateX(0deg)' ? 'rotateX(180deg)' : 'rotateX(0deg)'));
   }
+
+  useEffect(() => {
+    if (user && user.password) {
+      user.password = '';
+    }
+  }, []);
 
   return (
     <div key={user.custom_id} className="user-container">
@@ -32,8 +38,6 @@ function UserInputDisplay({
             alt="Toggle preview"
           />
           <h3>
-            {index + 1}
-            {'. '}
             {user.username}
           </h3>
         </button>

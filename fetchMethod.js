@@ -12,7 +12,6 @@ async function customFetch(url, method, formData, headers = {}) {
     };
 
     const mergedHeaders = { ...defaultHeaders, ...headers };
-    console.log(mergedHeaders);
 
     const response = await fetch(`${apiUrl}${url}`, {
       method,
