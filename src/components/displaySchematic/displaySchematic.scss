@@ -1,7 +1,7 @@
 @import url('../../global/colors.scss');
 @import url('../../global/global.scss');
 
-article.schematic-container{
+.schematic-container{
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -14,14 +14,14 @@ article.schematic-container{
   box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(4px);
 
-  .title{
+  .schematic-title{
     font-size: 20px;
     align-self: center;
     justify-self: center;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   }
 
-  .img-container {
+  .display-schematic-img-container {
     margin-top: 10px;
     overflow: hidden;
     display: flex;
@@ -43,7 +43,7 @@ article.schematic-container{
     }
   }
 
-  .buttons{
+  .schematic-display-buttons{
     display: flex;
     width: 100%;
     gap: 10px;

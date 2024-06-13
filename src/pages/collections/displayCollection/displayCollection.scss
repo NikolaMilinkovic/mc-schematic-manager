@@ -36,7 +36,7 @@
       font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     }
 
-    .img-container {
+    .collection-img-container {
       margin-top: 10px;
       overflow: hidden;
       display: flex;
@@ -47,10 +47,11 @@
       justify-content: center;
       border-radius: 5px;
 
-      img {
+      img.image-collection {
         overflow: hidden;
         max-width: 100%;
         max-height: 100%;
+        min-height: 180px;
         object-fit: cover;
         user-select: none;
         -webkit-user-drag: none;
@@ -127,151 +128,17 @@
 
 
 @media only screen and (max-width: 1444px) {
-  .collection-container{
+  article.collection-container{
     min-height: 45vh;
   }
 }
 @media only screen and (max-width: 1024px) {
-  .collection-container{
+  article.collection-container{
     min-height: 45vh;
   }
 }
 @media only screen and (max-width: 600px) {
-  .collection-container{
+  article.collection-container{
     min-height: 80vh;
   }
 }
-
-
-
-// .link-container-collecton{
-//   z-index: 2;
-//   transition: 0.2s linear;
-//   display: flex;
-//   position: relative;
-//   height: 45vh;
-//   min-height: 350px;
-
-//   .link{
-//     transform-origin: center;
-//     perspective: 130vh;
-//     width: 100%;
-
-
-
-
-//     &:hover{
-//       transform: scale(1.05);
-//     }
-//     // &:active{
-//     //   transform: scale(1.0);
-//     // }
-  
-//     .collection-card{
-//       position: absolute;
-//       overflow: hidden;
-//       display: flex;
-//       height: 100%;
-//       flex-direction: column;
-//       padding: 1rem;
-//       border-radius: 10px;
-//       background: var(--black);
-//       box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
-//       backdrop-filter: blur(4px);
-//       backface-visibility: hidden;
-//       transform-style: preserve-3d;
-//       width: 100%;
-    
-
-      
-//       .header-container{
-//         display: flex;
-//         align-items: center;
-//         justify-content: center;
-//         text-align: center;
-//         font-size: 16px;
-//         margin-bottom: 1rem;
-//         color: var(--white);
-//         height: 100px;
-//       }
-    
-//       .collection-image-container{
-//         width: 100%;
-//         height: 180px;
-//         border-radius: 8px;
-//         display: flex;
-//         margin-bottom: auto !important;
-      
-//         .image {
-//           width: 100%;
-//           height: 100%;
-//           object-fit: cover;
-//           user-select: none;
-//           -webkit-user-drag: none;
-//           -webkit-user-select: none;
-//         }
-//       }
-//       .tags-container{
-//         color: var(--white);
-//         height: 100%;
-//         .pad-left{
-//           padding-left: 0.7rem;
-//         }
-
-//         .tags-label{
-//           margin-bottom: 0.7rem;
-//           font-weight: bold;
-//         }
-//       }
-//       .right-click-message-container{
-//         color: var(--white);
-//         display: flex;
-//         align-items: center;
-//         justify-content: center;
-//         margin-top: 1rem;
-//         margin-top: auto;
-//       }
-//     }
-//   }
-// }
-
-// .flip{
-//   animation: flip-card 0.4s linear forwards;
-// }
-// .flip-back{
-//   animation: flip-card-back 0.4s linear forwards;
-// }
-// @keyframes flip-card {
-//   from {
-//       transform: rotateY(0deg)
-//   } to {
-//       transform: rotateY(180deg)
-//   }
-// }
-// @keyframes flip-card-back {
-//   from {
-//       transform: rotateY(180deg)
-//   } to {
-//       transform: rotateY(0deg)
-//   }
-// }
-// .flip-background{
-//   animation: flip-background 0.4s linear forwards;
-// }
-// .flip-back-background{
-//   animation: flip-background-back 0.4s linear forwards;
-// }
-// @keyframes flip-background {
-//   from {
-//       transform: rotateY(0deg)
-//   } to {
-//       transform: rotateY(-180deg)
-//   }
-// }
-// @keyframes flip-background-back {
-//   from {
-//       transform: rotateY(-180deg)
-//   } to {
-//       transform: rotateY(0deg)
-//   }
-// }

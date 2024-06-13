@@ -73,11 +73,11 @@ function DisplaySchematic({ schematic, index, popSchematic }) {
   return (
     <article key={index} className="schematic-container">
 
-      <h2 className="title">{schematic.name}</h2>
-      <div className="img-container">
+      <h2 className="schematic-title">{schematic.name}</h2>
+      <div className="display-schematic-img-container">
         <img src={schematic.image.url} alt={schematic.name} />
       </div>
-      <div className="buttons">
+      <div className="schematic-display-buttons">
         {activeUser && activeUser.permissions.schematic.get_schematic ? (
           !getButtonState ? (
             <button type="button" className="get-button" name={schematic._id} onClick={(e) => getSchematicString(e)}>Get Schematic</button>

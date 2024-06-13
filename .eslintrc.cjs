@@ -20,5 +20,6 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    'no-multiple-empty-lines': ['error', { max: 3, maxEOF: 1 }],
   },
 }

@@ -37,8 +37,8 @@ function DisplayCollection({
           {collectionData && (
           <div>
             <h2 className="title">{collectionData.name}</h2>
-            <div className="img-container">
-              <img className="image" src={collectionData.image.url} alt={`${collectionData.name} collection`} />
+            <div className="collection-img-container">
+              <img className="image-collection" src={collectionData.image.url} alt={`${collectionData.name} collection`} />
             </div>
           </div>
           )}

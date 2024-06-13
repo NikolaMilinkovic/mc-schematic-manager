@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-nested-ternary */
+import { v4 as uuid } from 'uuid';
 import React, { useState, useEffect, useRef } from 'react';
 import './collectionLanding.scss';
 import { useParams } from 'react-router-dom';
@@ -9,6 +10,10 @@ import { notifyError } from '../../../util-components/Notifications';
 import customFetch from '../../../../fetchMethod';
 import DisplayCollection from '../DisplayCollection';
 import DisplaySchematic from '../../../components/displaySchematic/DisplaySchematic';
+import FormInput from '../../../util-components/FormInput';
+import TagsInput from '../../../util-components/TagsInput';
+
+
 
 function CollectionLanding({ schematicsFilter, data }) {
   const { id } = useParams();
@@ -17,14 +22,32 @@ function CollectionLanding({ schematicsFilter, data }) {
   const [schematics, setSchematics] = useState([]);
   const [cachedScehmatics, setCachedScehmatics] = useState([]);
   const [collectionInfoState, setCollectionInfoState] = useState('open');
+  const [imageDisplay, setImageDisplay] = useState('');
   const [collectionInfoArrow, setCollectionInfoArrow] = useState('rotateX(0deg)');
   const imageInputRef = useRef('');
+
+  // ==========================[FORM DATA INPUTS]==========================
+  const [tags, setTags] = useState([]);
+  const [formData, setFormData] = useState({
+    name: '',
+  });
+  function onChange(event) {
+    const { name, value } = event.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  }
+  // ==========================[FORM DATA INPUTS]==========================
+
+
 
   function toggleCollectionInfo() {
     setCollectionInfoState((prevState) => (prevState === 'closed' ? 'open' : 'closed'));
     setCollectionInfoArrow((prevState) => (prevState === 'rotateX(0deg)' ? 'rotateX(180deg)' : 'rotateX(0deg)'));
   }
 
+  // ==========================[DATA FETCHING]==========================
   async function fetchCollection() {
     try {
       const response = await customFetch(`/get-collection/${id}`, 'GET');
@@ -32,6 +55,8 @@ function CollectionLanding({ schematicsFilter, data }) {
         if (response.data.collection) {
           setCollection(response.data.collection);
           setSchematics(response.data.collection.schematics);
+          setImageDisplay(response.data.collection.image.url);
+          setTags(response.data.collection.tags);
         }
       } else {
         notifyError(response.message);
@@ -45,7 +70,11 @@ function CollectionLanding({ schematicsFilter, data }) {
   useEffect(() => {
     fetchCollection();
   }, []);
+  // ==========================[DATA FETCHING]==========================
 
+
+
+  // ==========================[SCHEMATIC FILTERING]==========================
   // Filter Collections based on collectionsFilter
   useEffect(() => {
     if (schematicsFilter) {
@@ -66,9 +95,34 @@ function CollectionLanding({ schematicsFilter, data }) {
     const newCollectionList = schematics.filter((schematic) => schematic._id !== schematicId);
     setSchematics(newCollectionList);
   }
+  // ==========================[SCHEMATIC FILTERING]==========================
+
+
+
+  // ==========================[IMAGE INPUT RELATED]==========================
   function newImageInput() {
     imageInputRef.current.click();
   }
+  function handleUpload(event) {
+    const file = event.target.files[0];
+    if (file && file.name) {
+      setImageDisplay(URL.createObjectURL(file));
+    }
+  }
+  function handleDrop(event) {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    if (file) {
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(file);
+      imageInputRef.current.files = dataTransfer.files;
+
+      // Manually trigger the onChange event
+      const changeEvent = new Event('change', { bubbles: true });
+      imageInputRef.current.dispatchEvent(changeEvent);
+    }
+  }
+  // ==========================[IMAGE INPUT RELATED]==========================
 
   return (
     <div className="landing-content">
@@ -97,13 +151,17 @@ function CollectionLanding({ schematicsFilter, data }) {
             </div>
             {/* Collection Info content */}
             <div
+              onDrop={(e) => handleDrop(e)}
+              onDragOver={(event) => event.preventDefault()}
               className={`collection-info-content ${collectionInfoState === 'open' ? 'info-content-open-state' : 'info-content-closed-state'}`}
             >
-              <div className="collection-img-container">
+              <div
+                className="collection-img-container"
+              >
                 <p>Update image:</p>
                 <img
                   className="collection-avatar"
-                  src={collection ? collection.image.url : ''}
+                  src={imageDisplay}
                   alt={collection ? collection.name : ''}
                   onClick={(e) => newImageInput(e)}
                 />
@@ -113,7 +171,15 @@ function CollectionLanding({ schematicsFilter, data }) {
                   name="avatar"
                   id="avatar-input"
                   ref={imageInputRef}
+                  onChange={handleUpload}
                 />
+                <button
+                  type="button"
+                  className="collection-upload-avatar-button"
+                  onClick={(e) => newImageInput(e)}
+                >
+                  Upload new image
+                </button>
               </div>
             </div>
 
@@ -121,7 +187,30 @@ function CollectionLanding({ schematicsFilter, data }) {
             <div
               className={`information-inputs ${collectionInfoState === 'open' ? 'info-content-open-state' : 'info-content-closed-state'}`}
             >
-              <p>{collection && (collection.schematics.length)}</p>
+              <div className="collection-input-name-container">
+                <FormInput
+                  label="Collection Name"
+                  id={uuid()}
+                  name="name"
+                  type="text"
+                  placeholder="Collection Name"
+                  onChange={(e) => onChange(e)}
+                  text={formData.name ? formData.name : ''}
+                  required
+                  borderBottom="2px solid var(--borders)"
+                  labelColor={{ color: 'var(--white)' }}
+                />
+              </div>
+              {/* PLACEHOLDER FOR GRID LAYOUT */}
+              <div className="placeholder" />
+
+              <TagsInput
+                tags={tags}
+                setTags={setTags}
+                // autocomplete={tagAutocomplete}
+                id="tags-input"
+                className="tags-input"
+              />
             </div>
             {/* END OF INPUTS SECTION */}
 

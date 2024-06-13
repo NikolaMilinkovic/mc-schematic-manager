@@ -100,9 +100,13 @@ main.profile-content{
         display: flex;
         flex-direction: column;
         height: min-content;
+        gap: 0.5rem;
 
         .passwords-container{
           margin-top: 3rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
         }
       }
     }
