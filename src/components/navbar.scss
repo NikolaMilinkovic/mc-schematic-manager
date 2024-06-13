@@ -27,6 +27,9 @@ header{
     align-items: center;
     justify-content: center;
     gap: 1rem;
+
+    
+
     
     .nav-active{
       background-color: var(--highlight);
@@ -35,6 +38,8 @@ header{
 
     button{
       height: 50px;
+      display: flex;
+      margin-left: auto;
     }
 
     input{
@@ -50,6 +55,8 @@ header{
       background-color: transparent;
       margin-right: auto;
       margin-left: 40.7%;
+
+
 
 
       &:focus{
@@ -84,6 +91,11 @@ header{
     opacity: 0;
     padding: 1rem;
   }
+  .nav-search{
+    visibility: hidden;
+    opacity: 0;
+    display: none;
+  }
   .log-out{
     display: flex;
     background-color: transparent;
@@ -104,11 +116,27 @@ header{
 
 @media only screen and (max-width: 1024px) {
   header{
-    // position: relative;
     .nav-btn{
       visibility: visible;
       opacity: 1;
     }
+    .nav-search{
+      visibility: visible;
+      opacity: 1;
+      display: flex;
+      min-width: 350px;
+      min-height: 40px;
+      align-self: center;
+      padding: 10px;
+      border: 1px solid transparent;
+      border-bottom: 1px solid var(--white);
+      outline: none;
+      margin-left: auto;
+      background-color: transparent;
+      margin-right: auto;
+      margin-left: 40.7%;
+    }
+    
     nav{
       position: fixed;
       top: 0;
@@ -124,6 +152,21 @@ header{
       padding: 0rem 4rem;
       padding-top: 10vh;
       gap: 1rem;
+
+      button{
+        margin-left: 0;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        font-size: 22px;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+
+        &:hover{
+          background-color: var(--highlight-hover);
+        }
+      }
 
       input{
         margin-left: auto;

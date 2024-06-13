@@ -7,17 +7,24 @@ import './navbar.scss';
 import { Link, useLocation } from 'react-router-dom';
 import ProfileDropDown from './profileMenu/ProfileDropDown';
 
-function Navbar({ navActive, setNavActive, setSchematicsFilter }) {
+function Navbar({
+  navActive, setNavActive, setSchematicsFilter, setCollectionsFilter,
+}) {
   const navRef = useRef();
   const [prevScrollPos, setScrollPos] = useState(window.scrollY);
   const [transformY, setTransformY] = useState(0);
   const location = useLocation();
-  // const [userData, setUserData] = useState();
 
   function filterSchematics(e) {
     setSchematicsFilter(e.target.value);
     if (!e.target.value) {
       setSchematicsFilter('');
+    }
+  }
+  function filterCollections(e) {
+    setCollectionsFilter(e.target.value);
+    if (!e.target.value) {
+      setCollectionsFilter('');
     }
   }
 
@@ -47,10 +54,10 @@ function Navbar({ navActive, setNavActive, setSchematicsFilter }) {
 
   // Updates the active element
   function updateNav(event) {
-    console.log('Updating nav on click');
     if (event.target.name) {
       const { name } = event.target;
       setNavActive(name);
+      showNavbar();
     }
   }
 
@@ -82,9 +89,20 @@ function Navbar({ navActive, setNavActive, setSchematicsFilter }) {
     <header style={{ transform: `translateY(${transformY}px)` }}>
 
       <nav ref={navRef}>
-        <input type="text" className="search-input" onChange={(e) => filterSchematics(e)} placeholder="Search by name / tag" />
+        {!setSchematicsFilter && !setCollectionsFilter && (
+        <input type="text" className="search-input" onChange={(e) => filterSchematics(e)} placeholder="Search Schematic by name / tag" />
+        )}
+        {setSchematicsFilter && (
+          <input type="text" className="search-input" onChange={(e) => filterSchematics(e)} placeholder="Search Schematic by name / tag" />
+        )}
+        {setCollectionsFilter && (
+          <input type="text" className="search-input" onChange={(e) => filterCollections(e)} placeholder="Search Collection by name / tag" />
+        )}
+
+        {/* CLOSE MENU BUTTON */}
         <button type="button" className="nav-btn nav-close-btn" onClick={showNavbar}>
           <FaTimes />
+
         </button>
         {/* HOME BUTTON */}
         <Link
@@ -114,8 +132,16 @@ function Navbar({ navActive, setNavActive, setSchematicsFilter }) {
           Upload schematic
         </Link>
 
-        <ProfileDropDown />
+        <div>
+          <ProfileDropDown />
+        </div>
       </nav>
+      {setSchematicsFilter && (
+        <input type="text" className="search-input nav-search" onChange={(e) => filterSchematics(e)} placeholder="Search Schematic by name / tag" />
+      )}
+      {setCollectionsFilter && (
+      <input type="text" className="search-input nav-search" onChange={(e) => filterCollections(e)} placeholder="Search Collection by name / tag" />
+      )}
       <button type="button" className="nav-btn" onClick={showNavbar}>
         <FaBars />
       </button>

@@ -1,0 +1,207 @@
+@import url('../../../global/colors.scss');
+@import url('../../../global/global.scss');
+
+// NIKAKO NE DIRATI, SVE ZIVO SJEBE!
+.landing-content{
+  display: grid;
+  flex-direction: column;
+  position: relative;
+  min-width: 100vw;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding-top: 80px;
+  height: 100%;
+  background: var(--background-gradient);
+  background-image: url('/img/jungle-background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  transition: 0.2s linear;
+
+  .landing-content-wrapper{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+    z-index: 2;
+
+
+    .info-open-state{
+      opacity: 1;
+      height: 50vh;
+      transition: 0.2s linear;
+    }
+    .info-closed-state{
+      height: 120px;
+      transition: 0.2s linear;
+    }
+    .info-content-open-state{
+      transition: 0.2s linear;
+      opacity: 1;
+    }
+    .info-content-closed-state{
+      transition: 0.2s linear;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-300px);
+    }
+  
+    .collection-info{
+      background-color: rgba(0,0,0,0.7);
+      padding: 1rem;
+      border-radius: 12px;
+      z-index: 3;
+      display: grid;
+      grid-template-columns: 0.3fr 1fr;
+      position: relative;
+      gap: 1rem;
+      overflow: hidden;
+      z-index: 12;
+
+      .information-inputs{
+        padding: 2rem;
+        display: grid;
+        grid: 1fr 1fr;
+        border: 2px solid;
+        margin-bottom: 2rem;
+      }
+  
+
+  
+      // INFO CONTENT CONTAINER
+      .collection-info-content{
+          display: flex;
+          align-items: start;
+          justify-content: start;
+          border-radius: 5px;
+          position: relative;
+          height: 100%;
+          height: 300px;
+          
+          #avatar-input{
+            visibility: hidden;
+          }
+      
+          .collection-avatar {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            padding: 2rem;
+            cursor: pointer;
+            transition: 0.2s linear;
+
+            &:hover{
+              transform: scale(1.05);
+            }
+            &:active{
+              transition: none;
+              transform: scale(1);
+            }
+        }
+      }
+  
+      // HEADER & TOGGLE BUTTON
+      .title{
+        grid-column: span 2;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: min-content;
+        margin-bottom: 120px;
+        z-index: 12;
+  
+        .toggle-preview-btn{
+          display: flex;
+          align-items: center;
+          position: absolute;
+          gap: 0.5rem;
+          top: 0px;
+          left: 0px;
+          right: 0px;
+          font-size: 20px;
+          height: 120px;
+          padding: 4px;
+          background-color: transparent;
+          border: none;
+          cursor: pointer;
+          width: 100%;
+          align-items: center;
+          justify-content: center;
+          border-radius: 8px;
+          z-index: 3;
+      
+      
+          &:focus{
+            outline: none;
+          }
+          &:hover{
+            background-color: var(--highlight-hover);
+          }
+      
+          .toggle-preview-icon{
+            transition: 0.3s ease;
+            width: 40px;
+            height: 40px;
+          }
+        }
+      }
+    }
+  }
+
+
+  .options-section{
+    display: flex;
+    justify-content: space-evenly;
+    background-color: var(--background);
+    align-items: center;
+
+    a{
+      text-align: center;
+    }
+  }
+
+  .collections-container{
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+    padding: 1rem;
+    min-height: 45vh;
+  }
+  .options-section{
+    max-height: 120px;
+  }
+}
+
+
+@media only screen and (max-width: 1444px) {
+  .collections-container{
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 1rem;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .collections-container{
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1rem;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .collections-container{
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+  }
+}

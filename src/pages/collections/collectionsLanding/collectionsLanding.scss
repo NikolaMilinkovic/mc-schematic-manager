@@ -1,5 +1,5 @@
-@import url('../../global/colors.scss');
-@import url('../../global/global.scss');
+@import url('../../../global/colors.scss');
+@import url('../../../global/global.scss');
 
 .landing-content{
   display: grid;
@@ -20,13 +20,12 @@
     }
   }
 
-  .schematics-container{
+  .collections-container{
     position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     gap: 1rem;
     padding: 1rem;
-
     
   }
   .options-section{
@@ -36,7 +35,7 @@
 
 
 @media only screen and (max-width: 1444px) {
-  .schematics-container{
+  .collections-container{
     position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr !important;
@@ -44,7 +43,7 @@
   }
 }
 @media only screen and (max-width: 1024px) {
-  .schematics-container{
+  .collections-container{
     position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr !important;
@@ -52,7 +51,7 @@
   }
 }
 @media only screen and (max-width: 600px) {
-  .schematics-container{
+  .collections-container{
     position: relative;
     display: grid;
     grid-template-columns: 1fr !important;

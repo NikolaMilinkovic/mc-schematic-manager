@@ -14,11 +14,13 @@ import Error404 from './errors/Error404';
 import UploadSchematic from './pages/uploadSchematic/UploadSchematic';
 import Navbar from './components/Navbar';
 import EditSchematic from './pages/editSchematic/EditSchematic';
+import DisplayCollection from './pages/collection/DisplayCollection';
 import { UserProvider } from '../UserContext';
 
 function App() {
   const [navActive, setNavActive] = useState('');
   const [schematicsFilter, setSchematicsFilter] = useState('');
+  const [collectionsFilter, setCollectionsFilter] = useState('');
 
   return (
     <BrowserRouter basename="/">
@@ -57,8 +59,23 @@ function App() {
             path="/collections"
             element={(
               <ProtectedAuth>
+                <Navbar
+                  navActive={navActive}
+                  setNavActive={setNavActive}
+                  setCollectionsFilter={setCollectionsFilter}
+                />
+                <Collections
+                  collectionsFilter={collectionsFilter}
+                />
+              </ProtectedAuth>
+        )}
+          />
+          <Route
+            path="/collections/:id"
+            element={(
+              <ProtectedAuth>
                 <Navbar navActive={navActive} setNavActive={setNavActive} />
-                <Collections />
+                <DisplayCollection />
               </ProtectedAuth>
         )}
           />

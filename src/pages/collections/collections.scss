@@ -1,33 +1,36 @@
-@import url('../../global/colors.scss');
-@import url('../../global/global.scss');
+  @import url('../../global/colors.scss');
+  @import url('../../global/global.scss');
 
-.collections-main{
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr;
-  min-width: 100vw;
-  min-height: 100vh;
-  height: 100%;
-  overflow: auto;
-  padding: 120px 10vw;
-  align-items: start;
-  justify-content: start;
-  gap: 1rem;
-
-  background: var(--background-gradient);
-  background-image: url('/img/jungle-background.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-
-  .background-overlay-dashboard{
-    position: fixed;
-    display: flex;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.35); 
-    z-index: 1;
+  .dashboard-body{
+    .background-overlay-dashboard{
+      position: fixed;
+      display: flex;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.35); 
+      z-index: 1;
+    }
   }
-}
+
+  body.dashboard-body{
+    background: var(--background-gradient);
+    position: relative;
+    min-width: 100vw;
+    min-height: 100vh;
+
+    background-image: url('/img/jungle-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    .dashboard-container{
+      position: absolute;
+      top: 0;
+      left: 0;
+      min-width: 100vw;
+      min-height: 100vh;
+      z-index: 2;
+    }
+  }

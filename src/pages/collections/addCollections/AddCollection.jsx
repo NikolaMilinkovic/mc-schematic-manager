@@ -183,7 +183,7 @@ function AddCollection({ state, toggleState }) {
       onPaste={handlePaste}
     >
       <form className="new-collection-form" ref={formRef}>
-        <h2>Add new Collection:</h2>
+        <h2 className="header">Add new Collection:</h2>
         <div className="name-img-inputs">
 
           <FormInput
