@@ -78,9 +78,6 @@ function Login() {
             handleSetActiveUser(data.user);
             localStorage.setItem('activeUser', JSON.stringify(data.user));
           }
-          // NOTE DOBIJAMO STUDIO USERA !!!
-          // KAKO SADA POPRAVITI CELU APLIKACIJU??
-
           setTimeout(() => {
             navigate('/');
           }, 1000);
@@ -127,7 +124,13 @@ function Login() {
             </span>
           </Link>
         </p>
-
+        {/* <p className="register-link-container">
+          <Link to="/reset-password">
+            <span className="register-link">
+              Reset Password Here!
+            </span>
+          </Link>
+        </p> */}
       </form>
       <p className="copyright">©2024 Gold Studios, All right reserved.</p>
       <div className="background-overlay" />

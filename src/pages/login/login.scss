@@ -98,6 +98,12 @@ body.login-body{
 
       .register-link{
         text-decoration: underline;
+        color: #8bacea;
+
+        &:hover{
+          color: #6495ED;
+          cursor: pointer;
+        }
       }
     }
 

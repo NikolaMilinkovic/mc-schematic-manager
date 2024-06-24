@@ -24,7 +24,9 @@ function App() {
 
   return (
     <BrowserRouter basename="/">
+
       <UserProvider>
+
         <ToastContainer
           position="bottom-right"
           autoClose={3000}
@@ -42,6 +44,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          {/* <Route path="passwordReset" element={<PasswordReset />} */}
           <Route
             path="/"
             element={(

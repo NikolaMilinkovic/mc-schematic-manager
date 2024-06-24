@@ -1,13 +1,14 @@
 import React, {
   createContext, useState, useMemo, useEffect,
 } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 
 const UserContext = createContext();
 
 function UserProvider({ children }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const [activeUser, setActiveUser] = useState(() => {
     const storedUser = localStorage.getItem('activeUser');
     return storedUser ? JSON.parse(storedUser) : null;
@@ -20,9 +21,11 @@ function UserProvider({ children }) {
     } else {
       const cookies = new Cookies();
       cookies.remove('token', { path: '/' });
-      navigate('/login');
+      if (location.pathname !== '/register') {
+        navigate('/login'); // Redirect to login only if not on registration page
+      }
     }
-  }, [activeUser, navigate]);
+  }, [activeUser, navigate, location.pathname]);
 
   function handleSetActiveUser(user) {
     setActiveUser(user);
