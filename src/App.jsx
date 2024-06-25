@@ -4,6 +4,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ToastContainer, Bounce } from 'react-toastify';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
+import ResetPassword from './pages/resetPassword/ResetPassword';
+import ResetNewPassword from './pages/resetNewPassword/ResetNewPassword';
 import Dashboard from './pages/dashboard/Dashboard';
 import Profile from './pages/profile/Profile';
 import ProtectedAuth from './pages/auth/ProtectedAuth';
@@ -26,7 +28,6 @@ function App() {
     <BrowserRouter basename="/">
 
       <UserProvider>
-
         <ToastContainer
           position="bottom-right"
           autoClose={3000}
@@ -44,7 +45,9 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          {/* <Route path="passwordReset" element={<PasswordReset />} */}
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/set-new-password/:token" element={<ResetNewPassword />} />
+
           <Route
             path="/"
             element={(

@@ -21,9 +21,11 @@ function UserProvider({ children }) {
     } else {
       const cookies = new Cookies();
       cookies.remove('token', { path: '/' });
-      if (location.pathname !== '/register') {
-        navigate('/login'); // Redirect to login only if not on registration page
-      }
+      if (location.pathname === '/register') return;
+      if (location.pathname === '/reset-password') return;
+      console.log(location.pathname.split('/'));
+      if (location.pathname.includes('/set-new-password/')) return;
+      navigate('/login');
     }
   }, [activeUser, navigate, location.pathname]);
 

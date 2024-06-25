@@ -159,7 +159,7 @@ function Register() {
           onChange={(e) => onChange(e)}
         />
 
-        <div className="error-message">{error}</div>
+        <pre className="error-message">{error}</pre>
 
         <button type="submit" className="btn-submit">Register</button>
         <p className="register-link-container">

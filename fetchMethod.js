@@ -5,7 +5,7 @@ const apiUrl = import.meta.env.VITE_BACKEND_URL;
 async function customFetch(url, method, formData, headers = {}) {
   try {
     const cookies = new Cookies(null, { path: '/' });
-    const token = cookies.get('token');
+    const token = await cookies.get('token');
     const activeUser = JSON.parse(localStorage.getItem('activeUser'));
     const defaultHeaders = {
       authorization: token,

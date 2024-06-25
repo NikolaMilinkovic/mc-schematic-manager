@@ -78,9 +78,9 @@ function Login() {
             handleSetActiveUser(data.user);
             localStorage.setItem('activeUser', JSON.stringify(data.user));
           }
-          setTimeout(() => {
-            navigate('/');
-          }, 1000);
+          // setTimeout(() => {
+          //   navigate('/');
+          // }, 2000);
         }
       })
       .catch((err) => {
@@ -114,7 +114,7 @@ function Login() {
           onChange={(e) => onChange(e)}
         />
 
-        <div className="error-message">{error}</div>
+        <pre className="error-message">{error}</pre>
 
         <button type="submit" className="btn-submit">Login</button>
         <p className="register-link-container">
@@ -124,13 +124,13 @@ function Login() {
             </span>
           </Link>
         </p>
-        {/* <p className="register-link-container">
+        <p className="register-link-container">
           <Link to="/reset-password">
             <span className="register-link">
               Reset Password Here!
             </span>
           </Link>
-        </p> */}
+        </p>
       </form>
       <p className="copyright">©2024 Gold Studios, All right reserved.</p>
       <div className="background-overlay" />
