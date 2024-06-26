@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import FormInput from '../../util-components/FormInput';
 import './register.scss';
+import { notifyError } from '../../util-components/Notifications';
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -83,8 +84,12 @@ function Register() {
       body: JSON.stringify(formData),
     })
       .then((response) => {
+        console.log(response);
         if (!response.ok) {
           return response.json().then((data) => {
+            if (response.status === 409) {
+              notifyError(data.message);
+            }
             throw new Error(data.message || 'Unknown error occurred.');
           });
         }

@@ -10,7 +10,7 @@ import TagsInput from '../../../util-components/TagsInput';
 import imageCompressor from '../../../../util-methods/imageCompressor';
 import customFetch from '../../../../fetchMethod';
 
-function AddCollection({ state, toggleState }) {
+function AddCollection({ state, toggleState, renderer }) {
   const imgInputRef = useRef(null);
   const [imgKey, setImgKey] = useState(null);
   const [tagAutocomplete, setTagAutocomplete] = useState([]);
@@ -67,6 +67,7 @@ function AddCollection({ state, toggleState }) {
 
       if (response.status === 201 || response.status === 200) {
         notifySuccess('Collection added successfully!');
+        renderer();
       } else {
         console.log('');
         if (response.data.message) {
@@ -98,7 +99,7 @@ function AddCollection({ state, toggleState }) {
     return () => {
       document.removeEventListener('click', handleClicks);
     };
-  }, []);
+  }, [toggleState]);
   // Handles user input
   function onInput(e) {
     const { value, name } = e.target;

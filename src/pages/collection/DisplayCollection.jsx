@@ -14,6 +14,7 @@ import DisplaySchematic from '../../components/displaySchematic/DisplaySchematic
 import DraggableButton from '../../components/DraggableButton/DraggableButton';
 import Loading from '../../components/loading/Loading';
 import CollectionLanding from './collectionLanding/CollectionLanding';
+import UploadSchematicToCollectionPopup from './UploadSchematicToCollectionPopup/UploadSchematicToCollectionPopup';
 
 function DisplayCollection({ collectionsFilter, key }) {
   const { id } = useParams(); // Get the id from the URL
@@ -42,7 +43,7 @@ function DisplayCollection({ collectionsFilter, key }) {
   }, []);
 
   function showAddSchematic() {
-    setAddSchematicState(!addSchematicState);
+    setAddSchematicState((prevState) => !prevState);
   }
 
   return (
@@ -56,6 +57,11 @@ function DisplayCollection({ collectionsFilter, key }) {
 
       <DraggableButton
         onClick={() => showAddSchematic()}
+      />
+      <UploadSchematicToCollectionPopup
+        state={addSchematicState}
+        toggleState={showAddSchematic}
+        collectionData={collection}
       />
       {/* <AddSchematicToCollection
         state={addSchematicState}

@@ -7,9 +7,8 @@ import { notifyError } from '../../../util-components/Notifications';
 import customFetch from '../../../../fetchMethod';
 import DisplayCollection from '../displayCollection/DisplayCollection';
 
-function CollectionsLanding({ collectionsFilter }) {
+function CollectionsLanding({ collectionsFilter, renderer }) {
   const [loading, setLoading] = useState(true);
-
   const [collections, setCollections] = useState([]);
   const [cachedCollections, setCachedCollections] = useState([]);
 
@@ -29,7 +28,7 @@ function CollectionsLanding({ collectionsFilter }) {
 
   useEffect(() => {
     fetchCollectionsData();
-  }, []);
+  }, [renderer]);
 
   // Filter Collections based on collectionsFilter
   useEffect(() => {
@@ -46,8 +45,9 @@ function CollectionsLanding({ collectionsFilter }) {
   }, [collectionsFilter, cachedCollections]);
 
   // Removes the schematic from display
-  function popSchematic(event) {
+  function popCollection(event) {
     const collectionId = event.target.name;
+    console.log(collectionId);
     const newCollectionList = collections.filter((collection) => collection._id !== collectionId);
     setCollections(newCollectionList);
   }
@@ -62,8 +62,9 @@ function CollectionsLanding({ collectionsFilter }) {
             ? (
               collections.map((collection) => (
                 <DisplayCollection
-                  key={uuid()}
+                  key={collection.name}
                   data={collection}
+                  popCollection={(e) => popCollection(e)}
                 />
               ))
             ) : (

@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-nested-ternary */
@@ -6,12 +7,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import './collectionLanding.scss';
 import { useParams } from 'react-router-dom';
 import Loading from '../../../components/loading/Loading';
-import { notifyError } from '../../../util-components/Notifications';
+import { notifyError, notifyInfo, notifySuccess } from '../../../util-components/Notifications';
 import customFetch from '../../../../fetchMethod';
-import DisplayCollection from '../DisplayCollection';
 import DisplaySchematic from '../../../components/displaySchematic/DisplaySchematic';
 import FormInput from '../../../util-components/FormInput';
 import TagsInput from '../../../util-components/TagsInput';
+import imageCompressor from '../../../../util-methods/imageCompressor';
+import setFileToBase64 from '../../../../util-methods/fileToBase64';
 
 
 
@@ -25,6 +27,7 @@ function CollectionLanding({ schematicsFilter, data }) {
   const [imageDisplay, setImageDisplay] = useState('');
   const [collectionInfoArrow, setCollectionInfoArrow] = useState('rotateX(0deg)');
   const imageInputRef = useRef('');
+  const [tagAutocomplete, setTagAutocomplete] = useState('');
 
   // ==========================[FORM DATA INPUTS]==========================
   const [tags, setTags] = useState([]);
@@ -47,16 +50,19 @@ function CollectionLanding({ schematicsFilter, data }) {
     setCollectionInfoArrow((prevState) => (prevState === 'rotateX(0deg)' ? 'rotateX(180deg)' : 'rotateX(0deg)'));
   }
 
-  // ==========================[DATA FETCHING]==========================
+  // =======================[DATA FETCHING]=======================
   async function fetchCollection() {
     try {
       const response = await customFetch(`/get-collection/${id}`, 'GET');
+      // const allTags = await customFetch('/get-tags', 'GET')
+      //   .then((res) => setTagAutocomplete(res.data[0].tags));
       if (response.status === 200) {
         if (response.data.collection) {
           setCollection(response.data.collection);
           setSchematics(response.data.collection.schematics);
           setImageDisplay(response.data.collection.image.url);
           setTags(response.data.collection.tags);
+          setTagAutocomplete(response.data.collection.tags);
         }
       } else {
         notifyError(response.message);
@@ -70,7 +76,13 @@ function CollectionLanding({ schematicsFilter, data }) {
   useEffect(() => {
     fetchCollection();
   }, []);
-  // ==========================[DATA FETCHING]==========================
+  // Set collection name field text
+  useEffect(() => {
+    if (collection && collection.name) {
+      formData.name = collection.name;
+    }
+  }, [collection]);
+  // =======================[DATA FETCHING]=======================
 
 
 
@@ -123,6 +135,52 @@ function CollectionLanding({ schematicsFilter, data }) {
     }
   }
   // ==========================[IMAGE INPUT RELATED]==========================
+
+
+
+  // ==========================[SAVE CHANGES METHOD]==========================
+  async function updateCollection(e) {
+    e.preventDefault();
+    const imageInput = imageInputRef.current;
+
+    // Input validation
+    if (formData.name.trim() === '') {
+      setFormData((prev) => ({ ...prev, name: collection.name }));
+      return notifyError('Collection must have a name, please try again.');
+    }
+    if (tags.length === 0) {
+      return notifyError('Collection must have at least one tag, please try again.');
+    }
+
+    notifyInfo('Updating profile...');
+    try {
+      let avatar;
+      const newFormData = new FormData();
+
+      if (imageInput.files[0]) {
+        avatar = await imageCompressor(imageInput.files[0]);
+        const imageBase64 = await setFileToBase64(avatar);
+        newFormData.append('avatar', imageBase64);
+      }
+      newFormData.append('name', formData.name);
+      newFormData.append('tags', tags);
+
+      const response = await customFetch(`/update-collection/${collection._id}`, 'POST', newFormData);
+
+      // Response handling
+      if (response.status === 201 || response.status === 200 || response.status === 304) {
+        notifySuccess('Profile updated successfully!');
+      } else if (response.data.message) {
+        notifyError(response.data.message);
+      } else {
+        notifyError('There was an error updating the collection.');
+      }
+    } catch (err) {
+      console.error(err);
+      notifyError('Error: ', err);
+    }
+  }
+  // ==========================[SAVE CHANGES METHOD]==========================
 
   return (
     <div className="landing-content">
@@ -207,16 +265,34 @@ function CollectionLanding({ schematicsFilter, data }) {
               <TagsInput
                 tags={tags}
                 setTags={setTags}
-                // autocomplete={tagAutocomplete}
+                autocomplete={tagAutocomplete}
                 id="tags-input"
                 className="tags-input"
               />
             </div>
             {/* END OF INPUTS SECTION */}
+            <div
+              className={`add-remove-schem-container ${collectionInfoState === 'open' ? 'info-content-open-state' : 'info-content-closed-state'}`}
+            >
+              <h2>Add / Remove schematic to collection:</h2>
+              {/* ADD / REMOVE SHCMEATIC COMPONENT */}
+
+              {/* SUBMIT BUTTON */}
+              <div className="submit-button-container">
+                <button
+                  type="button"
+                  className="save-changes-button"
+                  onClick={updateCollection}
+                >
+                  Save changes
+                </button>
+              </div>
+            </div>
+
 
           </div>
           {/* Schematics container */}
-          <div className="collections-container">
+          <div className="schematics-container">
             {schematics && schematics.length !== 0
               ? (
                 schematics.map((schematic) => (

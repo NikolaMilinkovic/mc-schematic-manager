@@ -1,20 +1,21 @@
 /* eslint-disable no-nested-ternary */
 import {
-  useState, React, useContext,
+  useState, React,
 } from 'react';
 import './collections.scss';
 import DraggableButton from '../../components/DraggableButton/DraggableButton';
 import AddCollection from './addCollections/AddCollection';
-import { UserContext } from '../../../UserContext';
 import CollectionsLanding from './collectionsLanding/CollectionsLanding';
 
 function Collections({ collectionsFilter }) {
   const [addCollectionState, setAddCollectionState] = useState(false);
-  const { activeUser, handleSetActiveUser } = useContext(UserContext);
-  const [loading, setLoading] = useState(true);
+  const [renderer, setRenderer] = useState(0);
 
   function showAddCollection() {
     setAddCollectionState((prevState) => !prevState);
+  }
+  function rerender() {
+    setRenderer((prev) => prev + 1);
   }
 
   return (
@@ -22,16 +23,17 @@ function Collections({ collectionsFilter }) {
       <div className="dashboard-container">
         <CollectionsLanding
           collectionsFilter={collectionsFilter}
+          renderer={renderer}
         />
       </div>
 
       <DraggableButton
-        pathString="/collections"
         onClick={() => showAddCollection()}
       />
       <AddCollection
         state={addCollectionState}
         toggleState={() => showAddCollection()}
+        renderer={() => rerender()}
       />
       <div className="background-overlay-dashboard" />
     </body>

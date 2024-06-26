@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect, useRef } from 'react';
 import './draggableButton.scss';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function DraggableButton({ pathString, onClick }) {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);

@@ -16,7 +16,6 @@
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  transition: 0.2s linear;
 
   .landing-content-wrapper{
     display: flex;
@@ -29,11 +28,9 @@
     .info-open-state{
       opacity: 1;
       min-height: 70vh;
-      transition: 0.2s linear;
     }
     .info-closed-state{
       height: 80px;
-      transition: 0.2s linear;
     }
     .info-content-open-state{
       transition: 0.2s linear;
@@ -43,7 +40,6 @@
       transition: 0.2s linear;
       opacity: 0;
       visibility: hidden;
-      transform: translateY(-300px);
     }
   
     .collection-info{
@@ -57,12 +53,14 @@
       gap: 1rem;
       overflow: hidden;
       z-index: 12;
+      // transition: 0.2s linear;
+
 
       .information-inputs{
         padding: 2rem;
         display: grid;
         grid-template-columns: 1fr 1fr;
-        border: 2px solid;
+        border-left: 2px solid var(--borders);
         margin-bottom: 2rem;
         gap: 1rem;
 
@@ -80,7 +78,38 @@
           margin-top: 0px !important;
         }
       }
-  
+
+
+      .add-remove-schem-container{
+        background-color: red !important;
+        grid-column: span 2 !important;
+      }
+      .submit-button-container{
+        grid-column: span 2 !important;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        transition: 0.2s linear;
+
+        .save-changes-button{
+          display: flex;
+          bottom: -2rem;
+          margin-top: auto;
+          padding: 1rem;
+          cursor: pointer;
+          border: 2px solid transparent;
+          background-color: var(--highlight);
+          border-radius: 5px;
+
+          &:hover{
+            cursor: pointer;
+            background-color: var(--highlight-hover);
+          }
+          &:active{
+            transform: scale(0.95);
+          }
+        }
+      }
 
   
       // INFO CONTENT CONTAINER
@@ -109,8 +138,8 @@
             cursor: pointer;
             align-items: center;
             justify-content: center;
-            border: 2px solid transparent;
-            background-color: var(--highlight);
+            border: 2px solid var(--borders);
+            background-color: var(--black);
             border-radius: 5px;
 
             &:hover{
@@ -210,7 +239,7 @@
     }
   }
 
-  .collections-container{
+  .schematics-container{
     position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
