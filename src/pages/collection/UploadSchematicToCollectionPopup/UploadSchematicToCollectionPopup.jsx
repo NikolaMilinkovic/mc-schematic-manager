@@ -123,9 +123,10 @@ function UploadSchematicToCollectionPopup({ state, toggleState, collectionData }
         formData.append('schematicFile', file);
         formData.append('tags', tags.join(','));
         formData.append('schematicName', schematicName);
-        formData.append('collectionId', collectionData._id);
+        const collectionId = collectionData._id;
+        // formData.append('collectionId', collectionData._id);
 
-        const response = await customFetch('/upload-schematic-to-collection', 'POST', formData);
+        const response = await customFetch(`/upload-schematic-to-collection/${collectionId}`, 'POST', formData);
 
         if (response.status === 201) {
           // Reset Values

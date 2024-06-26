@@ -22,7 +22,7 @@ function CollectionLanding({ schematicsFilter, data }) {
   const [loading, setLoading] = useState(true);
   const [collection, setCollection] = useState(null);
   const [schematics, setSchematics] = useState([]);
-  const [cachedScehmatics, setCachedScehmatics] = useState([]);
+  const [cachedSchematics, setCachedSchematics] = useState([]);
   const [collectionInfoState, setCollectionInfoState] = useState('open');
   const [imageDisplay, setImageDisplay] = useState('');
   const [collectionInfoArrow, setCollectionInfoArrow] = useState('rotateX(0deg)');
@@ -51,55 +51,62 @@ function CollectionLanding({ schematicsFilter, data }) {
   }
 
   // =======================[DATA FETCHING]=======================
-  async function fetchCollection() {
-    try {
-      const response = await customFetch(`/get-collection/${id}`, 'GET');
-      // const allTags = await customFetch('/get-tags', 'GET')
-      //   .then((res) => setTagAutocomplete(res.data[0].tags));
-      if (response.status === 200) {
-        if (response.data.collection) {
-          setCollection(response.data.collection);
-          setSchematics(response.data.collection.schematics);
-          setImageDisplay(response.data.collection.image.url);
-          setTags(response.data.collection.tags);
-          setTagAutocomplete(response.data.collection.tags);
-        }
-      } else {
-        notifyError(response.message);
-      }
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
-  }
+
+
   useEffect(() => {
+    async function fetchCollection() {
+      try {
+        const response = await customFetch(`/get-collection/${id}`, 'GET');
+        if (response.status === 200) {
+          if (response.data.collection) {
+            setCollection(response.data.collection);
+            // console.log(response.data.collection.schematics);
+            setSchematics(response.data.collection.schematics);
+            setCachedSchematics(response.data.collection.schematics);
+            setImageDisplay(response.data.collection.image.url);
+            setTags(response.data.collection.tags);
+            setTagAutocomplete(response.data.collection.tags);
+          }
+        } else {
+          notifyError(response.message);
+        }
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
     fetchCollection();
-  }, []);
+  }, [id]);
   // Set collection name field text
   useEffect(() => {
     if (collection && collection.name) {
-      formData.name = collection.name;
+      setFormData((prevState) => ({ ...prevState, name: collection.name }));
     }
   }, [collection]);
   // =======================[DATA FETCHING]=======================
 
 
+  useEffect(() => {
+    console.log('Schematics state:', schematics); // Log the schematics state
+    console.log('CachedSchematics state:', cachedSchematics); // Log the schematics state
+  }, [schematics, cachedSchematics]);
 
   // ==========================[SCHEMATIC FILTERING]==========================
   // Filter Collections based on collectionsFilter
   useEffect(() => {
     if (schematicsFilter) {
-      const filteredCollections = cachedScehmatics.filter((schematic) => {
+      const filteredCollections = cachedSchematics.filter((schematic) => {
         const matchesName = schematic.name.toLowerCase().includes(schematicsFilter.toLowerCase());
         const matchesTags = schematic.tags.some((tag) => tag.toLowerCase().includes(schematicsFilter.toLowerCase()));
         return matchesName || matchesTags;
       });
       setSchematics(filteredCollections);
     } else {
-      setSchematics(cachedScehmatics);
+      setSchematics(cachedSchematics);
     }
-  }, [schematicsFilter, cachedScehmatics]);
+  }, [schematicsFilter, cachedSchematics]);
 
   // Removes the schematic from display
   function popSchematic(event) {
@@ -185,7 +192,7 @@ function CollectionLanding({ schematicsFilter, data }) {
   return (
     <div className="landing-content">
       {/* && schematics[0] */}
-      {schematics ? (
+      {collection ? (
         <div className="landing-content-wrapper">
           {/* Collection Info Component */}
           <div
@@ -293,11 +300,18 @@ function CollectionLanding({ schematicsFilter, data }) {
           </div>
           {/* Schematics container */}
           <div className="schematics-container">
-            {schematics && schematics.length !== 0
+            {schematics && schematics.length > 0 && schematics[0] !== undefined
               ? (
                 schematics.map((schematic) => (
+                  // <p
+                  //   key={schematic._id}
+                  // >
+                  //   {schematic.name}
+                  // </p>
                   <DisplaySchematic
-                    data={schematic}
+                    schematic={schematic}
+                    popSchematic={popSchematic}
+                    key={schematic._id}
                   />
                 ))
               ) : (
@@ -308,7 +322,7 @@ function CollectionLanding({ schematicsFilter, data }) {
           </div>
         </div>
       ) : (
-        <Loading zIndex="1" text={`${collection.name} has no schematics. Add some!`} />
+        <Loading zIndex="1" text={`${collection ? collection.name : ''} has no schematics. Add some!`} />
       )}
 
     </div>

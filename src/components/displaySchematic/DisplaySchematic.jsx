@@ -14,6 +14,11 @@ function DisplaySchematic({ schematic, index, popSchematic }) {
   const [getButtonState, setGetButtonState] = useState(false);
   const { activeUser, handleSetActiveUser } = useContext(UserContext);
 
+  useEffect(() => {
+    console.log('LOGGING SCHEMATIC IN DISPLAY SCHEMATIC COMPONENT');
+    console.log(schematic);
+  }, []);
+
   async function downloadSchematic(event) {
     const id = event.target.name;
     const response = await customFetch(`/get-schematic-file/${id}`);
