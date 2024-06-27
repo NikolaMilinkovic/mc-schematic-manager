@@ -303,11 +303,6 @@ function CollectionLanding({ schematicsFilter, data }) {
             {schematics && schematics.length > 0 && schematics[0] !== undefined
               ? (
                 schematics.map((schematic) => (
-                  // <p
-                  //   key={schematic._id}
-                  // >
-                  //   {schematic.name}
-                  // </p>
                   <DisplaySchematic
                     schematic={schematic}
                     popSchematic={popSchematic}
@@ -315,14 +310,12 @@ function CollectionLanding({ schematicsFilter, data }) {
                   />
                 ))
               ) : (
-            // <p>Nothing to see here</p>
-                null
-                // <Loading zIndex="2" text="Pedro stole all collections..." />
+                <Loading zIndex="2" text="Pedro stole all collections..." />
               )}
           </div>
         </div>
       ) : (
-        <Loading zIndex="1" text={`${collection ? collection.name : ''} has no schematics. Add some!`} />
+        <Loading zIndex="1" text="Loading..." />
       )}
 
     </div>
