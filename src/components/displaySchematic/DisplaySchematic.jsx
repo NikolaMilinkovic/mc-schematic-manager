@@ -99,6 +99,7 @@ function DisplaySchematic({ schematic, index, popSchematic }) {
           loading="lazy"
           style={{ display: imageLoaded ? 'block' : 'hidden' }}
           onLoad={handleImageLoad}
+          className={imageLoaded ? '' : 'hide'}
         />
       </div>
       <div className="schematic-display-buttons">
@@ -126,7 +127,7 @@ function DisplaySchematic({ schematic, index, popSchematic }) {
           <button type="button" onClick={downloadSchematic} name={schematic._id}>Download</button>
           )}
 
-          {activeUser && activeUser.permissions.schematic.remove_schematic === true && <button type="button" onClick={removeSchematic} className="remove-button" name={schematic._id}>Remove</button>}
+          {activeUser && activeUser.permissions.schematic.remove_schematic === true && <button type="button" onClick={removeSchematic} className="remove-button" name={schematic._id}>Delete</button>}
         </div>
       </div>
     </article>

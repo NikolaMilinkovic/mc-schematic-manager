@@ -48,11 +48,12 @@ function DisplayCollection({
               {collectionData && collectionData.blur_hash && !imageLoaded ? (
                 <Blurhash
                   hash={collectionData.blur_hash.hash}
-                  width={collectionData.blur_hash.width}
-                  height={collectionData.blur_hash.height}
+                  width={200}
+                  height={200}
                   resolutionX={32}
                   resolutionY={32}
                   punch={1}
+                  className="image-collection"
                 />
               ) : null}
               <img
@@ -61,11 +62,9 @@ function DisplayCollection({
                 loading="lazy"
                 style={{ display: imageLoaded ? 'block' : 'hidden' }}
                 onLoad={handleImageLoad}
-                className="image-collection"
+                className={imageLoaded ? 'image-collection' : 'hide'}
               />
-              {/* <img className="image-collection" src={collectionData.image.url} alt={`${collectionData.name} collection`} /> */}
             </div>
-
           </div>
           )}
         </article>

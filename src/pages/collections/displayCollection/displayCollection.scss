@@ -137,6 +137,14 @@
         -webkit-user-drag: none;
         -webkit-user-select: none;
         max-height: 200px;
+
+        transition: opacity, filter 0.5s ease;
+      }
+      .hide{
+        width: 0px;
+        height: 0px;
+        opacity: 0.3;
+        filter: blur(8px);
       }
     }
 
