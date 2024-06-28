@@ -104,13 +104,22 @@
   }
 
   img {
-    align-self: center;
-    justify-self: center;
-    overflow: hidden;
-    max-width: 100%;
-    max-height: inherit;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: block;
+    object-position: center;
     object-fit: cover;
+    max-height: 100%;
     user-select: none;
     -webkit-user-drag: none;
+    -webkit-user-select: none;
+    // align-self: center;
+    // justify-self: center;
+    // overflow: hidden;
+    // max-width: 100%;
+    // max-height: inherit;
+    // object-fit: cover;
+    // user-select: none;
+    // -webkit-user-drag: none;
   }
 }

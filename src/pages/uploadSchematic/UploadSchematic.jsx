@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import './uploadSchematic.scss';
 import { v4 as uuid } from 'uuid';
+import { Blurhash } from 'react-blurhash';
 import { notifySuccess, notifyError, notifyInfo } from '../../util-components/Notifications';
 import TagsInput from '../../util-components/TagsInput';
 import FormInput from '../../util-components/FormInput';
@@ -11,6 +12,8 @@ import FileInput from '../../util-components/fileInputComponent/FileInputCompone
 import ImgInputComponent from '../../util-components/imgInputComponent/ImgInputComponent';
 import customFetch from '../../../fetchMethod';
 import imageCompressor from '../../../util-methods/imageCompressor';
+import resizeImage from '../../../util-methods/resizeImage';
+import encodeImageToBlurHash from '../../../util-methods/encodeToBlurHash';
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -61,6 +64,8 @@ function UploadSchematic() {
     const imgInput = imgInputRef.current;
     event.preventDefault();
 
+    console.log('Started schematic upload');
+
     // Check for bad input
     if (tags.length < 1 || schematicName.trim() === '' || !fileInput.files[0]) {
       if (schematicName.trim() === '') {
@@ -97,9 +102,23 @@ function UploadSchematic() {
       try {
         let compressedImage;
         if (image) {
+          console.log('Entered image');
+          // Compressed main image
           compressedImage = await imageCompressor(imgInput.files[0]);
           const imageBase64 = await setFileToBase64(compressedImage);
           formData.append('image', imageBase64);
+
+          const { blurHash, width, height } = await encodeImageToBlurHash(compressedImage);
+          formData.append('blurHash', blurHash);
+          formData.append('blurHashWidth', width);
+          formData.append('blurHashHeight', height);
+
+
+          // Lazy loading small image
+          // const resizedImage = await resizeImage(image);
+          // formData.append('imageSmall', resizedImage);
+          // console.log('Logging Resized Image');
+          // console.log(resizedImage);
         }
         formData.append('schematicFile', file);
         formData.append('tags', tags.join(','));

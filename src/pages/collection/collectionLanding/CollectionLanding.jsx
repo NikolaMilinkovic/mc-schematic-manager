@@ -14,6 +14,7 @@ import FormInput from '../../../util-components/FormInput';
 import TagsInput from '../../../util-components/TagsInput';
 import imageCompressor from '../../../../util-methods/imageCompressor';
 import setFileToBase64 from '../../../../util-methods/fileToBase64';
+import encodeImageToBlurHash from '../../../../util-methods/encodeToBlurHash';
 
 
 
@@ -23,7 +24,7 @@ function CollectionLanding({ schematicsFilter, data }) {
   const [collection, setCollection] = useState(null);
   const [schematics, setSchematics] = useState([]);
   const [cachedSchematics, setCachedSchematics] = useState([]);
-  const [collectionInfoState, setCollectionInfoState] = useState('open');
+  const [collectionInfoState, setCollectionInfoState] = useState('closed');
   const [imageDisplay, setImageDisplay] = useState('');
   const [collectionInfoArrow, setCollectionInfoArrow] = useState('rotateX(0deg)');
   const imageInputRef = useRef('');
@@ -60,7 +61,6 @@ function CollectionLanding({ schematicsFilter, data }) {
         if (response.status === 200) {
           if (response.data.collection) {
             setCollection(response.data.collection);
-            // console.log(response.data.collection.schematics);
             setSchematics(response.data.collection.schematics);
             setCachedSchematics(response.data.collection.schematics);
             setImageDisplay(response.data.collection.image.url);
@@ -168,6 +168,11 @@ function CollectionLanding({ schematicsFilter, data }) {
         avatar = await imageCompressor(imageInput.files[0]);
         const imageBase64 = await setFileToBase64(avatar);
         newFormData.append('avatar', imageBase64);
+
+        const { blurHash, width, height } = await encodeImageToBlurHash(avatar);
+        newFormData.append('blurHash', blurHash);
+        newFormData.append('blurHashWidth', width);
+        newFormData.append('blurHashHeight', height);
       }
       newFormData.append('name', formData.name);
       newFormData.append('tags', tags);
@@ -227,6 +232,7 @@ function CollectionLanding({ schematicsFilter, data }) {
                 <img
                   className="collection-avatar"
                   src={imageDisplay}
+                  loading="lazy"
                   alt={collection ? collection.name : ''}
                   onClick={(e) => newImageInput(e)}
                 />

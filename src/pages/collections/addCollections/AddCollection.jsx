@@ -9,6 +9,7 @@ import ImgInputComponent from '../../../util-components/imgInputComponent/ImgInp
 import TagsInput from '../../../util-components/TagsInput';
 import imageCompressor from '../../../../util-methods/imageCompressor';
 import customFetch from '../../../../fetchMethod';
+import encodeImageToBlurHash from '../../../../util-methods/encodeToBlurHash';
 
 function AddCollection({ state, toggleState, renderer }) {
   const imgInputRef = useRef(null);
@@ -58,6 +59,11 @@ function AddCollection({ state, toggleState, renderer }) {
         avatar = await imageCompressor(imgInput.files[0]);
         const imageBase64 = await setFileToBase64(avatar);
         newFormData.append('avatar', imageBase64);
+
+        const { blurHash, width, height } = await encodeImageToBlurHash(avatar);
+        newFormData.append('blurHash', blurHash);
+        newFormData.append('blurHashWidth', width);
+        newFormData.append('blurHashHeight', height);
       }
 
       newFormData.append('collection_name', collectionForm.collection_name);

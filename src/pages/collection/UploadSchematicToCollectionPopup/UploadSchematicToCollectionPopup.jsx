@@ -11,6 +11,7 @@ import FileInput from '../../../util-components/fileInputComponent/FileInputComp
 import ImgInputComponent from '../../../util-components/imgInputComponent/ImgInputComponent';
 import customFetch from '../../../../fetchMethod';
 import imageCompressor from '../../../../util-methods/imageCompressor';
+import encodeImageToBlurHash from '../../../../util-methods/encodeToBlurHash';
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -119,6 +120,11 @@ function UploadSchematicToCollectionPopup({ state, toggleState, collectionData }
           compressedImage = await imageCompressor(imgInput.files[0]);
           const imageBase64 = await setFileToBase64(compressedImage);
           formData.append('image', imageBase64);
+
+          const { blurHash, width, height } = await encodeImageToBlurHash(compressedImage);
+          formData.append('blurHash', blurHash);
+          formData.append('blurHashWidth', width);
+          formData.append('blurHashHeight', height);
         }
         formData.append('schematicFile', file);
         formData.append('tags', tags.join(','));

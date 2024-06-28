@@ -6,6 +6,7 @@ import {
 import './displaySchematic.scss';
 import { ToastContainer, Bounce } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import { Blurhash } from 'react-blurhash';
 import { notifySuccess, notifyError, notifyInfo } from '../../util-components/Notifications';
 import customFetch from '../../../fetchMethod';
 import { UserContext } from '../../../UserContext';
@@ -13,11 +14,11 @@ import { UserContext } from '../../../UserContext';
 function DisplaySchematic({ schematic, index, popSchematic }) {
   const [getButtonState, setGetButtonState] = useState(false);
   const { activeUser, handleSetActiveUser } = useContext(UserContext);
-
-  useEffect(() => {
-    console.log('LOGGING SCHEMATIC IN DISPLAY SCHEMATIC COMPONENT');
-    console.log(schematic);
-  }, []);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const handleImageLoad = () => {
+    console.log('SETTING IMAGE LOADED TO TRUE!');
+    setImageLoaded(true);
+  };
 
   async function downloadSchematic(event) {
     const id = event.target.name;
@@ -79,8 +80,26 @@ function DisplaySchematic({ schematic, index, popSchematic }) {
     <article key={index} className="schematic-container">
 
       <h2 className="schematic-title">{schematic.name}</h2>
-      <div className="display-schematic-img-container">
-        <img src={schematic.image.url} alt={schematic.name} />
+      <div
+        className="display-schematic-img-container"
+      >
+        {schematic && schematic.blur_hash && !imageLoaded ? (
+          <Blurhash
+            hash={schematic.blur_hash.hash}
+            width={schematic.blur_hash.width}
+            height={schematic.blur_hash.height}
+            resolutionX={32}
+            resolutionY={32}
+            punch={1}
+          />
+        ) : null}
+        <img
+          src={schematic.image.url}
+          alt={schematic.name}
+          loading="lazy"
+          style={{ display: imageLoaded ? 'block' : 'hidden' }}
+          onLoad={handleImageLoad}
+        />
       </div>
       <div className="schematic-display-buttons">
         {activeUser && activeUser.permissions.schematic.get_schematic ? (

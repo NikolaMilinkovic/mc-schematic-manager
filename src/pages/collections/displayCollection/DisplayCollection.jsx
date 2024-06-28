@@ -5,6 +5,7 @@ import {
 import './displayCollection.scss';
 import { v4 as uuid } from 'uuid';
 import { Link } from 'react-router-dom';
+import { Blurhash } from 'react-blurhash';
 import { notifySuccess, notifyError } from '../../../util-components/Notifications';
 import customFetch from '../../../../fetchMethod';
 
@@ -13,6 +14,10 @@ function DisplayCollection({
 }) {
   const [collectionData, setCollectionData] = useState(data);
   const [confirmRemove, setConfirmRemove] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
   function showConfirm() {
     setConfirmRemove(true);
   }
@@ -40,7 +45,25 @@ function DisplayCollection({
           <div>
             <h2 className="title">{collectionData.name}</h2>
             <div className="collection-img-container">
-              <img className="image-collection" src={collectionData.image.url} alt={`${collectionData.name} collection`} />
+              {collectionData && collectionData.blur_hash && !imageLoaded ? (
+                <Blurhash
+                  hash={collectionData.blur_hash.hash}
+                  width={collectionData.blur_hash.width}
+                  height={collectionData.blur_hash.height}
+                  resolutionX={32}
+                  resolutionY={32}
+                  punch={1}
+                />
+              ) : null}
+              <img
+                src={collectionData.image.url}
+                alt={`${collectionData.name} collection`}
+                loading="lazy"
+                style={{ display: imageLoaded ? 'block' : 'hidden' }}
+                onLoad={handleImageLoad}
+                className="image-collection"
+              />
+              {/* <img className="image-collection" src={collectionData.image.url} alt={`${collectionData.name} collection`} /> */}
             </div>
 
           </div>

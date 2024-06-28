@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './imgInputComponent.scss';
+import resizeImage from '../../../util-methods/resizeImage';
 
 function ImgInputComponent({
   reference, rerenderkey, label = 'Click to upload image', schematicObj = '',
@@ -9,6 +10,7 @@ function ImgInputComponent({
   const [displayState, setDisplayState] = useState(false);
   const [arrowState, setArrowState] = useState('rotateX(0deg)');
   const [imgRerender, setImgRerender] = useState(rerenderkey);
+  const [resizedImage, setResizedImage] = useState('');
 
   useEffect(() => {
     setImageDisplay('');
@@ -31,13 +33,19 @@ function ImgInputComponent({
     }
   }
 
-  function handleUpload(event) {
+  async function handleUpload(event) {
     const file = event.target.files[0];
     if (file && file.name) {
       setText(file.name);
       setDisplayState(true);
       setArrowState('rotateX(180deg)');
       setImageDisplay(URL.createObjectURL(file));
+      try {
+        const resizedImageUrl = await resizeImage(file);
+        setResizedImage(resizedImageUrl);
+      } catch (error) {
+        console.error('Error resizing image:', error);
+      }
     }
   }
 
@@ -105,10 +113,18 @@ function ImgInputComponent({
         </button>
         {imageDisplay && displayState
           ? (
-            <img
-              src={imageDisplay}
-              alt="Preview"
-            />
+            <div>
+              <img
+                src={imageDisplay}
+                alt="Preview"
+              />
+              {/* {resizedImage && (
+              <img
+                src={resizedImage}
+                alt="Preview"
+              />
+              )} */}
+            </div>
           )
           : ''}
       </div>
