@@ -315,7 +315,7 @@ function CollectionLanding({ schematicsFilter, data, rerender }) {
                   />
                 ))
               ) : (
-                <Loading zIndex="2" text="Pedro stole all collections..." background={false} />
+                <Loading zIndex="2" text="Pedro stole all schematics..." background={false} />
               )}
           </div>
         </div>
