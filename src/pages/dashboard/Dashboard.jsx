@@ -12,6 +12,7 @@ const apiUrl = import.meta.env.VITE_BACKEND_URL;
 function Dashboard({ schematicsFilter }) {
   const [loading, setLoading] = useState(true);
   const [renderer, setRenderer] = useState(0);
+
   function rerender() {
     setRenderer((prev) => prev + 1);
   }

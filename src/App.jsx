@@ -23,6 +23,10 @@ function App() {
   const [navActive, setNavActive] = useState('');
   const [schematicsFilter, setSchematicsFilter] = useState('');
   const [collectionsFilter, setCollectionsFilter] = useState('');
+  function resetSearchData() {
+    setSchematicsFilter('');
+    setCollectionsFilter('');
+  }
 
   return (
     <BrowserRouter basename="/">
@@ -56,6 +60,7 @@ function App() {
                   navActive={navActive}
                   setNavActive={setNavActive}
                   setSchematicsFilter={setSchematicsFilter}
+                  resetSearch={() => resetSearchData()}
                 />
                 <Dashboard schematicsFilter={schematicsFilter} />
               </ProtectedAuth>
@@ -69,6 +74,7 @@ function App() {
                   navActive={navActive}
                   setNavActive={setNavActive}
                   setCollectionsFilter={setCollectionsFilter}
+                  resetSearch={() => resetSearchData()}
                 />
                 <Collections
                   collectionsFilter={collectionsFilter}
@@ -80,7 +86,11 @@ function App() {
             path="/collections/:id"
             element={(
               <ProtectedAuth>
-                <Navbar navActive={navActive} setNavActive={setNavActive} />
+                <Navbar
+                  navActive={navActive}
+                  setNavActive={setNavActive}
+                  resetSearch={() => resetSearchData()}
+                />
                 <DisplayCollection />
               </ProtectedAuth>
         )}
@@ -89,7 +99,11 @@ function App() {
             path="/upload-schematic"
             element={(
               <ProtectedAuth>
-                <Navbar navActive={navActive} setNavActive={setNavActive} />
+                <Navbar
+                  navActive={navActive}
+                  setNavActive={setNavActive}
+                  resetSearch={() => resetSearchData()}
+                />
                 <UploadSchematic />
               </ProtectedAuth>
         )}
@@ -98,7 +112,11 @@ function App() {
             path="/edit-schematic/:id"
             element={(
               <ProtectedAuth>
-                <Navbar navActive={navActive} setNavActive={setNavActive} />
+                <Navbar
+                  resetSearch={() => resetSearchData()}
+                  navActive={navActive}
+                  setNavActive={setNavActive}
+                />
                 <EditSchematic />
               </ProtectedAuth>
         )}
@@ -107,7 +125,11 @@ function App() {
             path="/profile/:id"
             element={(
               <ProtectedAuth>
-                <Navbar navActive={navActive} setNavActive={setNavActive} />
+                <Navbar
+                  navActive={navActive}
+                  setNavActive={setNavActive}
+                  resetSearch={() => resetSearchData()}
+                />
                 <Profile />
               </ProtectedAuth>
         )}

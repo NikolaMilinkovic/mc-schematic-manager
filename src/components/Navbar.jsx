@@ -8,12 +8,17 @@ import { Link, useLocation } from 'react-router-dom';
 import ProfileDropDown from './profileMenu/ProfileDropDown';
 
 function Navbar({
-  navActive, setNavActive, setSchematicsFilter, setCollectionsFilter,
+  navActive, setNavActive, setSchematicsFilter, setCollectionsFilter, resetSearch,
 }) {
   const navRef = useRef();
   const [prevScrollPos, setScrollPos] = useState(window.scrollY);
   const [transformY, setTransformY] = useState(0);
   const location = useLocation();
+
+  useEffect(() => {
+    console.log('Location changed!');
+    resetSearch();
+  }, [location]);
 
   function filterSchematics(e) {
     setSchematicsFilter(e.target.value);
