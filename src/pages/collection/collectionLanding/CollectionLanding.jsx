@@ -30,6 +30,8 @@ function CollectionLanding({ schematicsFilter, data }) {
   const imageInputRef = useRef('');
   const [tagAutocomplete, setTagAutocomplete] = useState('');
 
+
+
   // ==========================[FORM DATA INPUTS]==========================
   const [tags, setTags] = useState([]);
   const [formData, setFormData] = useState({
@@ -87,11 +89,6 @@ function CollectionLanding({ schematicsFilter, data }) {
   }, [collection]);
   // =======================[DATA FETCHING]=======================
 
-
-  useEffect(() => {
-    console.log('Schematics state:', schematics); // Log the schematics state
-    console.log('CachedSchematics state:', cachedSchematics); // Log the schematics state
-  }, [schematics, cachedSchematics]);
 
   // ==========================[SCHEMATIC FILTERING]==========================
   // Filter Collections based on collectionsFilter

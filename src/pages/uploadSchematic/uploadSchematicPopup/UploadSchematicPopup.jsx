@@ -26,7 +26,7 @@ function reducer(state, action) {
   }
 }
 
-function UploadSchematicPopup({ state, toggleState }) {
+function UploadSchematicPopup({ state, toggleState, scrollOffset }) {
   const [resetKey, dispatch] = useReducer(reducer, initialState);
   const [tags, setTags] = useState([]);
   const [schematicName, setSchematicName] = useState('');
@@ -54,6 +54,25 @@ function UploadSchematicPopup({ state, toggleState }) {
       document.removeEventListener('click', handleClicks);
     };
   }, []);
+
+  // const [offset, setOffset] = useState(0);
+  // useEffect(() => {
+  //   const onScroll = () => {
+  //     setOffset(window.scrollY);
+  //     console.log(window.scrollY);
+  //     console.log('Logging');
+  //   };
+  //   // clean up code
+  //   console.log('Adding event listener on scroll');
+  //   document.addEventListener('scroll', onScroll, { passive: true });
+  //   return () => document.removeEventListener('scroll', onScroll);
+  // }, []);
+
+  // useEffect(() => {
+  //   console.log('Offset updated:', offset);
+  // }, [offset]);
+
+
 
   // Rerenders file input text using reducer method
   function handleReset() {
@@ -248,7 +267,10 @@ function UploadSchematicPopup({ state, toggleState }) {
       onPaste={handlePaste}
       ref={outsideFormRef}
     >
-      <div className="upload-schematic-content-popup">
+      <div
+        className="upload-schematic-content-popup"
+        style={{ marginTop: `calc(${scrollOffset}px + 6rem)` }}
+      >
         <form id="upload-form" onSubmit={submitSchematic} ref={formRef}>
           <h1 className="header">Upload Schematic</h1>
           <section className="inputs-section">

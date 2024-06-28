@@ -12,6 +12,11 @@ const apiUrl = import.meta.env.VITE_BACKEND_URL;
 function Dashboard({ schematicsFilter }) {
   const [loading, setLoading] = useState(true);
 
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const handleScroll = (e) => {
+    setScrollPosition(e.target.scrollTop);
+  };
+
   useEffect(() => {
     const hasLoaded = sessionStorage.getItem('hasLoaded');
     if (hasLoaded) {
@@ -29,11 +34,22 @@ function Dashboard({ schematicsFilter }) {
     console.log(ModalState);
   }
 
+
   return (
-    <body className="dashboard-body">
+    <body
+      className="dashboard-body"
+      onScroll={(e) => handleScroll(e)}
+    >
       {loading && <Loading zIndex="1000" />}
       <div className="dashboard-container">
         <Landing schematicsFilter={schematicsFilter} />
+        <div className="background-overlay-dashboard" />
+
+        <UploadSchematicPopup
+          state={ModalState}
+          toggleState={() => toggleUploadModal()}
+          scrollOffset={scrollPosition}
+        />
       </div>
 
       <DraggableButton
@@ -41,11 +57,7 @@ function Dashboard({ schematicsFilter }) {
         onClick={() => toggleUploadModal()}
         state={ModalState}
       />
-      <UploadSchematicPopup
-        state={ModalState}
-        toggleState={toggleUploadModal}
-      />
-      <div className="background-overlay-dashboard" />
+
     </body>
   );
 }

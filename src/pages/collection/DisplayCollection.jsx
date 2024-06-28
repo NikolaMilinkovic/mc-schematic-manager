@@ -22,6 +22,7 @@ function DisplayCollection({ collectionsFilter, key }) {
   const [loading, setLoading] = useState(true);
   const [addSchematicState, setAddSchematicState] = useState(false);
 
+
   async function fetchCollection() {
     try {
       const response = await customFetch(`/get-collection/${id}`, 'GET');
@@ -47,11 +48,12 @@ function DisplayCollection({ collectionsFilter, key }) {
   }
 
   return (
-    <main className="dashboard-body">
+    <main className="dashboard-body" onScroll={(e) => handleScroll(e)}>
       <div className="dashboard-container">
         <CollectionLanding
           collectionsFilter={collectionsFilter}
           data={collection}
+          scroll={(e) => handleScroll(e)}
         />
       </div>
 
@@ -62,6 +64,7 @@ function DisplayCollection({ collectionsFilter, key }) {
         state={addSchematicState}
         toggleState={showAddSchematic}
         collectionData={collection}
+        // scrollOffset={scrollPosition}
       />
       {/* <AddSchematicToCollection
         state={addSchematicState}

@@ -26,7 +26,9 @@ function reducer(state, action) {
   }
 }
 
-function UploadSchematicToCollectionPopup({ state, toggleState, collectionData }) {
+function UploadSchematicToCollectionPopup({
+  state, toggleState, collectionData,
+}) {
   const [resetKey, dispatch] = useReducer(reducer, initialState);
   const [tags, setTags] = useState([]);
   const [schematicName, setSchematicName] = useState('');
@@ -37,6 +39,19 @@ function UploadSchematicToCollectionPopup({ state, toggleState, collectionData }
   const outsideFormRef = useRef(null);
   const [imgKey, setImgKey] = useState('');
   const [fileInputLabel, setFileInputLabel] = useState('Click to Upload Schematic');
+  const [scrollOffset, setScrollOffset] = useState(0);
+
+  // Handles centering the form
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollOffset(window.scrollY);
+      console.log(window.scrollY);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   // Closes the dropdown when clicked outside of it
   useEffect(() => {
@@ -250,7 +265,10 @@ function UploadSchematicToCollectionPopup({ state, toggleState, collectionData }
       onPaste={handlePaste}
       ref={outsideFormRef}
     >
-      <div className="upload-schematic-content-popup">
+      <div
+        className="upload-schematic-content-popup"
+        style={{ marginTop: `calc(${scrollOffset}px + 6rem)` }}
+      >
         <form id="upload-form" onSubmit={submitSchematic} ref={formRef}>
           <h1 className="header">
             Upload Schematic to

@@ -13,6 +13,8 @@ function Landing({ schematicsFilter }) {
   const [cachedSchematics, setCachedSchematics] = useState([]);
   const [loading, setLoading] = useState(true);
 
+
+
   // Fetch schematics when component mounts
   useEffect(() => {
     async function fetchSchematics() {
@@ -63,7 +65,7 @@ function Landing({ schematicsFilter }) {
                 />
               ))
             ) : (
-              <Loading zIndex="1" text="Pedro stole all schematics..." />
+              <Loading zIndex="2" text="Pedro stole all schematics..." />
             )}
       </div>
     </div>

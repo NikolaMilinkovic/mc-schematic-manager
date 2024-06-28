@@ -18,8 +18,16 @@ function Collections({ collectionsFilter }) {
     setRenderer((prev) => prev + 1);
   }
 
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const handleScroll = (e) => {
+    setScrollPosition(e.target.scrollTop);
+  };
+
   return (
-    <body className="dashboard-body">
+    <body
+      className="dashboard-body"
+      onScroll={(e) => handleScroll(e)}
+    >
       <div className="dashboard-container">
         <CollectionsLanding
           collectionsFilter={collectionsFilter}
@@ -34,6 +42,7 @@ function Collections({ collectionsFilter }) {
         state={addCollectionState}
         toggleState={() => showAddCollection()}
         renderer={() => rerender()}
+        scrollTop={scrollPosition}
       />
       <div className="background-overlay-dashboard" />
     </body>

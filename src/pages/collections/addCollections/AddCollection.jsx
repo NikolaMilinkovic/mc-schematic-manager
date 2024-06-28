@@ -11,7 +11,9 @@ import imageCompressor from '../../../../util-methods/imageCompressor';
 import customFetch from '../../../../fetchMethod';
 import encodeImageToBlurHash from '../../../../util-methods/encodeToBlurHash';
 
-function AddCollection({ state, toggleState, renderer }) {
+function AddCollection({
+  state, toggleState, renderer, scrollPosition,
+}) {
   const imgInputRef = useRef(null);
   const [imgKey, setImgKey] = useState(null);
   const [tagAutocomplete, setTagAutocomplete] = useState([]);
@@ -22,6 +24,19 @@ function AddCollection({ state, toggleState, renderer }) {
   });
   const formRef = useRef(null);
   const outsideFormRef = useRef(null);
+  // const [scrollOffset, setScrollOffset] = useState(0);
+
+  // // Handles centering the form
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     setScrollOffset(window.scrollY);
+  //     console.log(window.scrollY);
+  //   };
+  //   window.addEventListener('scroll', handleScroll, { passive: true });
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll);
+  //   };
+  // }, []);
 
   useEffect(() => {
     setCollectionForm((prev) => ({
@@ -189,7 +204,7 @@ function AddCollection({ state, toggleState, renderer }) {
       onDragOver={(event) => event.preventDefault()}
       onPaste={handlePaste}
     >
-      <form className="new-collection-form" ref={formRef}>
+      <form className="new-collection-form" ref={formRef} style={{ marginTop: `calc(${scrollPosition}px + 6rem)` }}>
         <h2 className="header">Add new Collection:</h2>
         <div className="name-img-inputs">
 

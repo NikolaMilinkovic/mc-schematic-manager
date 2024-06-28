@@ -2,15 +2,17 @@
   @import url('../../global/global.scss');
 
   .dashboard-body{
-    .background-overlay-dashboard{
-      position: fixed;
-      display: flex;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.35); 
-      z-index: 1;
+    .dashboard-container{
+      .background-overlay-dashboard{
+        position: absolute;
+        display: flex;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.2); 
+        z-index: 1;
+      }
     }
   }
 
@@ -19,7 +21,6 @@
     position: relative;
     min-width: 100vw;
     min-height: 100vh;
-
     background-image: url('/img/jungle-background.jpg');
     background-size: cover;
     background-position: center;
