@@ -10,13 +10,13 @@ import CollectionsLanding from './collectionsLanding/CollectionsLanding';
 function Collections({ collectionsFilter }) {
   const [addCollectionState, setAddCollectionState] = useState(false);
   const [renderer, setRenderer] = useState(0);
-
-  function showAddCollection() {
-    setAddCollectionState((prevState) => !prevState);
-  }
   function rerender() {
     setRenderer((prev) => prev + 1);
   }
+  function showAddCollection() {
+    setAddCollectionState((prevState) => !prevState);
+  }
+
 
   const [scrollPosition, setScrollPosition] = useState(0);
   const handleScroll = (e) => {

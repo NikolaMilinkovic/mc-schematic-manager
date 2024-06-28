@@ -84,7 +84,6 @@ function Register() {
       body: JSON.stringify(formData),
     })
       .then((response) => {
-        console.log(response);
         if (!response.ok) {
           return response.json().then((data) => {
             if (response.status === 409) {

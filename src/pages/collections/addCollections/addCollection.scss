@@ -39,6 +39,8 @@ main.add-collection-main{
     gap: 1rem;
     margin-bottom: auto;
     margin-top: 1rem;
+    overflow: auto;
+    max-height: 75vh;
 
     .header{
       display: flex;

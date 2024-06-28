@@ -64,8 +64,6 @@ function UploadSchematic() {
     const imgInput = imgInputRef.current;
     event.preventDefault();
 
-    console.log('Started schematic upload');
-
     // Check for bad input
     if (tags.length < 1 || schematicName.trim() === '' || !fileInput.files[0]) {
       if (schematicName.trim() === '') {
@@ -102,7 +100,6 @@ function UploadSchematic() {
       try {
         let compressedImage;
         if (image) {
-          console.log('Entered image');
           // Compressed main image
           compressedImage = await imageCompressor(imgInput.files[0]);
           const imageBase64 = await setFileToBase64(compressedImage);
@@ -112,13 +109,6 @@ function UploadSchematic() {
           formData.append('blurHash', blurHash);
           formData.append('blurHashWidth', width);
           formData.append('blurHashHeight', height);
-
-
-          // Lazy loading small image
-          // const resizedImage = await resizeImage(image);
-          // formData.append('imageSmall', resizedImage);
-          // console.log('Logging Resized Image');
-          // console.log(resizedImage);
         }
         formData.append('schematicFile', file);
         formData.append('tags', tags.join(','));

@@ -21,27 +21,32 @@ function DisplayCollection({ collectionsFilter, key }) {
   const [collection, setCollection] = useState(null);
   const [loading, setLoading] = useState(true);
   const [addSchematicState, setAddSchematicState] = useState(false);
-
-
-  async function fetchCollection() {
-    try {
-      const response = await customFetch(`/get-collection/${id}`, 'GET');
-      if (response.status === 200) {
-        if (response.data.collection) {
-          setCollection(response.data.collection);
-        }
-      } else {
-        notifyError(response.message);
-      }
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
+  const [renderer, setRenderer] = useState(0);
+  function rerender() {
+    setRenderer((prev) => prev + 1);
   }
+
+
   useEffect(() => {
+    async function fetchCollection() {
+      try {
+        const response = await customFetch(`/get-collection/${id}`, 'GET');
+        if (response.status === 200) {
+          if (response.data.collection) {
+            setCollection(response.data.collection);
+          }
+        } else {
+          notifyError(response.message);
+        }
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
     fetchCollection();
-  }, []);
+  }, [id]);
 
   function showAddSchematic() {
     setAddSchematicState((prevState) => !prevState);
@@ -54,6 +59,7 @@ function DisplayCollection({ collectionsFilter, key }) {
           collectionsFilter={collectionsFilter}
           data={collection}
           scroll={(e) => handleScroll(e)}
+          rerender={renderer}
         />
       </div>
 
@@ -64,7 +70,7 @@ function DisplayCollection({ collectionsFilter, key }) {
         state={addSchematicState}
         toggleState={showAddSchematic}
         collectionData={collection}
-        // scrollOffset={scrollPosition}
+        rerender={() => rerender()}
       />
       {/* <AddSchematicToCollection
         state={addSchematicState}

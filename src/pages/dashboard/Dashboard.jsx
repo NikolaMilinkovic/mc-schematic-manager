@@ -11,7 +11,10 @@ const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 function Dashboard({ schematicsFilter }) {
   const [loading, setLoading] = useState(true);
-
+  const [renderer, setRenderer] = useState(0);
+  function rerender() {
+    setRenderer((prev) => prev + 1);
+  }
   const [scrollPosition, setScrollPosition] = useState(0);
   const handleScroll = (e) => {
     setScrollPosition(e.target.scrollTop);
@@ -28,10 +31,10 @@ function Dashboard({ schematicsFilter }) {
       }, 1500);
     }
   }, []);
+
   const [ModalState, setModalState] = useState(false);
   function toggleUploadModal() {
     setModalState((prevState) => !prevState);
-    console.log(ModalState);
   }
 
 
@@ -42,13 +45,17 @@ function Dashboard({ schematicsFilter }) {
     >
       {loading && <Loading zIndex="1000" />}
       <div className="dashboard-container">
-        <Landing schematicsFilter={schematicsFilter} />
+        <Landing
+          schematicsFilter={schematicsFilter}
+          rerender={renderer}
+        />
         <div className="background-overlay-dashboard" />
 
         <UploadSchematicPopup
           state={ModalState}
           toggleState={() => toggleUploadModal()}
           scrollOffset={scrollPosition}
+          rerender={() => rerender()}
         />
       </div>
 

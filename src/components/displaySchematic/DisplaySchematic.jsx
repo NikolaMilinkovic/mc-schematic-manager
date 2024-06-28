@@ -11,12 +11,29 @@ import { notifySuccess, notifyError, notifyInfo } from '../../util-components/No
 import customFetch from '../../../fetchMethod';
 import { UserContext } from '../../../UserContext';
 
-function DisplaySchematic({ schematic, index, popSchematic }) {
+function DisplaySchematic({
+  schematic, index, popSchematic, collectionId,
+}) {
   const [getButtonState, setGetButtonState] = useState(false);
   const { activeUser, handleSetActiveUser } = useContext(UserContext);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [confirmRemove, setConfirmRemove] = useState(false);
+  const [removeOrDelete, setRemoveOrDelete] = useState();
+
+  function showConfirm(para) {
+    if (para === 'delete') {
+      setRemoveOrDelete('delete');
+    }
+    if (para === 'remove') {
+      setRemoveOrDelete('remove');
+    }
+    setConfirmRemove(true);
+  }
+  function closeConfirm() {
+    setConfirmRemove(false);
+  }
+
   const handleImageLoad = () => {
-    console.log('SETTING IMAGE LOADED TO TRUE!');
     setImageLoaded(true);
   };
 
@@ -72,14 +89,86 @@ function DisplaySchematic({ schematic, index, popSchematic }) {
         if (response.status === 201) {
           return notifySuccess('Success, schematic removed!');
         }
-        return notifyError('Uh on something went wrong!');
+        return notifyError('Uh oh something went wrong!');
       });
   }
 
+  // Removes schematic from Collection and Display
+  async function removeSchematicFromCollection(event) {
+    const id = event.target.name;
+    const formData = new FormData();
+    formData.append('collectionId', collectionId);
+
+    try {
+      const response = await customFetch(`/remove-schematic-from-collection/${id}`, 'POST', formData);
+
+      if (response.status === 201 || response.status === 200) {
+        notifySuccess('Success, schematic removed from collection!');
+        popSchematic(event);
+      } else {
+        notifyError(response.data.message);
+      }
+    } catch (err) {
+      console.error('Error removing schematic:', err);
+      notifyError('An error occurred while removing the schematic.');
+    }
+  }
   return (
     <article key={index} className="schematic-container">
-
       <h2 className="schematic-title">{schematic.name}</h2>
+      {confirmRemove && (
+      <div className="confirmation-modal">
+        <div className="choices-container">
+          {/* DELETE or REMOVE */}
+          {removeOrDelete === 'delete' ? (
+            <h3 className="text">Are you sure you want to DELETE this schematic?</h3>
+          ) : (
+            <h3 className="text">Are you sure you want to REMOVE this schematic from this collection?</h3>
+          )}
+          <div className="buttons-container">
+            {/* BUTTON YES */}
+            {/* DELETE or REMOVE */}
+            {removeOrDelete === 'delete' ? (
+              (
+                // BUTTON DELETE
+                <button
+                  type="button"
+                  className="btn-yes"
+                  onClick={(e) => removeSchematic(e)}
+                  name={schematic._id}
+                >
+                  Yes
+                </button>
+              )
+            ) : (
+              (
+                // BUTTON REMOVE FROM COLLECTION
+                <button
+                  type="button"
+                  className="btn-yes"
+                  onClick={(e) => removeSchematicFromCollection(e)}
+                  name={schematic._id}
+                >
+                  Yes
+                </button>
+              )
+            )}
+
+
+            {/* BUTTON NO */}
+            <button
+              type="button"
+              className="btn-no"
+              onClick={closeConfirm}
+            >
+              No
+            </button>
+          </div>
+        </div>
+      </div>
+      )}
+
+
       <div
         className="display-schematic-img-container"
       >
@@ -127,8 +216,14 @@ function DisplaySchematic({ schematic, index, popSchematic }) {
           <button type="button" onClick={downloadSchematic} name={schematic._id}>Download</button>
           )}
 
-          {activeUser && activeUser.permissions.schematic.remove_schematic === true && <button type="button" onClick={removeSchematic} className="remove-button" name={schematic._id}>Delete</button>}
+          {activeUser && activeUser.permissions.schematic.remove_schematic === true && <button type="button" onClick={() => showConfirm('delete')} className="remove-button">Delete</button>}
+
         </div>
+        {collectionId && (
+        <div>
+          {activeUser && activeUser.permissions.schematic.remove_schematic === true && <button type="button" onClick={() => showConfirm('remove')} className="remove-button">Remove from collection</button>}
+        </div>
+        )}
       </div>
     </article>
   );

@@ -1,21 +1,18 @@
 /* eslint-disable no-nested-ternary */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import './landing.scss';
 import Loading from '../loading/Loading';
 import DisplaySchematic from '../displaySchematic/DisplaySchematic';
 import { notifySuccess } from '../../util-components/Notifications';
 import customFetch from '../../../fetchMethod';
-import DraggableButton from '../DraggableButton/DraggableButton';
-import UploadSchematicPopup from '../../pages/uploadSchematic/uploadSchematicPopup/UploadSchematicPopup';
 
-function Landing({ schematicsFilter }) {
+function Landing({ schematicsFilter, rerender }) {
   const [schematics, setSchematics] = useState([]);
   const [cachedSchematics, setCachedSchematics] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
-
-  // Fetch schematics when component mounts
+  // Fetch schematics when component mounts and rerenders component when
+  // new schematic is added
   useEffect(() => {
     async function fetchSchematics() {
       const response = await customFetch('/get-schematics', 'GET');
@@ -24,7 +21,7 @@ function Landing({ schematicsFilter }) {
       setLoading(false);
     }
     fetchSchematics();
-  }, []);
+  }, [rerender]);
 
   // Filter schematics based on schematicsFilter
   useEffect(() => {

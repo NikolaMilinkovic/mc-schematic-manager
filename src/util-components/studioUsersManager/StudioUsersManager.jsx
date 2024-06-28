@@ -115,8 +115,6 @@ function StudioUsersManager() {
     if (activeUser !== undefined) {
       const getAllStudioUsers = async () => {
         const allStudioUsers = await customFetch('/get-all-studio-users', 'GET');
-
-        console.log(allStudioUsers);
         if (
           allStudioUsers
           && allStudioUsers.data.studio

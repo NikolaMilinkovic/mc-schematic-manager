@@ -18,7 +18,7 @@ import encodeImageToBlurHash from '../../../../util-methods/encodeToBlurHash';
 
 
 
-function CollectionLanding({ schematicsFilter, data }) {
+function CollectionLanding({ schematicsFilter, data, rerender }) {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const [collection, setCollection] = useState(null);
@@ -80,7 +80,8 @@ function CollectionLanding({ schematicsFilter, data }) {
     }
 
     fetchCollection();
-  }, [id]);
+  }, [id, rerender]);
+
   // Set collection name field text
   useEffect(() => {
     if (collection && collection.name) {
@@ -310,10 +311,11 @@ function CollectionLanding({ schematicsFilter, data }) {
                     schematic={schematic}
                     popSchematic={popSchematic}
                     key={schematic._id}
+                    collectionId={collection._id}
                   />
                 ))
               ) : (
-                <Loading zIndex="2" text="Pedro stole all collections..." />
+                <Loading zIndex="2" text="Pedro stole all collections..." background={false} />
               )}
           </div>
         </div>

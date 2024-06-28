@@ -26,7 +26,9 @@ function reducer(state, action) {
   }
 }
 
-function UploadSchematicPopup({ state, toggleState, scrollOffset }) {
+function UploadSchematicPopup({
+  state, toggleState, scrollOffset, rerender,
+}) {
   const [resetKey, dispatch] = useReducer(reducer, initialState);
   const [tags, setTags] = useState([]);
   const [schematicName, setSchematicName] = useState('');
@@ -54,24 +56,6 @@ function UploadSchematicPopup({ state, toggleState, scrollOffset }) {
       document.removeEventListener('click', handleClicks);
     };
   }, []);
-
-  // const [offset, setOffset] = useState(0);
-  // useEffect(() => {
-  //   const onScroll = () => {
-  //     setOffset(window.scrollY);
-  //     console.log(window.scrollY);
-  //     console.log('Logging');
-  //   };
-  //   // clean up code
-  //   console.log('Adding event listener on scroll');
-  //   document.addEventListener('scroll', onScroll, { passive: true });
-  //   return () => document.removeEventListener('scroll', onScroll);
-  // }, []);
-
-  // useEffect(() => {
-  //   console.log('Offset updated:', offset);
-  // }, [offset]);
-
 
 
   // Rerenders file input text using reducer method
@@ -159,6 +143,7 @@ function UploadSchematicPopup({ state, toggleState, scrollOffset }) {
           setImgKey(uuid());
           fileInputRef.current.value = null;
           handleReset();
+          rerender();
 
           notifySuccess('Schematic uploaded successfully!');
         } else if (response.status === 400) {

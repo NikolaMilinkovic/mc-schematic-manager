@@ -40,7 +40,6 @@ function ResetPassword() {
         return null;
       }
 
-      console.log(apiUrl);
       const response = await fetch(`${apiUrl}/password-reset`, {
         method: 'PATCH',
         headers: {

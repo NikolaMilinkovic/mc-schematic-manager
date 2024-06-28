@@ -24,19 +24,6 @@ function AddCollection({
   });
   const formRef = useRef(null);
   const outsideFormRef = useRef(null);
-  // const [scrollOffset, setScrollOffset] = useState(0);
-
-  // // Handles centering the form
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     setScrollOffset(window.scrollY);
-  //     console.log(window.scrollY);
-  //   };
-  //   window.addEventListener('scroll', handleScroll, { passive: true });
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
-  //   };
-  // }, []);
 
   useEffect(() => {
     setCollectionForm((prev) => ({
@@ -102,9 +89,6 @@ function AddCollection({
     }
   }
 
-  useEffect(() => {
-    console.log(tags);
-  }, [tags]);
   // Closes the dropdown when clicked outside of it
   useEffect(() => {
     function handleClicks(event) {

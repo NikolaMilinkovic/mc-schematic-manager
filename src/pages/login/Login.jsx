@@ -59,7 +59,6 @@ function Login() {
     })
       .then((response) => {
         if (response.status === 401) {
-          // console.log(response);
           setError('Username or password is incorrect.');
           return null;
         }
@@ -69,9 +68,6 @@ function Login() {
         if (data && data.token) {
           cookies.set('token', data.token, { path: '/', maxAge: 365 * 24 * 60 * 60 });
           if (data.studioUser) {
-            console.log('THERE IS STUDIO USER');
-            console.log(data.studioUser);
-            console.log(data.user);
             handleSetActiveUser(data.studioUser);
             localStorage.setItem('activeUser', JSON.stringify(data.studioUser));
           } else {

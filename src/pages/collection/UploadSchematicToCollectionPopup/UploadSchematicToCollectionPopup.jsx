@@ -27,7 +27,7 @@ function reducer(state, action) {
 }
 
 function UploadSchematicToCollectionPopup({
-  state, toggleState, collectionData,
+  state, toggleState, collectionData, rerender,
 }) {
   const [resetKey, dispatch] = useReducer(reducer, initialState);
   const [tags, setTags] = useState([]);
@@ -45,7 +45,6 @@ function UploadSchematicToCollectionPopup({
   useEffect(() => {
     const handleScroll = () => {
       setScrollOffset(window.scrollY);
-      console.log(window.scrollY);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
@@ -157,6 +156,7 @@ function UploadSchematicToCollectionPopup({
           setImgKey(uuid());
           fileInputRef.current.value = null;
           handleReset();
+          rerender();
 
           notifySuccess('Schematic uploaded successfully!');
         } else if (response.status === 400) {

@@ -23,7 +23,6 @@ function UserProvider({ children }) {
       cookies.remove('token', { path: '/' });
       if (location.pathname === '/register') return;
       if (location.pathname === '/reset-password') return;
-      console.log(location.pathname.split('/'));
       if (location.pathname.includes('/set-new-password/')) return;
       navigate('/login');
     }

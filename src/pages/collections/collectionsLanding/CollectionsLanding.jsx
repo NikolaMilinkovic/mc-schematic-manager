@@ -47,7 +47,6 @@ function CollectionsLanding({ collectionsFilter, renderer }) {
   // Removes the schematic from display
   function popCollection(event) {
     const collectionId = event.target.name;
-    console.log(collectionId);
     const newCollectionList = collections.filter((collection) => collection._id !== collectionId);
     setCollections(newCollectionList);
   }

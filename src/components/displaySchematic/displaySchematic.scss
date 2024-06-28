@@ -1,14 +1,65 @@
 @import url('../../global/colors.scss');
 @import url('../../global/global.scss');
 
+.confirmation-modal{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+
+  .choices-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    .text{
+      text-align: center;
+    }
+  }
+  .buttons-container{
+    display: flex;
+    gap: 1rem;
+
+    .btn-yes,
+    .btn-no{
+      display: flex;
+      padding: 1rem;
+      min-width: 100px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 5px;
+      border: 1px solid var(--borders);
+      background-color: var(--black);
+      cursor: pointer;
+
+      &:hover{
+        color: black;
+        background-color: whitesmoke;
+      }
+
+      &:active{
+        transform: scale(0.95);
+      }
+    }
+  }
+}
+
 .schematic-container{
   overflow: hidden;
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  height: 45vh;
-  min-height: 45vh;
-  max-height: 45vh;
+  height: 50vh;
+  min-height: 50vh;
+  max-height: 50vh;
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.7);
   box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
@@ -22,6 +73,8 @@
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   }
 
+
+
   .display-schematic-img-container {
     margin-top: 10px;
     overflow: hidden;
@@ -34,6 +87,8 @@
     border-radius: 5px;
     background-size: cover;
     background-position: center;
+
+    
 
     img {
       width: 100%;
@@ -56,6 +111,7 @@
     }
   }
 
+  
   .schematic-display-buttons{
     display: flex;
     width: 100%;
@@ -124,16 +180,16 @@
 
 @media only screen and (max-width: 1444px) {
   article.schematic-container{
-    min-height: 45vh;
+    min-height: 50vh;
   }
 }
 @media only screen and (max-width: 1024px) {
   article.schematic-container{
-    min-height: 45vh;
+    min-height: 50vh;
   }
 }
 @media only screen and (max-width: 600px) {
   article.schematic-container{
-    min-height: 80vh;
+    min-height: 85h;
   }
 }
