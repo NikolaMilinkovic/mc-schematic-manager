@@ -202,15 +202,17 @@ function DisplaySchematic({
 
         <div>
           {activeUser && activeUser.permissions.schematic.edit_schematic && (
-          <button type="button">
-            <Link
-              className="link"
-              name="link"
-              to={`/edit-schematic/${schematic._id}`}
-            >
-              Edit
-            </Link>
-          </button>
+
+            <button type="button" className="edit-button">
+              <Link
+                className="link"
+                name="link"
+                to={`/edit-schematic/${schematic._id}`}
+              >
+                Edit
+              </Link>
+            </button>
+
           )}
           {activeUser && activeUser.permissions.schematic.download_schematic && (
           <button type="button" onClick={downloadSchematic} name={schematic._id}>Download</button>
