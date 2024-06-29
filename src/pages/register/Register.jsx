@@ -175,7 +175,17 @@ function Register() {
         </p>
 
       </form>
-      <p className="copyright">©2024 Gold Studios, All right reserved.</p>
+      {/* COPYRIGHT */}
+      <a
+        href="https://github.com/NikolaMilinkovic"
+        className="copyright-link"
+        target="_blank"
+      >
+        <p className="copyright">
+          ©2024
+          nikolamlinkovic221@gmail.com
+        </p>
+      </a>
       <div className="background-overlay" />
     </body>
   );

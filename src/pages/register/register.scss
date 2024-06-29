@@ -147,16 +147,25 @@ body.register-body{
     margin-bottom: 3rem;
   }
 
-  .copyright{
-    position: absolute;
-    width: 200px;
-    bottom: 50px;
-    left: calc(50% - 100px);
-    text-align: center;
+  .copyright-link{
+    text-decoration: none;
     color: #d9d9d9f3;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 1rem;
-    z-index: 4;
+
+    &:hover{
+      color: #8bacea;
+    }
+  
+    .copyright{
+      display: flex;
+      position: absolute;
+      width: 350px;
+      bottom: 30px;
+      left: calc(50% - 175px);
+      text-align: center;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 1rem;
+      z-index: 4;
+    }
   }
 }
 
