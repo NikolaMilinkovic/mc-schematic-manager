@@ -257,7 +257,7 @@
   .collections-container{
     position: relative;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr !important;
+    grid-template-columns: 1fr 1fr 1fr 1fr !important;
     gap: 1rem;
   }
 }
@@ -265,7 +265,7 @@
   .collections-container{
     position: relative;
     display: grid;
-    grid-template-columns: 1fr 1fr !important;
+    grid-template-columns: 1fr 1fr 1fr !important;
     gap: 1rem;
   }
 }
