@@ -1,0 +1,46 @@
+@import url('../../global/colors.scss');
+@import url('../../global/global.scss');
+
+
+
+.display-collections{
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: min-content;
+  overflow: hidden;
+  border: 2px solid var(--black);
+  padding: 1rem;
+  background-color: var(--black);
+  min-height: 300px;
+  max-height: 300px;
+  box-sizing: border-box;
+  overflow: auto;
+
+
+  .collection{
+    display: flex;
+    padding: 1rem;
+    border: 2px solid var(--borders);
+    background-color: transparent;
+    cursor: pointer;
+    height: fit-content;
+    align-items: center;
+    justify-content: center;
+    word-break: break-all;
+    max-height: min-content;
+
+    &:hover{
+      background-color: var(--danger);
+      color: var(--black);
+    }
+    user-select: none;
+    &:active{
+      transform: scale(0.95);
+    }
+    &:focus{
+      background-color: var(--danger);
+      outline: none;
+    }
+  }
+}

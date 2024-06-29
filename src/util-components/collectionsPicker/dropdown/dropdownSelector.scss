@@ -1,0 +1,59 @@
+@import url('../../../global/colors.scss');
+@import url('../../../global/global.scss');
+
+.dropdown-wrapper{
+  display: flex;
+  width: 100%;
+  position: relative;
+
+  .main-button{
+    min-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    button{
+      display: flex;
+      min-width: 100%;
+      padding: 1rem;
+      background-color: var(--black);
+      border: 1px solid var(--borders);
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      cursor: pointer;
+      &:hover{
+        background-color: var(--highlight-hover);
+      }
+      .toggle-preview-icon{
+        color: whitesmoke;
+        height: 30px;
+        width: 30px;
+      }
+    }
+
+
+  }
+  .dropdown-elements{
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    width: 100%;
+    top: 4rem;
+    background-color: black;
+    // min-height: 220px;
+    max-height: 220px;
+    overflow: auto;
+    transition: 0.2s ease;
+
+    .item{
+      padding: 0.5rem;
+      background-color: transparent;
+      border: 1px solid var(--borders);
+      cursor: pointer;
+      &:hover{
+        background-color: var(--highlight-hover);
+      }
+    }
+  }
+}

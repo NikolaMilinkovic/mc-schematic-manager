@@ -285,9 +285,6 @@ function CollectionLanding({ schematicsFilter, data, rerender }) {
             <div
               className={`add-remove-schem-container ${collectionInfoState === 'open' ? 'info-content-open-state' : 'info-content-closed-state'}`}
             >
-              <h2>Add / Remove schematic to collection:</h2>
-              {/* ADD / REMOVE SHCMEATIC COMPONENT */}
-
               {/* SUBMIT BUTTON */}
               <div className="submit-button-container">
                 <button

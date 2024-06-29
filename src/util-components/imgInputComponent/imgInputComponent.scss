@@ -41,10 +41,8 @@
   max-height: 800px;
   position: relative;
   padding: 0px 10px;
-  padding-bottom: 10px;
-  padding-top: 50px;
+  padding-top: 60px;
   background-color: var(--black);
-  transition: 1s ease;
   overflow: hidden;
 
   .toggle-preview-btn{
@@ -113,13 +111,5 @@
     user-select: none;
     -webkit-user-drag: none;
     -webkit-user-select: none;
-    // align-self: center;
-    // justify-self: center;
-    // overflow: hidden;
-    // max-width: 100%;
-    // max-height: inherit;
-    // object-fit: cover;
-    // user-select: none;
-    // -webkit-user-drag: none;
   }
 }

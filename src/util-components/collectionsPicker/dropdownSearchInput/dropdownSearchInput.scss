@@ -1,0 +1,62 @@
+@import url('../../../global/colors.scss');
+@import url('../../../global/global.scss');
+
+.input-container{
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 0.3fr;
+  width: 100%;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    cursor: pointer;
+    border: 2px solid var(--borders);
+    background-color: var(--black);
+    &:hover{
+      border: 2px solid var(--highlight);
+      background-color: var(--highlight);
+    }
+    &:active{
+      transform: scale(0.95);
+    }
+    &:focus{
+      outline: none;
+      border: 2px solid var(--highlight);
+    }
+  }
+
+
+  .input-wrapper{
+    position: relative;
+    display: flex;
+    width: 100%;
+    
+    #collection-input{
+      display: flex;
+      width: 100%;
+      background-color: var(--black);
+      border: 2px solid var(--borders);
+      padding: 0.7rem;
+      position: relative;
+      color: whitesmoke;
+      &:focus{
+        border: 2px solid var(--highlight);
+        outline: none;
+      }
+    }
+
+    #autocomplete-span{
+      color: lightgray;
+      position: absolute;
+      top: calc(50% - 9px);
+      left: 13px;
+    }
+  }
+
+}
+

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, {
   useEffect, useState, useRef, useReducer,
 } from 'react';
@@ -13,6 +14,7 @@ import ImgInputComponent from '../../util-components/imgInputComponent/ImgInputC
 import customFetch from '../../../fetchMethod';
 import encodeImageToBlurHash from '../../../util-methods/encodeToBlurHash';
 import imageCompressor from '../../../util-methods/imageCompressor';
+import CollectionsPicker from '../../util-components/collectionsPicker/CollectionsPicker';
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -38,6 +40,31 @@ function EditSchematic() {
   const [fileInputLabel, setFileInputLabel] = useState('Upload File');
   const [imgInputLabel, setImgInputLabel] = useState('Upload Image');
   const [resetKey, dispatch] = useReducer(reducer, initialState);
+  const [collectionsList, setCollectionsList] = useState([]);
+  const [schematicsCollections, setSchematicsCollections] = useState([]);
+  const [updatedCollectionsList, setUpdatedCollectionsList] = useState([]);
+  const [removedCollections, setRemovedCollection] = useState([]);
+  const [newCollections, setNewCollections] = useState([]);
+
+
+
+  useEffect(() => {
+    function getRemovedCollections() {
+      const updatedCollectionIds = new Set(updatedCollectionsList.map((collection) => collection.collection_id));
+
+      const removed = schematicsCollections.filter((collection) => !updatedCollectionIds.has(collection.collection_id));
+
+      setRemovedCollection(removed);
+    }
+    function getNewCollections() {
+      const schematicsCollectionIds = new Set(schematicsCollections.map((collection) => collection.collection_id));
+      const addedCollections = updatedCollectionsList.filter((collection) => !schematicsCollectionIds.has(collection.collection_id));
+      setNewCollections(addedCollections);
+    }
+
+    getRemovedCollections();
+    getNewCollections();
+  }, [updatedCollectionsList, schematicsCollections]);
 
   useEffect(() => {
     customFetch(`/get-schematic/${id}`)
@@ -52,6 +79,18 @@ function EditSchematic() {
       })
       .catch((error) => console.error('Error fetching schematic:', error));
   }, []);
+
+  useEffect(() => {
+    async function fetchCollections() {
+      const collectionsList = await customFetch('/get-collections-list', 'GET');
+      setCollectionsList(collectionsList.data.collections);
+
+      const schematicsCollectionsList = await customFetch(`/get-schematcis-collection-list/${schematic._id}`, 'GET');
+      setSchematicsCollections(schematicsCollectionsList.data.currentCollections);
+    }
+
+    fetchCollections();
+  }, [schematic]);
 
   async function fetchTags() {
     const allTags = await customFetch('/get-tags', 'GET')
@@ -95,11 +134,19 @@ function EditSchematic() {
         reader.onerror = reject;
       });
 
+      // TO HANDLE IN BACKEND
+      // Skinute kolekcije
+      // removedCollections
+
+      // Dodate kolekcije
+      // newCollections
+
       try {
         const formData = new FormData();
 
         if (file) formData.append('schematicFile', file);
         let compressedImage;
+
         if (image) {
           compressedImage = await imageCompressor(imgInput.files[0]);
           const imageBase64 = await setFileToBase64(compressedImage);
@@ -112,11 +159,15 @@ function EditSchematic() {
         }
         formData.append('tags', tags.join(','));
         formData.append('schematicName', schematicName);
+        formData.append('updatedCollections', JSON.stringify(newCollections));
+        formData.append('removedCollections', JSON.stringify(removedCollections));
 
         const result = await customFetch(`/update-schematic/${id}`, 'POST', formData)
         // Display responses based on status returned
           .then((response) => {
             if (response.status === 200) {
+              setNewCollections([]);
+              setRemovedCollection([]);
               return notifySuccess('Schematic updated successfully!');
             }
             if (response.status === 400) {
@@ -247,6 +298,12 @@ function EditSchematic() {
             setTags={setTags}
             autocomplete={tagAutocomplete}
             id="tags-input"
+          />
+          <CollectionsPicker
+            collectionsData={collectionsList}
+            currentCollectionsData={schematicsCollections}
+            schematicData={schematic}
+            updateSchematicCollections={setUpdatedCollectionsList}
           />
           <button className="submit-btn" type="submit">Update Schematic</button>
         </form>

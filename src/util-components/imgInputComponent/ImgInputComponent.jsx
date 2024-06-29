@@ -118,12 +118,6 @@ function ImgInputComponent({
                 src={imageDisplay}
                 alt="Preview"
               />
-              {/* {resizedImage && (
-              <img
-                src={resizedImage}
-                alt="Preview"
-              />
-              )} */}
             </div>
           )
           : ''}
