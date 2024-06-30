@@ -12,6 +12,7 @@ import ImgInputComponent from '../../../util-components/imgInputComponent/ImgInp
 import customFetch from '../../../../fetchMethod';
 import imageCompressor from '../../../../util-methods/imageCompressor';
 import encodeImageToBlurHash from '../../../../util-methods/encodeToBlurHash';
+import CollectionsPicker from '../../../util-components/collectionsPicker/CollectionsPicker';
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -40,6 +41,32 @@ function UploadSchematicToCollectionPopup({
   const [imgKey, setImgKey] = useState('');
   const [fileInputLabel, setFileInputLabel] = useState('Click to Upload Schematic');
   const [scrollOffset, setScrollOffset] = useState(0);
+
+
+  // Collection Picker
+  const [currentCollectionObj, setCurrentCollectionObj] = useState([]);
+  const [collectionsList, setCollectionsList] = useState([]);
+  const [updatedCollectionsList, setUpdatedCollectionsList] = useState([]);
+
+  // Sets the innitial collection to schematic add
+  useEffect(() => {
+    if (collectionData && collectionData.name && collectionData._id) {
+      setCurrentCollectionObj([{
+        collection_name: collectionData.name,
+        collection_id: collectionData._id,
+      }]);
+    }
+  }, [collectionData]);
+
+  useEffect(() => {
+    async function fetchCollections() {
+      const collections = await customFetch('/get-collections-list', 'GET');
+      setCollectionsList(collections.data.collections);
+    }
+
+    fetchCollections();
+  }, []);
+
 
   // Handles centering the form
   useEffect(() => {
@@ -143,6 +170,7 @@ function UploadSchematicToCollectionPopup({
         formData.append('schematicFile', file);
         formData.append('tags', tags.join(','));
         formData.append('schematicName', schematicName);
+        formData.append('collectionsList', JSON.stringify(updatedCollectionsList));
         const collectionId = collectionData._id;
         // formData.append('collectionId', collectionData._id);
 
@@ -305,6 +333,13 @@ function UploadSchematicToCollectionPopup({
               id="tags-input"
             />
           </section>
+          {collectionData && (
+            <CollectionsPicker
+              collectionsData={collectionsList}
+              currentCollectionsData={currentCollectionObj}
+              updateSchematicCollections={setUpdatedCollectionsList}
+            />
+          )}
           <button className="submit-btn" type="submit">
             Upload Schematic to
             {' '}

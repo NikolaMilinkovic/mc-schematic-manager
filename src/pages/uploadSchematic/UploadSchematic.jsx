@@ -14,6 +14,7 @@ import customFetch from '../../../fetchMethod';
 import imageCompressor from '../../../util-methods/imageCompressor';
 import resizeImage from '../../../util-methods/resizeImage';
 import encodeImageToBlurHash from '../../../util-methods/encodeToBlurHash';
+import CollectionsPicker from '../../util-components/collectionsPicker/CollectionsPicker';
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -37,6 +38,19 @@ function UploadSchematic() {
   const imgInputRef = useRef(null);
   const [imgKey, setImgKey] = useState('');
   const [fileInputLabel, setFileInputLabel] = useState('Click to Upload Schematic');
+
+  // Collection Picker
+  const [collectionsList, setCollectionsList] = useState([]);
+  const [updatedCollectionsList, setUpdatedCollectionsList] = useState([]);
+
+  useEffect(() => {
+    async function fetchCollections() {
+      const collections = await customFetch('/get-collections-list', 'GET');
+      setCollectionsList(collections.data.collections);
+    }
+
+    fetchCollections();
+  }, []);
 
   // Rerenders file input text using reducer method
   function handleReset() {
@@ -113,6 +127,7 @@ function UploadSchematic() {
         formData.append('schematicFile', file);
         formData.append('tags', tags.join(','));
         formData.append('schematicName', schematicName);
+        formData.append('collectionsList', JSON.stringify(updatedCollectionsList));
 
         const response = await customFetch('/upload-schematic', 'POST', formData);
 
@@ -256,6 +271,10 @@ function UploadSchematic() {
             setTags={setTags}
             autocomplete={tagAutocomplete}
             id="tags-input"
+          />
+          <CollectionsPicker
+            collectionsData={collectionsList}
+            updateSchematicCollections={setUpdatedCollectionsList}
           />
           <button className="submit-btn" type="submit">Upload Schematic</button>
         </form>

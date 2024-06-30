@@ -6,7 +6,7 @@ import DropdownSearchInput from './dropdownSearchInput/DropdownSearchInput';
 import './collectionsPicker.scss';
 
 function CollectionsPicker({
-  collectionsData, currentCollectionsData, schematicData, updateSchematicCollections,
+  collectionsData = [], currentCollectionsData, schematicData, updateSchematicCollections,
 }) {
   const [collections, setCollections] = useState([]);
   const [currentCollections, setCurrentCollections] = useState([]);
@@ -15,16 +15,16 @@ function CollectionsPicker({
 
   // Store all the data
   useEffect(() => {
-    setCollections(collectionsData);
-    setCurrentCollections(currentCollectionsData);
-    setSchematic(schematicData);
+    if (collectionsData) {
+      setCollections(collectionsData);
+    }
+    if (currentCollectionsData) {
+      setCurrentCollections(currentCollectionsData);
+    }
+    if (schematicData) {
+      setSchematic(schematicData);
+    }
   }, [collectionsData, currentCollectionsData, schematicData]);
-
-  useEffect(() => {
-    console.log('CURRENT COLLECTIONS IS:');
-    console.log(currentCollections);
-  }, [currentCollections]);
-
 
   useEffect(() => {
     // Returns a set of unique ID's
@@ -35,6 +35,9 @@ function CollectionsPicker({
       // Gets all other collections > [{collection_id, collection_name}]
       // Goes into Dropdown component for display
       const otherCollections = collections.filter((collection) => !currentCollectionIds.has(collection.collection_id));
+
+      console.log('Logging otherCollections > Goes into dropdown');
+      console.log(otherCollections);
       setDropdownCollections(otherCollections);
     }
   }, [currentCollections, collections, collectionsData]);
@@ -91,7 +94,7 @@ function CollectionsPicker({
 
 
   return (
-    <div>
+    <div style={{ gridColumn: 'span 2' }}>
       <h3>Add / Remove from collections</h3>
       {/* Search Field Section */}
       <div className="search-collections-container">

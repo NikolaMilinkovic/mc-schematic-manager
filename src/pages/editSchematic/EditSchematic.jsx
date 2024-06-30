@@ -85,8 +85,10 @@ function EditSchematic() {
       const collectionsList = await customFetch('/get-collections-list', 'GET');
       setCollectionsList(collectionsList.data.collections);
 
-      const schematicsCollectionsList = await customFetch(`/get-schematcis-collection-list/${schematic._id}`, 'GET');
-      setSchematicsCollections(schematicsCollectionsList.data.currentCollections);
+      if (schematic && schematic._id) {
+        const schematicsCollectionsList = await customFetch(`/get-schematcis-collection-list/${schematic._id}`, 'GET');
+        setSchematicsCollections(schematicsCollectionsList.data.currentCollections);
+      }
     }
 
     fetchCollections();
@@ -133,13 +135,6 @@ function EditSchematic() {
         };
         reader.onerror = reject;
       });
-
-      // TO HANDLE IN BACKEND
-      // Skinute kolekcije
-      // removedCollections
-
-      // Dodate kolekcije
-      // newCollections
 
       try {
         const formData = new FormData();

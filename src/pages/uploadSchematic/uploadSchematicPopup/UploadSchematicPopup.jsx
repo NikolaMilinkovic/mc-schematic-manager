@@ -12,6 +12,7 @@ import ImgInputComponent from '../../../util-components/imgInputComponent/ImgInp
 import customFetch from '../../../../fetchMethod';
 import imageCompressor from '../../../../util-methods/imageCompressor';
 import encodeImageToBlurHash from '../../../../util-methods/encodeToBlurHash';
+import CollectionsPicker from '../../../util-components/collectionsPicker/CollectionsPicker';
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -39,6 +40,23 @@ function UploadSchematicPopup({
   const outsideFormRef = useRef(null);
   const [imgKey, setImgKey] = useState('');
   const [fileInputLabel, setFileInputLabel] = useState('Click to Upload Schematic');
+
+  // Collection Picker
+  const [collectionsList, setCollectionsList] = useState([]);
+  const [updatedCollectionsList, setUpdatedCollectionsList] = useState([]);
+
+  useEffect(() => {
+    async function fetchCollections() {
+      const collections = await customFetch('/get-collections-list', 'GET');
+      setCollectionsList(collections.data.collections);
+    }
+
+    fetchCollections();
+  }, []);
+
+  useEffect(() => {
+    console.log(collectionsList);
+  }, [collectionsList]);
 
   // Closes the dropdown when clicked outside of it
   useEffect(() => {
@@ -132,6 +150,7 @@ function UploadSchematicPopup({
         formData.append('schematicFile', file);
         formData.append('tags', tags.join(','));
         formData.append('schematicName', schematicName);
+        formData.append('collectionsList', JSON.stringify(updatedCollectionsList));
 
         const response = await customFetch('/upload-schematic', 'POST', formData);
 
@@ -288,6 +307,10 @@ function UploadSchematicPopup({
               id="tags-input"
             />
           </section>
+          <CollectionsPicker
+            collectionsData={collectionsList}
+            updateSchematicCollections={setUpdatedCollectionsList}
+          />
           <button className="submit-btn" type="submit">Upload Schematic</button>
         </form>
       </div>
