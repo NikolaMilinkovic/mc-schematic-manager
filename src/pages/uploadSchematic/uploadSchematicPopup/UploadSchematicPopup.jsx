@@ -264,58 +264,60 @@ function UploadSchematicPopup({
   };
 
   return (
-    <div
-      className={`upload-schematic-body ${state ? 'showPopup' : 'hidePopup'}`}
-      onDrop={handleDrop}
-      onDragOver={(event) => event.preventDefault()}
-      onPaste={handlePaste}
-      ref={outsideFormRef}
-    >
+    <>
       <div
-        className="upload-schematic-content-popup"
-        style={{ marginTop: `calc(${scrollOffset}px + 6rem)` }}
+        className={`upload-schematic-body-popup ${state ? '' : 'hidePopup'}`}
+        onDrop={handleDrop}
+        onDragOver={(event) => event.preventDefault()}
+        onPaste={handlePaste}
+        ref={outsideFormRef}
       >
-        <form id="upload-form" onSubmit={submitSchematic} ref={formRef}>
-          <h1 className="header">Upload Schematic</h1>
-          <section className="inputs-section">
-            <FormInput
-              label="Schematic name"
-              id={uuid()}
-              name="name"
-              type="text"
-              placeholder="Name"
-              onChange={(event) => setSchematicName(event.target.value)}
-              text={schematicName}
-              required
-              borderBottom="2px solid var(--borders)"
+        <div
+          className="upload-schematic-content-popup"
+          style={{ marginTop: `calc(${scrollOffset}px + 6rem)` }}
+        >
+          <form id="upload-form" onSubmit={submitSchematic} ref={formRef}>
+            <h1 className="header">Upload Schematic</h1>
+            <section className="inputs-section">
+              <FormInput
+                label="Schematic name"
+                id={uuid()}
+                name="name"
+                type="text"
+                placeholder="Name"
+                onChange={(event) => setSchematicName(event.target.value)}
+                text={schematicName}
+                required
+                borderBottom="2px solid var(--borders)"
+              />
+              <FileInput
+                reference={fileInputRef}
+                reset={resetKey}
+                label={fileInputLabel}
+              />
+              <ImgInputComponent
+                reference={imgInputRef}
+                rerenderkey={imgKey}
+              />
+            </section>
+            <section className="tags-section">
+              <TagsInput
+                tags={tags}
+                setTags={setTags}
+                autocomplete={tagAutocomplete}
+                id="tags-input"
+              />
+            </section>
+            <CollectionsPicker
+              collectionsData={collectionsList}
+              updateSchematicCollections={setUpdatedCollectionsList}
             />
-            <FileInput
-              reference={fileInputRef}
-              reset={resetKey}
-              label={fileInputLabel}
-            />
-            <ImgInputComponent
-              reference={imgInputRef}
-              rerenderkey={imgKey}
-            />
-          </section>
-          <section className="tags-section">
-            <TagsInput
-              tags={tags}
-              setTags={setTags}
-              autocomplete={tagAutocomplete}
-              id="tags-input"
-            />
-          </section>
-          <CollectionsPicker
-            collectionsData={collectionsList}
-            updateSchematicCollections={setUpdatedCollectionsList}
-          />
-          <button className="submit-btn" type="submit">Upload Schematic</button>
-        </form>
+            <button className="submit-btn" type="submit">Upload Schematic</button>
+          </form>
+        </div>
       </div>
       <div className="background-overlay-upload" />
-    </div>
+    </>
   );
 }
 

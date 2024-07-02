@@ -1,7 +1,16 @@
 @import url('../../../global/colors.scss');
 @import url('../../../global/global.scss');
 
-
+// .background-overlay-upload{
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   right: 0;
+//   bottom: 0;
+//   background: rgba(90, 222, 120, 0.25) !important; 
+//   background: rgba(103, 174, 121, 0.25) !important; 
+//   z-index: 2;
+// }
 .showPopup{
   opacity: 1;
   top: 0 !important;
@@ -13,50 +22,14 @@
   user-select: none !important;
   pointer-events: none !important;
 }
-div.upload-schematic-body{
+.upload-schematic-body-popup{
   display: flex;
   justify-content: center;
-  // position: fixed;
-  // top: 0;
-  // left: 0;
-  // bottom: 0;
-  // right: 0;
-  // top: 50%;
-  // left: 50%;
   position: fixed;
   transform: translate(0%, 0%);
-  // min-width: 100%;
   min-height: 100%;
-  z-index: 3;
   transition: 0.5s ease;
-  // background: transparent !important;
-  // background-color: rgba(0,0,0,0.5) !important;
-  // backdrop-filter: blur(4px);
-
-  .background-overlay-upload{
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.25); 
-    z-index: 2;
-  }
-
-  .upload-schematic-content-popup{
-    display: flex;
-    flex-direction: column;
-    // width: 100%;
-    // max-width: 1000px;
-    // min-height: 5500px;
-    padding: 1rem;
-    margin-top: 6rem;
-    position: fixed;
-    transform: translate(0%, 0%);
-    z-index: 3;
-    transition: margin-top 0.2s ease;
-
-
+  background: var(--popup-background-color);
   
     h1{
       margin-top: 0px;
@@ -73,11 +46,10 @@ div.upload-schematic-body{
       height: min-content;
       flex-direction: column;
       gap: 15px;
-      background-color: var(--background);
       background-color: transparent;
       padding: 10dvh;
       z-index: 3;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.75);
       border-radius: 12px;
       overflow: auto;
       max-height: 75vh;
@@ -121,7 +93,6 @@ div.upload-schematic-body{
         }
       }
     }
-  }
 }
 
 

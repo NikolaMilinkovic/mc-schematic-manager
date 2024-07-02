@@ -58,14 +58,12 @@ function Dashboard({ schematicsFilter }) {
           scrollOffset={scrollPosition}
           rerender={() => rerender()}
         />
+        <DraggableButton
+          pathString="/"
+          onClick={() => toggleUploadModal()}
+          state={ModalState}
+        />
       </div>
-
-      <DraggableButton
-        pathString="/"
-        onClick={() => toggleUploadModal()}
-        state={ModalState}
-      />
-
     </body>
   );
 }

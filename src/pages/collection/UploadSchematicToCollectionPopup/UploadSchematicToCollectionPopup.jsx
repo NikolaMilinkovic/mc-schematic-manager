@@ -287,7 +287,7 @@ function UploadSchematicToCollectionPopup({
 
   return (
     <div
-      className={`upload-schematic-body ${state ? 'showPopup' : 'hidePopup'}`}
+      className={`upload-schematic-body-popup ${state ? 'showPopup' : 'hidePopup'}`}
       onDrop={handleDrop}
       onDragOver={(event) => event.preventDefault()}
       onPaste={handlePaste}
@@ -347,7 +347,7 @@ function UploadSchematicToCollectionPopup({
           </button>
         </form>
       </div>
-      <div className="background-overlay-upload" />
+      {/* <div className="background-overlay-upload" /> */}
     </div>
   );
 }
