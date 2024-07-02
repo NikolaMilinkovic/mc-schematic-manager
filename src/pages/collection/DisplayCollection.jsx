@@ -53,8 +53,9 @@ function DisplayCollection({ collectionsFilter, key }) {
   }
 
   return (
-    <main className="dashboard-body" onScroll={(e) => handleScroll(e)}>
+    <main className="display-collection-main" onScroll={(e) => handleScroll(e)}>
       <div className="dashboard-container">
+        <div className="background-overlay-collection" />
         <CollectionLanding
           collectionsFilter={collectionsFilter}
           data={collection}
@@ -76,7 +77,6 @@ function DisplayCollection({ collectionsFilter, key }) {
         state={addSchematicState}
         toggleState={() => showAddSchematic()}
       /> */}
-      {/* <div className="background-overlay-dashboard" /> */}
     </main>
   );
 }

@@ -303,7 +303,7 @@ function EditSchematic() {
           <button className="submit-btn" type="submit">Update Schematic</button>
         </form>
       </div>
-      <div className="background-overlay" />
+      {/* <div className="background-overlay" /> */}
     </div>
   );
 }

@@ -187,7 +187,8 @@ main.profile-content{
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.2) !important; 
+    // background: rgba(0, 0, 0, 0.2) !important; 
+    // background: var(--background-overlay);
     z-index: 2;
   }
 

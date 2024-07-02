@@ -29,6 +29,7 @@ function Collections({ collectionsFilter }) {
       onScroll={(e) => handleScroll(e)}
     >
       <div className="dashboard-container">
+        <div className="background-overlay-collections" />
         <CollectionsLanding
           collectionsFilter={collectionsFilter}
           renderer={renderer}
@@ -44,7 +45,6 @@ function Collections({ collectionsFilter }) {
         renderer={() => rerender()}
         scrollTop={scrollPosition}
       />
-      <div className="background-overlay-dashboard" />
     </body>
   );
 }
