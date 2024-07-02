@@ -18,7 +18,9 @@ function DisplayCollection({
   const handleImageLoad = () => {
     setImageLoaded(true);
   };
-  function showConfirm() {
+  function showConfirm(event) {
+    event.preventDefault();
+    event.stopPropagation();
     setConfirmRemove(true);
   }
   function closeConfirm() {
@@ -40,9 +42,9 @@ function DisplayCollection({
         to={`/collections/${data._id}`}
         className="link"
       >
-        <article>
+        <article className="article">
           {collectionData && (
-          <div>
+          <div className="article-content">
             <h2 className="title">{collectionData.name}</h2>
             <div className="collection-img-container">
               {collectionData && collectionData.blur_hash && !imageLoaded ? (
@@ -68,6 +70,13 @@ function DisplayCollection({
           </div>
           )}
         </article>
+        <button
+          type="button"
+          onClick={(event) => showConfirm(event)}
+          className="remove-collection-button"
+        >
+          Remove
+        </button>
       </Link>
       {confirmRemove && (
       <div className="confirmation-modal">
@@ -100,13 +109,7 @@ function DisplayCollection({
       </div>
       )}
 
-      <button
-        type="button"
-        onClick={showConfirm}
-        className="remove-collection-button"
-      >
-        Remove
-      </button>
+
     </div>
   );
 }
