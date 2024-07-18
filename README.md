@@ -5,6 +5,8 @@ It uses FAWE to transform schematics and upload them to server for use.
 
 [Live Demo](https://mc-schematic-manager.vercel.app/login) ✨
 
+[Backend Server Repo](https://github.com/NikolaMilinkovic/mc-schematic-manager-server) ✨
+
 ## Features
 - Asset storage & display
 - Select, transform, upload asset and get schematic load string stored in clipboard in just one click!
